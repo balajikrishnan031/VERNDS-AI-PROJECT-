@@ -517,3 +517,53 @@ window.VerndsFront = {
   exportSessionTelemetryJson,
   showToastNotification
 };
+
+
+/* ==========================================================================
+   13. ADVANCED INTERACTIVE EVENT HANDLERS & SEARCH FILTERS
+   ========================================================================== */
+
+/**
+ * Filter Statutory District Cards by State
+ */
+function filterDistrictsByState(stateName) {
+  const cards = document.querySelectorAll('.dome-card');
+  cards.forEach(card => {
+    if (!stateName || stateName === 'ALL') {
+      card.style.display = 'block';
+    } else {
+      const cardState = card.querySelector('span')?.innerText;
+      if (cardState && cardState.toLowerCase().includes(stateName.toLowerCase())) {
+        card.style.display = 'block';
+      } else {
+        card.style.display = 'none';
+      }
+    }
+  });
+}
+
+/**
+ * Initialize District Search Bar
+ */
+function initDistrictSearchBar() {
+  const searchInput = document.getElementById('district-search-input');
+  if (!searchInput) return;
+
+  searchInput.addEventListener('input', (e) => {
+    const query = e.target.value.toLowerCase().trim();
+    const cards = document.querySelectorAll('.dome-card');
+
+    cards.forEach(card => {
+      const text = card.innerText.toLowerCase();
+      if (text.includes(query)) {
+        card.style.display = 'block';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initDistrictSearchBar();
+});
