@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vernds AI | Real-Time Stress & Trauma Assessment Engine - NHAA (14566)</title>
+  
+  <!-- Google Fonts & Font Awesome Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- Leaflet CSS & JS for Interactive Heatmap -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <!-- Custom Glassmorphism Stylesheet -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- Emergency SOS Alert Banner -->
+  <div class="sos-alert-bar">
+    <div>
+      <i class="fa-solid fa-triangle-exclamation fa-beat me-2"></i>
+      <strong>NATIONAL HELPLINE AGAINST ATROCITIES (14566) - CRISIS DISPATCH & TRIAGE ACTIVE</strong>
+    </div>
+    <div>
+      <span class="me-3" id="liveClock">2026-09-12 20:40:00 IST</span>
+      <button class="btn-sos" onclick="triggerEmergencySOS()"><i class="fa-solid fa-shield-cat me-1"></i> INSTANT EMERGENCY SOS</button>
+    </div>
+  </div>
+
+  <!-- Top Sticky Navigation Bar -->
+  <nav class="navbar">
+    <div class="nav-brand" onclick="navigateTo('page-landing')">
+      <div class="logo-badge"><i class="fa-solid fa-brain"></i></div>
+      <div>
+        <div class="brand-title">Vernds AI</div>
+        <div class="brand-sub">NHAA 14566 Trauma Assessment & Triage Engine</div>
+      </div>
+    </div>
+
+    <!-- Scrollable Menu Bar Linking ALL 15 Pages -->
+    <div class="nav-menu-scroll">
+      <button class="nav-link-btn active" id="link-page-landing" onclick="navigateTo('page-landing')"><i class="fa-solid fa-house"></i> 1. Landing</button>
+      <button class="nav-link-btn" id="link-page-auth" onclick="navigateTo('page-auth')"><i class="fa-solid fa-right-to-bracket"></i> 2. Login</button>
+      <button class="nav-link-btn" id="link-page-home" onclick="navigateTo('page-home')"><i class="fa-solid fa-table-columns"></i> 3. Home Hub</button>
+      <button class="nav-link-btn" id="link-page-telephony" onclick="navigateTo('page-telephony')"><i class="fa-solid fa-headset"></i> 4. 14566 Telephony</button>
+      <button class="nav-link-btn" id="link-page-nlp" onclick="navigateTo('page-nlp')"><i class="fa-solid fa-language"></i> 5. NLP & Emotion</button>
+      <button class="nav-link-btn" id="link-page-svi" onclick="navigateTo('page-svi')"><i class="fa-solid fa-calculator"></i> 6. SVI Calculator</button>
+      <button class="nav-link-btn" id="link-page-emergency" onclick="navigateTo('page-emergency')"><i class="fa-solid fa-truck-medical"></i> 7. 112 Dispatch</button>
+      <button class="nav-link-btn" id="link-page-heatmap" onclick="navigateTo('page-heatmap')"><i class="fa-solid fa-map-location-dot"></i> 8. Atrocity Heatmap</button>
+      <button class="nav-link-btn" id="link-page-victim-report" onclick="navigateTo('page-victim-report')"><i class="fa-solid fa-file-shield"></i> 9. Victim Portal</button>
+      <button class="nav-link-btn" id="link-page-chatbot" onclick="navigateTo('page-chatbot')"><i class="fa-solid fa-robot"></i> 10. AI Chatbot</button>
+      <button class="nav-link-btn" id="link-page-cases" onclick="navigateTo('page-cases')"><i class="fa-solid fa-rectangle-list"></i> 11. Grievance Audit</button>
+      <button class="nav-link-btn" id="link-page-counselor" onclick="navigateTo('page-counselor')"><i class="fa-solid fa-user-doctor"></i> 12. Counselor Workspace</button>
+      <button class="nav-link-btn" id="link-page-legal" onclick="navigateTo('page-legal')"><i class="fa-solid fa-scale-balanced"></i> 13. Legal & Witness</button>
+      <button class="nav-link-btn" id="link-page-notes" onclick="navigateTo('page-notes')"><i class="fa-solid fa-note-sticky"></i> 14. Sticky Notes</button>
+      <button class="nav-link-btn" id="link-page-compliance" onclick="navigateTo('page-compliance')"><i class="fa-solid fa-shield-halved"></i> 15. Ethical AI</button>
+    </div>
+
+    <!-- Language Selector -->
+    <div class="nav-actions">
+      <select class="language-select" id="languageSelect" onchange="changeLanguage(this.value)">
+        <option value="Hindi">🇮🇳 हिंदी (Hindi)</option>
+        <option value="Tamil">🇮🇳 தமிழ் (Tamil)</option>
+        <option value="Telugu">🇮🇳 తెలుగు (Telugu)</option>
+        <option value="Odia">🇮🇳 ଓଡ଼ିଆ (Odia)</option>
+        <option value="Marathi">🇮🇳 मराठी (Marathi)</option>
+        <option value="Bengali">🇮🇳 বাংলা (Bengali)</option>
+        <option value="Kannada">🇮🇳 ಕನ್ನಡ (Kannada)</option>
+        <option value="Gujarati">🇮🇳 ગુજરાતી (Gujarati)</option>
+        <option value="Punjabi">🇮🇳 ਪੰਜਾਬੀ (Punjabi)</option>
+        <option value="English" selected>🌐 English</option>
+      </select>
+    </div>
+  </nav>
+
+  <!-- Main App Container -->
+  <div class="app-container">
+
+    <!-- ================================================================= -->
+    <!-- PAGE 1: PUBLIC LANDING PAGE & HERO PORTAL -->
+    <!-- ================================================================= -->
+    <div id="page-landing" class="page-section active">
+      <div class="glass-card mb-4 text-center" style="padding: 48px 24px; background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(30, 41, 59, 0.8)); border-color: rgba(6, 182, 212, 0.3);">
+        <span style="background: rgba(6, 182, 212, 0.15); color: var(--accent-cyan); border: 1px solid var(--accent-cyan); padding: 6px 18px; border-radius: 30px; font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: 1px;">
+          National Helpline Against Atrocities (14566) • Ministry of Social Justice
+        </span>
+        <h1 style="font-size: 48px; font-weight: 900; margin: 18px 0 12px; background: linear-gradient(90deg, #fff, #93c5fd, #67e8f9); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+          AI-Enabled Real-Time Stress & Trauma Assessment Engine
+        </h1>
+        <p style="max-width: 850px; margin: 0 auto 28px; color: var(--text-muted); font-size: 16px; line-height: 1.7;">
+          Empowering SC/ST victims facing caste discrimination, violence, land displacement, social boycott, and threats with real-time vocal biomarker triaging, multilingual NLP emotion AI, standardized SVI scoring, and automated emergency police (112) & psychiatric dispatch.
+        </p>
+
+        <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
+          <button class="btn btn-primary" style="padding: 12px 28px; font-size: 15px;" onclick="navigateTo('page-auth')">
+            <i class="fa-solid fa-right-to-bracket"></i> Login to Portal
+          </button>
+          <button class="btn btn-purple" style="padding: 12px 28px; font-size: 15px;" onclick="navigateTo('page-home')">
+            <i class="fa-solid fa-gauge-high"></i> Open Command Dashboard
+          </button>
+          <button class="btn btn-danger" style="padding: 12px 28px; font-size: 15px;" onclick="triggerEmergencySOS()">
+            <i class="fa-solid fa-phone-volume"></i> Dial Emergency SOS
+          </button>
+        </div>
+      </div>
+
+      <!-- Quick Feature Grid -->
+      <div class="grid-4 mb-4">
+        <div class="glass-card text-center" onclick="navigateTo('page-telephony')">
+          <i class="fa-solid fa-headset text-cyan" style="font-size: 32px; margin-bottom: 12px;"></i>
+          <h4 class="mb-2">1. 14566 Telephony</h4>
+          <p style="font-size: 12px; color: var(--text-muted);">Real-time pitch, tremor & pause ratio audio stream analysis.</p>
+        </div>
+
+        <div class="glass-card text-center" onclick="navigateTo('page-nlp')">
+          <i class="fa-solid fa-language text-purple" style="font-size: 32px; margin-bottom: 12px;"></i>
+          <h4 class="mb-2">2. Multilingual NLP</h4>
+          <p style="font-size: 12px; color: var(--text-muted);">10 Indian languages ASR + Location Address (NER) extractor.</p>
+        </div>
+
+        <div class="glass-card text-center" onclick="navigateTo('page-emergency')">
+          <i class="fa-solid fa-truck-medical text-pink" style="font-size: 32px; margin-bottom: 12px;"></i>
+          <h4 class="mb-2">3. 112 Emergency Dispatch</h4>
+          <p style="font-size: 12px; color: var(--text-muted);">Automated 112 Police ERSS Webhook & Tele-MANAS hotline bridge.</p>
+        </div>
+
+        <div class="glass-card text-center" onclick="navigateTo('page-heatmap')">
+          <i class="fa-solid fa-map-location-dot text-blue" style="font-size: 32px; margin-bottom: 12px;"></i>
+          <h4 class="mb-2">4. All-India Heatmap</h4>
+          <p style="font-size: 12px; color: var(--text-muted);">Interactive GIS district vulnerability clusters & SVI trends.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================================================================= -->
+    <!-- PAGE 2: ROLE-BASED LOGIN / AUTH PORTAL -->
+    <!-- ================================================================= -->
+    <div id="page-auth" class="page-section">
+      <div style="max-width: 520px; margin: 40px auto;">
+        <div class="glass-card">
+          <div class="text-center mb-4">
+            <div class="logo-badge" style="margin: 0 auto 16px;"><i class="fa-solid fa-lock"></i></div>
+            <h2>Portal Authentication</h2>
+            <p style="font-size: 13px; color: var(--text-muted);">Select your official role to access authorized modules</p>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label" style="font-size: 12px;">Select Official Role</label>
+            <select class="form-control" id="loginRoleSelect">
+              <option value="agent">🎧 14566 Call Operator / Telephony Agent</option>
+              <option value="victim">🛡️ SC/ST Victim / Complainant Portal</option>
+              <option value="admin">🏛️ MoSJE & District Nodal Officer</option>
+              <option value="counselor">🩺 Tele-MANAS Mental Health Specialist</option>
+              <option value="legal">⚖️ DLSA Legal Aid Advocate</option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label" style="font-size: 12px;">Official Government Mobile / ID</label>
+            <input type="text" class="form-control" value="+91 98765 43210" id="loginIdInput">
+          </div>
+
+          <div class="mb-4">
+            <label class="form-label" style="font-size: 12px;">One-Time Password (OTP)</label>
+            <input type="password" class="form-control" value="14566" id="loginOtpInput">
+          </div>
+
+          <button class="btn btn-primary" style="width: 100%; padding: 12px;" onclick="simulateLogin()">
+            <i class="fa-solid fa-right-to-bracket me-1"></i> Authenticate & Enter System
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================================================================= -->
+    <!-- PAGE 3: MAIN COMMAND HOME DASHBOARD -->
+    <!-- ================================================================= -->
+    <div id="page-home" class="page-section">
+      <div class="glass-card mb-4" style="background: linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(6, 182, 212, 0.15)); border-color: rgba(139, 92, 246, 0.3);">
+        <div class="d-flex justify-between items-center">
+          <div>
+            <h2><i class="fa-solid fa-gauge-high text-cyan me-2"></i> SAMVEDNA-AI Command Center</h2>
+            <p style="font-size: 13px; color: var(--text-muted);">Central Hub Connecting All 15 Real-Time Modules</p>
+          </div>
+          <button class="btn btn-danger" onclick="triggerEmergencySOS()"><i class="fa-solid fa-bell"></i> CRISIS SOS</button>
+        </div>
+      </div>
+
+      <!-- Quick Hub Grid linking to all modules -->
+      <div class="grid-3 mb-4">
+        <div class="glass-card" onclick="navigateTo('page-telephony')" style="cursor: pointer;">
+          <h4><i class="fa-solid fa-headset text-cyan me-2"></i> 14566 Telephony Console</h4>
+          <p style="font-size: 12px; color: var(--text-muted); margin-top: 6px;">Live call audio recorder, pitch contour & FFT frequency visualizer.</p>
+        </div>
+
+        <div class="glass-card" onclick="navigateTo('page-nlp')" style="cursor: pointer;">
+          <h4><i class="fa-solid fa-language text-purple me-2"></i> Multilingual NLP Engine</h4>
+          <p style="font-size: 12px; color: var(--text-muted); margin-top: 6px;">Location Address NER Extractor & 10 Indian Languages Emotion AI.</p>
+        </div>
+
+        <div class="glass-card" onclick="navigateTo('page-svi')" style="cursor: pointer;">
+          <h4><i class="fa-solid fa-calculator text-pink me-2"></i> SVI Stress Calculator</h4>
+          <p style="font-size: 12px; color: var(--text-muted); margin-top: 6px;">Interactive sliders for 0-100 Stress Vulnerability Index calculation.</p>
+        </div>
+
+        <div class="glass-card" onclick="navigateTo('page-emergency')" style="cursor: pointer;">
+          <h4><i class="fa-solid fa-truck-medical text-red me-2"></i> Emergency 112 Dispatch</h4>
+          <p style="font-size: 12px; color: var(--text-muted); margin-top: 6px;">Webhook alert payload to 112 Police ERSS & Tele-MANAS hotline.</p>
+        </div>
+
+        <div class="glass-card" onclick="navigateTo('page-heatmap')" style="cursor: pointer;">
+          <h4><i class="fa-solid fa-map-location-dot text-blue me-2"></i> All-India GIS Heatmap</h4>
+          <p style="font-size: 12px; color: var(--text-muted); margin-top: 6px;">Interactive state/district SC/ST vulnerability clusters.</p>
+        </div>
+
+        <div class="glass-card" onclick="navigateTo('page-notes')" style="cursor: pointer;">
+          <h4><i class="fa-solid fa-note-sticky text-yellow me-2"></i> Sticky Notes Board</h4>
+          <p style="font-size: 12px; color: var(--text-muted); margin-top: 6px;">Interactive glassmorphic notes for crisis call plans & safety notes.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================================================================= -->
+    <!-- PAGE 4: 14566 LIVE TELEPHONY CALL CONSOLE -->
+    <!-- ================================================================= -->
+    <div id="page-telephony" class="page-section">
+      <div class="grid-2-1">
+        <div class="glass-card">
+          <div class="d-flex justify-between items-center mb-3">
+            <h3><i class="fa-solid fa-microphone-lines text-cyan me-2"></i> 14566 Telephony Live Stream Receiver</h3>
+            <span class="badge" style="background: rgba(16, 185, 129, 0.2); color: #34d399; padding: 4px 12px; border-radius: 20px; font-weight: 600;">
+              <span class="rec-dot"></span> LIVE PBX STREAM ACTIVE
+            </span>
+          </div>
+
+          <div class="waveform-box mb-3"><canvas id="waveformCanvas"></canvas></div>
+
+          <div class="d-flex gap-2 mb-3">
+            <button class="btn btn-primary" id="btnMicRecord" onclick="toggleMicrophone()">
+              <i class="fa-solid fa-microphone"></i> <span id="micBtnText">Start Mic Live Analysis</span>
+            </button>
+
+            <select class="form-control" style="width: auto;" id="sampleAudioSelect" onchange="loadSampleAudio(this.value)">
+              <option value="">-- Load Sample Telephony Scenario --</option>
+              <option value="critical">🔴 Critical Risk: Atrocity Violence & Death Threats (Hathras, Hindi)</option>
+              <option value="high">🟠 High Risk: Tribal Land Displacement (Kalahandi, Odia)</option>
+              <option value="moderate">🟡 Moderate Risk: Well Water Denial & Boycott (Madurai, Tamil)</option>
+              <option value="low">🟢 Low Risk: Wage Deduction & Discrimination (Bhilwara, Hindi)</option>
+            </select>
+          </div>
+
+          <!-- Extracted Address Card -->
+          <div style="background: rgba(10, 15, 26, 0.6); padding: 12px 16px; border-radius: 10px; border: 1px solid var(--border-color);" class="mb-3">
+            <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">
+              <i class="fa-solid fa-location-dot text-pink me-1"></i> AI Extracted Location & Address (NER Parsed)
+            </div>
+            <div id="extractedAddressDisplay" style="font-size: 15px; font-weight: 700; color: #fff; margin-top: 4px;">
+              Chandpa Village, Hathras District, Uttar Pradesh (Confidence: 96%)
+            </div>
+          </div>
+
+          <textarea class="form-control mb-3" id="agentNarrativeInput" rows="4" placeholder="Speak or type narrative..."></textarea>
+
+          <button class="btn btn-primary" style="width: 100%;" onclick="runComprehensiveAnalysis()">
+            <i class="fa-solid fa-wand-magic-sparkles"></i> Run AI Stress & Trauma Engine
+          </button>
+        </div>
+
+        <div>
+          <!-- SVI Gauge -->
+          <div class="glass-card svi-gauge-card mb-4">
+            <h4 style="color: var(--text-muted); font-size: 13px; text-transform: uppercase;">Stress Vulnerability Index (SVI)</h4>
+            <div class="svi-score-number" id="sviDisplay" style="color: var(--risk-critical);">88</div>
+            <div class="svi-risk-badge critical mb-3" id="riskBadgeDisplay">Critical Risk (P1)</div>
+            <div class="grid-2 text-start" style="font-size: 12px;">
+              <div>Voice Stress: <strong id="voiceScoreVal" style="color: var(--accent-cyan);">90 / 100</strong></div>
+              <div>NLP Trauma: <strong id="nlpScoreVal" style="color: var(--accent-pink);">88 / 100</strong></div>
+            </div>
+          </div>
+
+          <!-- Auto Dispatch Log -->
+          <div class="glass-card">
+            <h4 class="mb-3" style="color: var(--accent-cyan);"><i class="fa-solid fa-robot me-2"></i> Auto Dispatch Status</h4>
+            <div style="font-size: 12px; background: rgba(10, 15, 26, 0.5); padding: 10px; border-radius: 8px; margin-bottom: 12px;" id="autoCallStatusLog">
+              <div>📞 <strong>Auto-Call (Tele-MANAS Doctor):</strong> <span style="color: #34d399;">CONNECTED</span></div>
+              <div style="margin-top: 4px;">📩 <strong>Auto-Message (112 Police):</strong> <span style="color: #f87171;">DISPATCHED (ETA: 8 mins)</span></div>
+            </div>
+            <button class="btn btn-danger" style="width: 100%;" onclick="executeEmergencyDispatch()"><i class="fa-solid fa-paper-plane"></i> Dispatch Emergency SOS</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================================================================= -->
+    <!-- PAGE 5: MULTILINGUAL SPEECH & NLP TRAUMA PARSER -->
+    <!-- ================================================================= -->
+    <div id="page-nlp" class="page-section">
+      <div class="glass-card mb-4">
+        <h3><i class="fa-solid fa-language text-purple me-2"></i> Multilingual NLP & Emotion AI Parser</h3>
+        <p style="font-size: 13px; color: var(--text-muted);">Detects caste atrocity keywords, emotion probabilities, and extracts location names (NER) across 10 Indian languages.</p>
+      </div>
+
+      <div class="grid-2">
+        <div class="glass-card">
+          <h4><i class="fa-solid fa-keyboard me-2"></i> Input Narrative Text / Speech Transcript</h4>
+          <textarea class="form-control my-3" id="nlpInputArea" rows="6" placeholder="Type or paste text in Hindi, Tamil, Telugu, Odia, Marathi, Bengali, Kannada, English..."></textarea>
+          <button class="btn btn-purple" style="width: 100%;" onclick="analyzeNlpOnly()"><i class="fa-solid fa-brain"></i> Parse NLP & Extract Entities</button>
+        </div>
+
+        <div class="glass-card">
+          <h4><i class="fa-solid fa-heart-circle-bolt text-pink me-2"></i> Emotion AI Diagnostic Output</h4>
+          <div class="my-3" id="nlpResultOutput">
+            <div class="emotion-bar-item">
+              <div class="emotion-label-row"><span>Terror / Fear</span><span id="nlpFear">88%</span></div>
+              <div class="emotion-progress-track"><div class="emotion-progress-fill" id="nlpFearFill" style="width: 88%; background: #ef4444;"></div></div>
+            </div>
+            <div class="emotion-bar-item">
+              <div class="emotion-label-row"><span>Despair / Suicide Risk</span><span id="nlpDespair">85%</span></div>
+              <div class="emotion-progress-track"><div class="emotion-progress-fill" id="nlpDespairFill" style="width: 85%; background: #8b5cf6;"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================================================================= -->
+    <!-- PAGE 6: SVI CALCULATOR (STRESS VULNERABILITY INDEX) -->
+    <!-- ================================================================= -->
+    <div id="page-svi" class="page-section">
+      <div class="glass-card mb-4">
+        <h3><i class="fa-solid fa-calculator text-pink me-2"></i> Interactive SVI (Stress Vulnerability Index) Engine</h3>
+        <p style="font-size: 13px; color: var(--text-muted);">Adjust weighted parameters to simulate Stress Vulnerability Index calculation (0 to 100 scale).</p>
+      </div>
+
+      <div class="grid-2">
+        <div class="glass-card">
+          <h4><i class="fa-solid fa-sliders me-2"></i> SVI Weighted Parameter Sliders</h4>
+
+          <div class="my-3">
+            <label style="font-size: 12px;">Voice Acoustic Stress Score (Weight: 30%): <strong id="sliderVoiceVal">85</strong></label>
+            <input type="range" class="form-control" min="0" max="100" value="85" id="sliderVoice" oninput="recalcSviSliders()">
+          </div>
+
+          <div class="mb-3">
+            <label style="font-size: 12px;">NLP Narrative Trauma Score (Weight: 35%): <strong id="sliderNlpVal">88</strong></label>
+            <input type="range" class="form-control" min="0" max="100" value="88" id="sliderNlp" oninput="recalcSviSliders()">
+          </div>
+
+          <div class="mb-3">
+            <label style="font-size: 12px;">Atrocity Crime Severity Grade (Weight: 20%): <strong id="sliderCrimeVal">90</strong></label>
+            <input type="range" class="form-control" min="0" max="100" value="90" id="sliderCrime" oninput="recalcSviSliders()">
+          </div>
+
+          <div class="mb-3">
+            <label style="font-size: 12px;">Social Isolation Factor (Weight: 15%): <strong id="sliderIsoVal">80</strong></label>
+            <input type="range" class="form-control" min="0" max="100" value="80" id="sliderIso" oninput="recalcSviSliders()">
+          </div>
+        </div>
+
+        <div class="glass-card svi-gauge-card">
+          <h4>Computed Stress Vulnerability Index</h4>
+          <div class="svi-score-number" id="calcSviDisplay" style="color: var(--risk-critical);">88</div>
+          <div class="svi-risk-badge critical" id="calcRiskBadge">Critical Risk (P1)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================================================================= -->
+    <!-- PAGE 7: EMERGENCY SOS & 112 POLICE DISPATCH HUB -->
+    <!-- ================================================================= -->
+    <div id="page-emergency" class="page-section">
+      <div class="glass-card mb-4" style="border-color: #ef4444;">
+        <h3><i class="fa-solid fa-truck-medical text-red me-2"></i> Emergency 112 Police & Tele-MANAS Crisis Hub</h3>
+        <p style="font-size: 13px; color: var(--text-muted);">Real-time Webhook payload generator and multi-agency dispatch status dashboard.</p>
+      </div>
+
+      <div class="grid-2">
+        <div class="glass-card">
+          <h4><i class="fa-solid fa-paper-plane me-2"></i> 112 Police ERSS Webhook JSON Payload</h4>
+          <pre style="background: rgba(10, 15, 26, 0.9); padding: 16px; border-radius: 12px; font-size: 12px; color: #34d399; margin-top: 12px; overflow-x: auto;" id="webhookPayloadCode">
+{
+  "caseId": "NHAA-2026-8941",
+  "callerPhone": "+91 98765 *****",
+  "extractedAddress": "Chandpa Village, Hathras District, UP",
+  "crimeCategory": "Physical Violence & Death Threats",
+  "sviScore": 88,
+  "riskTier": "Critical Risk (P1)",
+  "dispatchAgencies": ["112 Police", "Tele-MANAS 14416", "Witness Protection"],
+  "timestamp": "2026-09-12T20:40:00Z"
+}
+          </pre>
+          <button class="btn btn-danger mt-3" style="width: 100%;" onclick="executeEmergencyDispatch()"><i class="fa-solid fa-bolt"></i> Send Emergency Webhook Dispatch</button>
+        </div>
+
+        <div class="glass-card">
+          <h4><i class="fa-solid fa-clock-rotate-left me-2"></i> Agency Response Status Logs</h4>
+          <div style="font-size: 13px; line-height: 2; margin-top: 12px;">
+            <p>🚨 <strong>112 Police Control Room:</strong> <span style="color: #34d399;">ACKNOWLEDGED (ETA: 8 mins)</span></p>
+            <p>📞 <strong>Tele-MANAS Doctor Bridge:</strong> <span style="color: #34d399;">LINE_HOT_TRANSFER_ACTIVE</span></p>
+            <p>🛡️ <strong>Witness Protection Cell:</strong> <span style="color: #fb923c;">FLAGGED_SEC_15A</span></p>
+            <p>🏛️ <strong>District Collector Alert:</strong> <span style="color: #34d399;">NOTIFIED_SMS_EMAIL</span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================================================================= -->
+    <!-- PAGE 8: ALL-INDIA SC/ST VULNERABILITY & ATROCITY HEATMAP -->
+    <!-- ================================================================= -->
+    <div id="page-heatmap" class="page-section">
+      <div class="glass-card mb-4">
+        <h3><i class="fa-solid fa-map-location-dot text-cyan me-2"></i> All-India SC/ST Vulnerability & Atrocity Heatmap</h3>
+        <p style="font-size: 12px; color: var(--text-muted);">Real-time district vulnerability clusters derived from SVI scores (MoSJE Admin View)</p>
+      </div>
+
+      <div class="glass-card mb-4">
+        <div id="leafletMap" style="height: 480px; border-radius: 14px;"></div>
+      </div>
+    </div>
+
+    <!-- ================================================================= -->
+    <!-- PAGE 9: VICTIM INCIDENT REPORT & VOICE NOTE PORTAL -->
+    <!-- ================================================================= -->
+    <div id="page-victim-report" class="page-section">
+      <div class="glass-card max-w-700 margin-auto" style="max-width: 750px; margin: 0 auto;">
+        <h3><i class="fa-solid fa-file-shield text-cyan me-2"></i> Trauma-Informed Victim Reporting Portal</h3>
+        <p style="font-size: 13px; color: var(--text-muted);" class="mb-4">Protected by DPDP Act 2023. Anonymous mode enabled.</p>
+
+        <div class="mb-3">
+          <label class="form-label" style="font-size: 12px;">Complainant ID / Name</label>
+          <input type="text" class="form-control" value="Anonymous SC/ST Victim (ID: #V-8941)" readonly>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" style="font-size: 12px;">Incident Location / District</label>
+          <input type="text" class="form-control" value="Hathras, Uttar Pradesh" id="victimLocInput">
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" style="font-size: 12px;">Describe Incident Narrative</label>
+          <textarea class="form-control" rows="5" id="victimDescInput" placeholder="Write or record voice message in Hindi, Tamil, Telugu, English..."></textarea>
+        </div>
+
+        <div class="mb-4">
+          <label style="font-size: 12px; color: var(--text-muted);"><input type="checkbox" checked> I consent to AI stress triaging (DPDP Act 2023)</label>
+        </div>
+
+        <button class="btn btn-primary" style="width: 100%;" onclick="submitVictimReport()"><i class="fa-solid fa-paper-plane"></i> Encrypt & Submit Complaint</button>
+      </div>
+    </div>
+
+    <!-- ================================================================= -->
+    <!-- PAGE 10: MULTILINGUAL SAMVEDNA AI CHATBOT -->
+    <!-- ================================================================= -->
+    <div id="page-chatbot" class="page-section">
+      <div class="glass-card chat-container max-w-800" style="max-width: 850px; margin: 0 auto;">
+        <div style="padding-bottom: 12px; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <strong><i class="fa-solid fa-bot text-cyan me-2"></i> SAMVEDNA Empathetic AI Assistant</strong>
+            <div style="font-size: 11px; color: var(--text-muted);">24x7 Helpline Connected • Multilingual</div>
+          </div>
+          <button class="btn btn-danger" style="padding: 4px 12px; font-size: 12px;" onclick="triggerEmergencySOS()"><i class="fa-solid fa-bell"></i> SOS Call</button>
+        </div>
+
+        <div class="chat-messages" id="chatMessages">
+          <div class="chat-bubble bot">
+            Namaste 🙏 Welcome to the National Helpline Against Atrocities (14566). I am SAMVEDNA, your empathetic support assistant. Please tell me what happened or how you are feeling right now. We are here to protect you.
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 8px; margin-top: 12px;">
+          <input type="text" class="form-control" id="chatInput" placeholder="Type your message in Hindi, Tamil, English..." onkeydown="if(event.key==='Enter') sendChatMessage()">
+          <button class="btn btn-primary" onclick="sendChatMessage()"><i class="fa-solid fa-paper-plane"></i></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================================================================= -->
+    <!-- PAGE 11: GRIEVANCE AUDIT & CASE HISTORY LOG -->
+    <!-- ================================================================= -->
+    <div id="page-cases" class="page-section">
+      <div class="glass-card mb-4">
+        <h3><i class="fa-solid fa-rectangle-list text-blue me-2"></i> 14566 Atrocity Grievance Audit Feed</h3>
+        <p style="font-size: 12px; color: var(--text-muted);">Filterable repository of logged cases, SVI scores, and assigned support agencies.</p>
+      </div>
+
+      <div class="glass-card">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Case ID</th>
+              <th>District & State</th>
+              <th>Caste Category</th>
+              <th>Incident Type</th>
+              <th>SVI Score</th>
+              <th>Risk Tier</th>
+              <th>Status & Assigned Agency</th>
+            </tr>
+          </thead>
+          <tbody id="casesTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ================================================================= -->
+    <!-- PAGE 12: MENTAL HEALTH SPECIALIST WORKSPACE -->
+    <!-- ================================================================= -->
+    <div id="page-counselor" class="page-section">
+      <div class="glass-card mb-4">
+        <h3><i class="fa-solid fa-user-doctor text-pink me-2"></i> Tele-MANAS Counselor Diagnostic Workspace</h3>
+        <p style="font-size: 13px; color: var(--text-muted);">DSM-5 & PCL-5 psychological diagnostic profile for acute atrocity trauma.</p>
+      </div>
+
+      <div class="grid-2">
+        <div class="glass-card">
+          <h4><i class="fa-solid fa-clipboard-question me-2"></i> Psychological Profile: #NHAA-2026-8941</h4>
+          <div style="font-size: 13px; line-height: 1.8; margin-top: 12px;">
+            <p><strong>District:</strong> Hathras, Uttar Pradesh</p>
+            <p><strong>Caste Group:</strong> Scheduled Caste (Valmiki)</p>
+            <p><strong>Vocal Biomarkers:</strong> High Vocal Tremor (0.082), 42% Freezing Pauses.</p>
+            <p><strong>Trauma Index:</strong> Terror (88%), Panic (75%), Despair (82%), Suicidal Ideation (45%).</p>
+          </div>
+        </div>
+
+        <div class="glass-card">
+          <h4><i class="fa-solid fa-notes-medical me-2"></i> Clinical Notes & Treatment Plan</h4>
+          <textarea class="form-control my-3" rows="4" placeholder="Enter session notes & treatment protocol..."></textarea>
+          <button class="btn btn-purple" style="width: 100%;"><i class="fa-solid fa-floppy-disk"></i> Save Counselor Record</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================================================================= -->
+    <!-- PAGE 13: LEGAL AID & WITNESS PROTECTION CELL -->
+    <!-- ================================================================= -->
+    <div id="page-legal" class="page-section">
+      <div class="glass-card mb-4">
+        <h3><i class="fa-solid fa-scale-balanced text-yellow me-2"></i> DLSA Legal Aid & Witness Protection Cell</h3>
+        <p style="font-size: 13px; color: var(--text-muted);">SC/ST (Prevention of Atrocities) Act Section 15A Witness Protection & Compensation Cell.</p>
+      </div>
+
+      <div class="grid-2">
+        <div class="glass-card">
+          <h4><i class="fa-solid fa-gavel me-2"></i> Legal Assistance Assignment</h4>
+          <div style="font-size: 13px; line-height: 1.8; margin-top: 12px;">
+            <p><strong>Advocate Assigned:</strong> Advocate R. K. Verma (Senior Panel Advocate)</p>
+            <p><strong>Act Provisions:</strong> Section 3(1) & Section 15A Witness Protection Scheme</p>
+            <p><strong>Interim Relief:</strong> ₹1,25,000 Sanctioned under PoA Rules</p>
+          </div>
+        </div>
+
+        <div class="glass-card">
+          <h4><i class="fa-solid fa-list-check me-2"></i> Protection Checklist</h4>
+          <div style="font-size: 13px; margin-top: 12px;">
+            <label style="display: block; margin-bottom: 8px;"><input type="checkbox" checked> Police Escort Provided to Court</label>
+            <label style="display: block; margin-bottom: 8px;"><input type="checkbox" checked> Identity Masking in Record</label>
+            <label style="display: block; margin-bottom: 8px;"><input type="checkbox" checked> Free Legal Aid Counsel Appointed</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================================================================= -->
+    <!-- PAGE 14: STICKY NOTES & CRISIS STABILIZATION WORKSPACE -->
+    <!-- ================================================================= -->
+    <div id="page-notes" class="page-section">
+      <div class="glass-card mb-4">
+        <div class="d-flex justify-between items-center">
+          <div>
+            <h3><i class="fa-solid fa-note-sticky text-yellow me-2"></i> Crisis Stabilization Sticky Notes Board</h3>
+            <p style="font-size: 13px; color: var(--text-muted);">Interactive glassmorphic sticky notes for call operators and counselors.</p>
+          </div>
+          <button class="btn btn-primary" onclick="addStickyNote()"><i class="fa-solid fa-plus"></i> Add Sticky Note</button>
+        </div>
+      </div>
+
+      <div class="sticky-note-board" id="stickyNoteBoard">
+        <div class="sticky-note sticky-red">
+          <div class="sticky-pin"></div>
+          <strong>🚨 Hathras Case #8941</strong>
+          <p style="margin-top: 6px;">Victim threatened with arson. 112 Police PCR unit dispatched. Tele-MANAS doctor joined call line.</p>
+          <div style="font-size: 11px; color: var(--text-muted); margin-top: 10px;">Priority: P1 Critical</div>
+        </div>
+
+        <div class="sticky-note sticky-cyan">
+          <div class="sticky-pin"></div>
+          <strong>📞 De-escalation Script</strong>
+          <p style="margin-top: 6px;">"You are safe now. Take a deep breath. Police assistance is arriving at your location."</p>
+          <div style="font-size: 11px; color: var(--text-muted); margin-top: 10px;">Operator Protocol</div>
+        </div>
+
+        <div class="sticky-note sticky-yellow">
+          <div class="sticky-pin"></div>
+          <strong>⚖️ DLSA Legal Aid</strong>
+          <p style="margin-top: 6px;">Contact Advocate Verma (+91 98765 11111) for immediate bail opposition and Section 15A protection.</p>
+          <div style="font-size: 11px; color: var(--text-muted); margin-top: 10px;">Legal Protocol</div>
+        </div>
+
+        <div class="sticky-note sticky-purple">
+          <div class="sticky-pin"></div>
+          <strong>🩺 Tele-MANAS Referral</strong>
+          <p style="margin-top: 6px;">Follow-up counselling scheduled tomorrow 10:00 AM IST with Dr. Ananya Sharma.</p>
+          <div style="font-size: 11px; color: var(--text-muted); margin-top: 10px;">Counselor Appointment</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================================================================= -->
+    <!-- PAGE 15: ETHICAL AI, DPDP ACT & PRIVACY CENTER -->
+    <!-- ================================================================= -->
+    <div id="page-compliance" class="page-section">
+      <div class="glass-card mb-4">
+        <h3><i class="fa-solid fa-shield-halved text-cyan me-2"></i> Ethical AI, DPDP Act 2023 & Privacy Center</h3>
+        <p style="font-size: 13px; color: var(--text-muted);">Data protection, PII masking verification, consent logs, and algorithmic fairness audits.</p>
+      </div>
+
+      <div class="grid-3">
+        <div class="glass-card text-center">
+          <i class="fa-solid fa-lock text-cyan" style="font-size: 32px; margin-bottom: 12px;"></i>
+          <h4>In-Memory Processing</h4>
+          <p style="font-size: 12px; color: var(--text-muted); margin-top: 6px;">Audio vectors processed in memory; raw call audio never saved on public servers.</p>
+        </div>
+
+        <div class="glass-card text-center">
+          <i class="fa-solid fa-user-secret text-purple" style="font-size: 32px; margin-bottom: 12px;"></i>
+          <h4>PII Masking & Hashing</h4>
+          <p style="font-size: 12px; color: var(--text-muted); margin-top: 6px;">Victim identities protected via SHA-256 encrypted hashes (#V-8941).</p>
+        </div>
+
+        <div class="glass-card text-center">
+          <i class="fa-solid fa-scale-balanced text-pink" style="font-size: 32px; margin-bottom: 12px;"></i>
+          <h4>DPDP Act 2023 Consent</h4>
+          <p style="font-size: 12px; color: var(--text-muted); margin-top: 6px;">Explicit IVRS & web consent prompts before stress analysis begins.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Custom JavaScript File -->
+  <script src="js/app.js"></script>
+</body>
+</html>

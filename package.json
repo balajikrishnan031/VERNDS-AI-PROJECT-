@@ -1,0 +1,14 @@
+{
+  "name": "samvedna-ai-nhaa-14566",
+  "version": "1.0.0",
+  "description": "AI-Based Real-Time Stress and Trauma Assessment Module for NHAA (14566) and Integrated Portal - SIH 2026",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "cors": "^2.8.5"
+  }
+}

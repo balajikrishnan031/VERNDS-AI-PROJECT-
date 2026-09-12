@@ -1,0 +1,85 @@
+{
+  "cases": [
+    {
+      "id": "NHAA-2026-8941",
+      "timestamp": "2026-09-12T20:55:00Z",
+      "callerId": "+91 98765 *****",
+      "extractedLocation": {
+        "address": "Chandpa Village, Main Road",
+        "district": "Hathras",
+        "state": "Uttar Pradesh",
+        "landmark": "Near Primary School"
+      },
+      "casteCategory": "Scheduled Caste (Valmiki)",
+      "incidentType": "Physical Violence & Threats of Social Boycott",
+      "sviScore": 88,
+      "riskCategory": "Critical Risk",
+      "audioMetrics": {
+        "pitchVariance": 48.2,
+        "pauseRatio": 0.42,
+        "jitterShimmer": "High (0.082)",
+        "acousticDistressScore": 90
+      },
+      "nlpMetrics": {
+        "threatLevel": 90,
+        "fearIndex": 88,
+        "suicidalIdeation": 45,
+        "isolationIndex": 80,
+        "traumaKeywordsFound": ["जान से मारने", "गाँव से बाहर"]
+      },
+      "recommendedActions": [
+        "Immediate 112 Police Control Room Dispatch (ETA: 8 min)",
+        "SIP Auto Hot-Bridge to Tele-MANAS Emergency Doctor",
+        "District Magistrate & SP High-Alert Notification"
+      ],
+      "status": "Active - Emergency Response Dispatched",
+      "assignedCounselor": "Dr. Ananya Sharma (Clinical Psychiatrist)",
+      "language": "Hindi"
+    },
+    {
+      "id": "NHAA-2026-8938",
+      "timestamp": "2026-09-12T19:40:00Z",
+      "callerId": "+91 87654 *****",
+      "extractedLocation": {
+        "address": "Lanjigarh Block, Tribal Belt",
+        "district": "Kalahandi",
+        "state": "Odisha"
+      },
+      "casteCategory": "Scheduled Tribe (Kondh)",
+      "incidentType": "Illegal Tribal Land Displacement & Intimidation",
+      "sviScore": 68,
+      "riskCategory": "High Risk",
+      "audioMetrics": {
+        "pitchVariance": 32.1,
+        "pauseRatio": 0.31,
+        "jitterShimmer": "Moderate (0.054)",
+        "acousticDistressScore": 65
+      },
+      "nlpMetrics": {
+        "threatLevel": 72,
+        "fearIndex": 70,
+        "suicidalIdeation": 15,
+        "isolationIndex": 75,
+        "traumaKeywordsFound": ["जमीन छीनना", "धमकी"]
+      },
+      "recommendedActions": [
+        "Priority Legal Aid Advocate Assignment (PoA Act Section 3)",
+        "Scheduled Tele-Counselling Call (within 6 hours)",
+        "District Collector Nodal Officer Grievance Escalation"
+      ],
+      "status": "In Progress - Legal & Counselor Assigned",
+      "assignedCounselor": "Mr. Rajesh Patnaik (Social Worker & Legal Aid)",
+      "language": "Odia"
+    }
+  ],
+  "analytics": {
+    "totalAssessedVictims": 1428,
+    "avgNationalSVI": 64.8,
+    "riskDistribution": {
+      "critical": 284,
+      "high": 512,
+      "moderate": 420,
+      "low": 212
+    }
+  }
+}
