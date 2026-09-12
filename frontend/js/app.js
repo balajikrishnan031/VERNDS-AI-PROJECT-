@@ -1,267 +1,159 @@
-// Vernds AI Client Application Logic (Supports Separate Frontend & Backend Deployment)
+/**
+ * VERNDS AI - Master Frontend Application & Operational SPA Controller
+ * Vernds AI (Formerly SAMVEDNA-AI) | National Helpline Against Atrocities (14566)
+ * Ministry of Social Justice & Empowerment, Govt. of India
+ */
 
-// Dynamic API Base URL Configuration (Render / Vercel Separate Deployment Support)
-const API_BASE_URL = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
-  ? '' 
-  : 'https://vernds-ai-backend.onrender.com'; // Replace with your deployed Render/Railway backend URL
+document.addEventListener('DOMContentLoaded', () => {
+  console.log("🚀 [VERNDS AI] Enterprise Core Application Initialized.");
 
-let audioCtx = null;
-let analyser = null;
-let micStream = null;
-let isRecording = false;
-let animationFrameId = null;
-let leafletMapInstance = null;
-let riskPieChartInstance = null;
+  // 1. Initialize Scroll Reveal Animations (IntersectionObserver)
+  initScrollReveal();
 
-let currentSVI = 88;
-let currentLanguage = "English";
+  // 2. Initialize SPA Navigation Router
+  initSpaNavigation();
 
-const translations = {
-  English: { welcomeMessage: "Namaste 🙏 Welcome to the National Helpline Against Atrocities (14566). I am Vernds AI, your empathetic support assistant. We are here to protect you." },
-  Hindi: { welcomeMessage: "नमस्ते 🙏 राष्ट्रीय अत्याचार निवारण हेल्पलाइन (14566) में आपका स्वागत है। मैं वर्न्ड्स एआई (Vernds AI) आपकी सुरक्षा के लिए प्रस्तुत हूँ।" },
-  Tamil: { welcomeMessage: "வணக்கம் 🙏 தேசிய வன்கொடுமை தடுப்பு உதவி எண் (14566)-க்கு வரவேற்கிறோம். நான் வெர்ன்ட்ஸ் ஏஐ (Vernds AI), உங்களைப் பாதுகாக்க இருக்கிறோம்." }
-};
+  // 3. Initialize Real-Time Web Audio Analyzer & Waveform Visualizer
+  initAudioAnalyzer();
 
-document.addEventListener("DOMContentLoaded", () => {
-  initWaveformCanvas();
-  fetchCases();
-  initAdminAnalytics();
-  updateClock();
-  setInterval(updateClock, 1000);
-  initScrollRevealAnimations();
+  // 4. Initialize Chatbot Engine
+  initChatbotEngine();
+
+  // 5. Initialize SVI Calculator Interactive Sliders
+  initSviCalculator();
+
+  // 6. Initialize Sticky Notes Manager
+  initStickyNotes();
+
+  // 7. Initialize 112 ERSS SOS Dispatch Sequence
+  initErssDispatchTrigger();
 });
 
-function initScrollRevealAnimations() {
-  const observerOptions = {
-    root: null,
-    rootMargin: "0px 0px -40px 0px",
-    threshold: 0.1
-  };
+/* ==========================================================================
+   1. SCROLL REVEAL OBSERVER
+   ========================================================================== */
+function initScrollReveal() {
+  const revealElements = document.querySelectorAll('.reveal');
+  
+  if (!('IntersectionObserver' in window)) {
+    revealElements.forEach(el => el.classList.add('reveal-active'));
+    return;
+  }
 
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
-        entry.target.classList.add("reveal-active");
+        entry.target.classList.add('reveal-active');
       }
     });
-  }, observerOptions);
+  }, { threshold: 0.12 });
 
-  document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
+  revealElements.forEach(el => observer.observe(el));
 }
 
-function updateClock() {
-  const clockEl = document.getElementById("liveClock");
-  if (clockEl) {
-    const now = new Date();
-    clockEl.innerText = now.toISOString().replace('T', ' ').substring(0, 19) + " IST";
-  }
-}
+/* ==========================================================================
+   2. SPA NAVIGATION ROUTER (Landing + 15 Sub-Page Modules)
+   ========================================================================== */
+function initSpaNavigation() {
+  const navLinks = document.querySelectorAll('[data-view-target]');
+  const landingSection = document.getElementById('landing-page-view');
+  const moduleViews = document.querySelectorAll('.spa-module-view');
 
-// --- ALL 15 PAGES NAVIGATION ROUTER ---
-function navigateTo(pageId) {
-  document.querySelectorAll(".page-section").forEach(sec => sec.classList.remove("active"));
-  document.querySelectorAll(".nav-link-btn").forEach(btn => btn.classList.remove("active"));
+  navLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const targetId = link.getAttribute('data-view-target');
 
-  const targetPage = document.getElementById(pageId);
-  const targetLink = document.getElementById(`link-${pageId}`);
+      // Update Active Nav Link Highlight
+      navLinks.forEach(nl => nl.classList.remove('active'));
+      link.classList.add('active');
 
-  if (targetPage) targetPage.classList.add("active");
-  if (targetLink) targetLink.classList.add("active");
-
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-  setTimeout(() => initScrollRevealAnimations(), 50);
-
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-
-  if (pageId === 'page-heatmap' && leafletMapInstance) {
-    setTimeout(() => leafletMapInstance.invalidateSize(), 300);
-  }
-}
-
-// --- LANGUAGE SWITCHER ---
-function changeLanguage(lang) {
-  currentLanguage = lang;
-  const langDict = translations[lang] || translations.English;
-  const chatMessages = document.getElementById("chatMessages");
-  if (chatMessages && chatMessages.children.length === 1) {
-    chatMessages.children[0].innerText = langDict.welcomeMessage;
-  }
-}
-
-// --- ROLE AUTH SIMULATION ---
-function simulateLogin() {
-  const role = document.getElementById("loginRoleSelect").value;
-  alert(`Authenticated successfully as Official Role: [${role.toUpperCase()}]. Welcome to Vernds AI Command Center.`);
-  navigateTo('page-home');
-}
-
-// --- STICKY NOTES MANAGER ---
-function addStickyNote() {
-  const board = document.getElementById("stickyNoteBoard");
-  if (!board) return;
-
-  const noteText = prompt("Enter crisis note or operator safety instruction:");
-  if (!noteText) return;
-
-  const noteColors = ['sticky-yellow', 'sticky-cyan', 'sticky-purple', 'sticky-pink', 'sticky-red'];
-  const randomColor = noteColors[Math.floor(Math.random() * noteColors.length)];
-
-  const noteDiv = document.createElement("div");
-  noteDiv.className = `sticky-note ${randomColor}`;
-  noteDiv.innerHTML = `
-    <div class="sticky-pin"></div>
-    <strong>📌 New Operator Note</strong>
-    <p style="margin-top: 6px;">${noteText}</p>
-    <div style="font-size: 11px; color: var(--text-muted); margin-top: 10px;">Created: Just now</div>
-  `;
-
-  board.prepend(noteDiv);
-}
-
-// --- INTERACTIVE SVI SLIDER RECALCULATION ---
-function recalcSviSliders() {
-  const voice = parseInt(document.getElementById("sliderVoice").value);
-  const nlp = parseInt(document.getElementById("sliderNlp").value);
-  const crime = parseInt(document.getElementById("sliderCrime").value);
-  const iso = parseInt(document.getElementById("sliderIso").value);
-
-  document.getElementById("sliderVoiceVal").innerText = voice;
-  document.getElementById("sliderNlpVal").innerText = nlp;
-  document.getElementById("sliderCrimeVal").innerText = crime;
-  document.getElementById("sliderIsoVal").innerText = iso;
-
-  const svi = Math.min(100, Math.round((voice * 0.30) + (nlp * 0.35) + (crime * 0.20) + (iso * 0.15)));
-  const sviDisplay = document.getElementById("calcSviDisplay");
-  const riskBadge = document.getElementById("calcRiskBadge");
-
-  sviDisplay.innerText = svi;
-
-  if (svi >= 76) {
-    sviDisplay.style.color = "#ef4444";
-    riskBadge.innerText = "Critical Risk (P1)";
-    riskBadge.className = "svi-risk-badge critical";
-  } else if (svi >= 51) {
-    sviDisplay.style.color = "#f97316";
-    riskBadge.innerText = "High Risk (P2)";
-    riskBadge.className = "svi-risk-badge high";
-  } else if (svi >= 26) {
-    sviDisplay.style.color = "#f59e0b";
-    riskBadge.innerText = "Moderate Risk (P3)";
-    riskBadge.className = "svi-risk-badge moderate";
-  } else {
-    sviDisplay.style.color = "#10b981";
-    riskBadge.innerText = "Low Risk (P4)";
-    riskBadge.className = "svi-risk-badge low";
-  }
-}
-
-// --- STANDALONE NLP PARSER ---
-async function analyzeNlpOnly() {
-  const text = document.getElementById("nlpInputArea").value;
-  if (!text) {
-    alert("Please enter text narrative to parse.");
-    return;
-  }
-
-  try {
-    const res = await fetch(`${API_BASE_URL}/api/analyze-text`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ text })
+      if (targetId === 'landing-page-view') {
+        if (landingSection) landingSection.style.display = 'block';
+        moduleViews.forEach(v => v.classList.remove('active-view'));
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        if (landingSection) landingSection.style.display = 'none';
+        moduleViews.forEach(v => {
+          if (v.id === targetId) {
+            v.classList.add('active-view');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          } else {
+            v.classList.remove('active-view');
+          }
+        });
+      }
     });
-    const data = await res.json();
-
-    document.getElementById("nlpFear").innerText = `${data.emotions.fear}%`;
-    document.getElementById("nlpFearFill").style.width = `${data.emotions.fear}%`;
-    document.getElementById("nlpDespair").innerText = `${data.emotions.despair}%`;
-    document.getElementById("nlpDespairFill").style.width = `${data.emotions.despair}%`;
-
-    alert(`NLP Analysis Complete!\nExtracted Location: ${data.extractedLocation}\nDistress Score: ${data.nlpDistressScore}/100\nSuicidal Ideation Flag: ${data.suicidalIdeationFlag ? 'YES' : 'NO'}`);
-  } catch (err) {
-    alert("Failed to analyze NLP.");
-  }
+  });
 }
 
-// --- WEB AUDIO API MIC ANALYZER ---
-async function toggleMicrophone() {
-  const btnText = document.getElementById("micBtnText");
-  const micBtn = document.getElementById("btnMicRecord");
+/* ==========================================================================
+   3. WEB AUDIO API REAL-TIME MICROPHONE ANALYZER & CANVAS WAVEFORM
+   ========================================================================== */
+let audioCtx = null;
+let analyser = null;
+let microphoneStream = null;
+let animationFrameId = null;
 
-  if (!isRecording) {
+function initAudioAnalyzer() {
+  const recordBtn = document.getElementById('start-mic-btn');
+  const stopBtn = document.getElementById('stop-mic-btn');
+  const canvas = document.getElementById('waveform-canvas');
+
+  if (!recordBtn || !canvas) return;
+
+  const ctx = canvas.getContext('2d');
+
+  recordBtn.addEventListener('click', async () => {
     try {
-      micStream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
       audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      const source = audioCtx.createMediaStreamSource(micStream);
+      microphoneStream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
+
+      const source = audioCtx.createMediaStreamSource(microphoneStream);
       analyser = audioCtx.createAnalyser();
       analyser.fftSize = 256;
       source.connect(analyser);
 
-      isRecording = true;
-      btnText.innerText = "Stop Recording";
-      if (micBtn) {
-        micBtn.classList.remove("btn-primary");
-        micBtn.classList.add("btn-danger");
-      }
+      recordBtn.style.display = 'none';
+      if (stopBtn) stopBtn.style.display = 'inline-flex';
 
-      drawLiveWaveform();
+      drawWaveform(ctx, canvas);
+      updateProsodyTelemetryMock();
     } catch (err) {
-      alert("Microphone unavailable. Running simulated visualizer.");
-      simulateAudioVisualizer();
+      alert("Microphone Access Required: " + err.message);
     }
-  } else {
-    stopMicrophone();
+  });
+
+  if (stopBtn) {
+    stopBtn.addEventListener('click', () => {
+      if (microphoneStream) {
+        microphoneStream.getTracks().forEach(track => track.stop());
+      }
+      if (audioCtx) audioCtx.close();
+      if (animationFrameId) cancelAnimationFrame(animationFrameId);
+
+      stopBtn.style.display = 'none';
+      recordBtn.style.display = 'inline-flex';
+      clearCanvas(ctx, canvas);
+    });
   }
 }
 
-function stopMicrophone() {
-  if (micStream) micStream.getTracks().forEach(track => track.stop());
-  if (audioCtx) audioCtx.close();
-  isRecording = false;
+function drawWaveform(ctx, canvas) {
+  if (!analyser) return;
 
-  const btnText = document.getElementById("micBtnText");
-  const micBtn = document.getElementById("btnMicRecord");
-  if (btnText) btnText.innerText = "Start Mic Live Analysis";
-  if (micBtn) {
-    micBtn.classList.remove("btn-danger");
-    micBtn.classList.add("btn-primary");
-  }
-  if (animationFrameId) cancelAnimationFrame(animationFrameId);
-}
-
-function initWaveformCanvas() {
-  const canvas = document.getElementById("waveformCanvas");
-  if (!canvas) return;
-  const ctx = canvas.getContext("2d");
-  canvas.width = canvas.parentElement.clientWidth;
-  canvas.height = canvas.parentElement.clientHeight;
-
-  ctx.fillStyle = "rgba(10, 15, 26, 0.8)";
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-  ctx.strokeStyle = "#06b6d4";
-  ctx.lineWidth = 2;
-  ctx.beginPath();
-  ctx.moveTo(0, canvas.height / 2);
-  ctx.lineTo(canvas.width, canvas.height / 2);
-  ctx.stroke();
-}
-
-function drawLiveWaveform() {
-  if (!isRecording || !analyser) return;
-
-  const canvas = document.getElementById("waveformCanvas");
-  const ctx = canvas.getContext("2d");
   const bufferLength = analyser.frequencyBinCount;
   const dataArray = new Uint8Array(bufferLength);
 
-  function draw() {
-    if (!isRecording) return;
-    animationFrameId = requestAnimationFrame(draw);
+  function render() {
+    animationFrameId = requestAnimationFrame(render);
     analyser.getByteTimeDomainData(dataArray);
 
-    ctx.fillStyle = "rgba(10, 15, 26, 0.25)";
+    ctx.fillStyle = '#000000';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
+
     ctx.lineWidth = 2;
-    ctx.strokeStyle = currentSVI >= 76 ? "#ef4444" : "#06b6d4";
+    ctx.strokeStyle = '#C9AAFF';
     ctx.beginPath();
 
     const sliceWidth = canvas.width * 1.0 / bufferLength;
@@ -273,6 +165,7 @@ function drawLiveWaveform() {
 
       if (i === 0) ctx.moveTo(x, y);
       else ctx.lineTo(x, y);
+
       x += sliceWidth;
     }
 
@@ -280,248 +173,149 @@ function drawLiveWaveform() {
     ctx.stroke();
   }
 
-  draw();
+  render();
 }
 
-function simulateAudioVisualizer() {
-  isRecording = true;
-  const canvas = document.getElementById("waveformCanvas");
-  const ctx = canvas.getContext("2d");
-
-  function drawSimulated() {
-    if (!isRecording) return;
-    animationFrameId = requestAnimationFrame(drawSimulated);
-
-    ctx.fillStyle = "rgba(10, 15, 26, 0.2)";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    ctx.lineWidth = 2;
-    ctx.strokeStyle = "#f97316";
-    ctx.beginPath();
-
-    const width = canvas.width;
-    const height = canvas.height;
-    const time = Date.now() * 0.005;
-
-    for (let x = 0; x < width; x += 4) {
-      const y = height / 2 + Math.sin(x * 0.03 + time) * 25 * Math.random();
-      if (x === 0) ctx.moveTo(x, y);
-      else ctx.lineTo(x, y);
-    }
-    ctx.stroke();
-  }
-  drawSimulated();
+function clearCanvas(ctx, canvas) {
+  ctx.fillStyle = '#000000';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
 }
 
-function loadSampleAudio(sampleType) {
-  if (!sampleType) return;
-  simulateAudioVisualizer();
+function updateProsodyTelemetryMock() {
+  const f0El = document.getElementById('live-f0-display');
+  const jitterEl = document.getElementById('live-jitter-display');
+  const pauseEl = document.getElementById('live-pause-display');
 
-  const narrativeInput = document.getElementById("agentNarrativeInput");
-  const incidentSelect = document.getElementById("incidentTypeSelect");
-  const addressDisplay = document.getElementById("extractedAddressDisplay");
-
-  if (sampleType === "critical") {
-    narrativeInput.value = "हमको हाथरस जिले के चंदपा गाँव से निकाल दिया गया है और जान से मारने की धमकी दे रहे हैं! घर में आग लगा दी!";
-    if (incidentSelect) incidentSelect.value = "Physical Violence & Murder Threats";
-    if (addressDisplay) addressDisplay.innerHTML = `Chandpa Village, Hathras District, Uttar Pradesh <span style="font-size:12px; color:#34d399">(NER Confidence: 96%)</span>`;
-    updateSVIDisplay(88, "Critical Risk (P1)", "#ef4444", 90, 88);
-  } else if (sampleType === "high") {
-    narrativeInput.value = "අපේ ලංජිගාර් ඉඩම් බලහත්කාරයෙන් අල්ලාගෙන තර්ජනය කරනවා. (Lanjigarh Block, Kalahandi, Odisha)";
-    if (incidentSelect) incidentSelect.value = "Land Displacement & Arson";
-    if (addressDisplay) addressDisplay.innerHTML = `Lanjigarh Block, Kalahandi District, Odisha <span style="font-size:12px; color:#34d399">(NER Confidence: 92%)</span>`;
-    updateSVIDisplay(68, "High Risk (P2)", "#f97316", 65, 70);
-  } else if (sampleType === "moderate") {
-    narrativeInput.value = "மதுரை மாவட்டத்தில் பொதுக் கிணற்றில் தண்ணீர் எடுக்க விடாமல் தடுக்கிறார்கள். சாதி பெயரைச் சொல்லி ஏளனம் செய்கிறார்கள்.";
-    if (incidentSelect) incidentSelect.value = "Social Boycott & Resource Exclusion";
-    if (addressDisplay) addressDisplay.innerHTML = `Madurai South Taluk, Madurai District, Tamil Nadu <span style="font-size:12px; color:#34d399">(NER Confidence: 94%)</span>`;
-    updateSVIDisplay(48, "Moderate Risk (P3)", "#f59e0b", 45, 50);
-  } else if (sampleType === "low") {
-    narrativeInput.value = "भीलवाड़ा में मजदूरी समय पर नहीं मिल रही है और काम से हटा दिया है।";
-    if (incidentSelect) incidentSelect.value = "Verbal Abuse & Caste Slurs";
-    if (addressDisplay) addressDisplay.innerHTML = `Bhilwara District, Rajasthan <span style="font-size:12px; color:#34d399">(NER Confidence: 90%)</span>`;
-    updateSVIDisplay(22, "Low Risk (P4)", "#10b981", 20, 25);
-  }
+  if (f0El) f0El.innerText = (240 + Math.random() * 40).toFixed(1) + " Hz";
+  if (jitterEl) jitterEl.innerText = (2.8 + Math.random() * 1.2).toFixed(2) + " %";
+  if (pauseEl) pauseEl.innerText = (38.0 + Math.random() * 8.0).toFixed(1) + " %";
 }
 
-async function runComprehensiveAnalysis() {
-  const textNarrative = document.getElementById("agentNarrativeInput").value;
-  if (!textNarrative) {
-    alert("Please enter narrative text or speak into the microphone.");
-    return;
-  }
+/* ==========================================================================
+   4. CHATBOT CONVERSATIONAL ENGINE
+   ========================================================================== */
+function initChatbotEngine() {
+  const chatInput = document.getElementById('chat-user-input');
+  const sendBtn = document.getElementById('chat-send-btn');
+  const chatBox = document.getElementById('chat-messages-container');
 
-  try {
-    const textRes = await fetch(`${API_BASE_URL}/api/analyze-text`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ text: textNarrative })
-    });
-    const textData = await textRes.json();
+  if (!sendBtn || !chatInput || !chatBox) return;
 
-    if (textData.extractedLocation) {
-      document.getElementById("extractedAddressDisplay").innerHTML = `${textData.extractedLocation} <span style="font-size:12px; color:#34d399">(NER Parsed)</span>`;
-    }
+  const responses = [
+    "வணக்கம், 14566 தேசிய அவசர உதவி மையம். உங்களுக்கு என்ன உதவி வேண்டும்? (Greetings from 14566 National Helpline.)",
+    "आपकी सुरक्षा हमारी प्राथमिकता है। VERNDS AI SVI ने आपकी स्थिति को अति-संवेदनशील (Critical Red) के रूप में वर्गीकृत किया है।",
+    "SC/ST PoA Act 1989 Section 18A in-charge officer and 112 ERSS police unit are notified.",
+    "Do you require 3-way Tele-MANAS (+91 14416) psychiatric counseling right now?"
+  ];
 
-    const voiceRes = await fetch(`${API_BASE_URL}/api/analyze-voice`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ pitchVariance: 42, pauseRatio: 0.38, volumeSpikes: 5 })
-    });
-    const voiceData = await voiceRes.json();
+  sendBtn.addEventListener('click', () => {
+    const text = chatInput.value.trim();
+    if (!text) return;
 
-    const sviRes = await fetch(`${API_BASE_URL}/api/calculate-svi`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        acousticScore: voiceData.acousticDistressScore,
-        nlpScore: textData.nlpDistressScore,
-        crimeSeverity: 85,
-        socialIsolation: 75
-      })
-    });
-    const sviData = await sviRes.json();
+    // Append User Message
+    const userMsg = document.createElement('div');
+    userMsg.className = 'chat-message user-msg';
+    userMsg.innerHTML = `<div class="msg-bubble">${text}</div>`;
+    chatBox.appendChild(userMsg);
+    chatInput.value = '';
 
-    currentSVI = sviData.sviScore;
-    updateSVIDisplay(sviData.sviScore, sviData.riskCategory, sviData.colorCode, voiceData.acousticDistressScore, textData.nlpDistressScore);
-    updateEmotionBars(textData.emotions);
-  } catch (err) {
-    console.error("API error:", err);
-    alert("Failed to analyze.");
-  }
-}
+    // Scroll Down
+    chatBox.scrollTop = chatBox.scrollHeight;
 
-function updateSVIDisplay(svi, category, color, voice, nlp) {
-  const display = document.getElementById("sviDisplay");
-  const badge = document.getElementById("riskBadgeDisplay");
-  if (display) { display.innerText = svi; display.style.color = color; }
-  if (badge) {
-    badge.innerText = category;
-    badge.className = `svi-risk-badge ${svi >= 76 ? 'critical' : svi >= 51 ? 'high' : svi >= 26 ? 'moderate' : 'low'}`;
-  }
-  const vScore = document.getElementById("voiceScoreVal");
-  const nScore = document.getElementById("nlpScoreVal");
-  if (vScore) vScore.innerText = `${voice} / 100`;
-  if (nScore) nScore.innerText = `${nlp} / 100`;
-}
-
-function updateEmotionBars(emotions) {
-  if (document.getElementById("fearPercent")) document.getElementById("fearPercent").innerText = `${emotions.fear}%`;
-  if (document.getElementById("fearFill")) document.getElementById("fearFill").style.width = `${emotions.fear}%`;
-  if (document.getElementById("panicPercent")) document.getElementById("panicPercent").innerText = `${emotions.panic}%`;
-  if (document.getElementById("panicFill")) document.getElementById("panicFill").style.width = `${emotions.panic}%`;
-  if (document.getElementById("despairPercent")) document.getElementById("despairPercent").innerText = `${emotions.despair}%`;
-  if (document.getElementById("despairFill")) document.getElementById("despairFill").style.width = `${emotions.despair}%`;
-  if (document.getElementById("angerPercent")) document.getElementById("angerPercent").innerText = `${emotions.anger}%`;
-  if (document.getElementById("angerFill")) document.getElementById("angerFill").style.width = `${emotions.anger}%`;
-}
-
-async function executeEmergencyDispatch() {
-  try {
-    const res = await fetch(`${API_BASE_URL}/api/dispatch/emergency-sos`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ sviScore: currentSVI, district: "Hathras", state: "Uttar Pradesh" })
-    });
-    const data = await res.json();
-    alert(`🚨 ${data.message} 🚨\nDispatched Agencies:\n` + data.dispatchedAgencies.map(a => `- ${a.agency}: ${a.status} (ETA: ${a.etaMinutes} mins)`).join("\n"));
-  } catch (err) {
-    alert("Emergency SOS Dispatched Successfully to 112 Control Room & Tele-MANAS!");
-  }
-}
-
-function triggerEmergencySOS() { executeEmergencyDispatch(); }
-
-function sendChatMessage() {
-  const input = document.getElementById("chatInput");
-  const msg = input.value.trim();
-  if (!msg) return;
-
-  const chatContainer = document.getElementById("chatMessages");
-  const userBubble = document.createElement("div");
-  userBubble.className = "chat-bubble user";
-  userBubble.innerText = msg;
-  chatContainer.appendChild(userBubble);
-  input.value = "";
-
-  setTimeout(() => {
-    const botBubble = document.createElement("div");
-    botBubble.className = "chat-bubble bot";
-    botBubble.innerText = "I hear your pain. Your safety is our highest priority. I have logged your response and calculated an urgent protection assessment. A counselor is being assigned immediately.";
-    chatContainer.appendChild(botBubble);
-    chatContainer.scrollTop = chatContainer.scrollHeight;
-  }, 1000);
-}
-
-async function initAdminAnalytics() {
-  try {
-    const res = await fetch(`${API_BASE_URL}/api/analytics/heatmap`);
-    const data = await res.json();
-    initLeafletMap(data.heatmapData);
-    initRiskPieChart(data.riskDistribution);
-  } catch (err) { console.error(err); }
-}
-
-function initLeafletMap(locations) {
-  const mapElement = document.getElementById("leafletMap");
-  if (!mapElement) return;
-
-  leafletMapInstance = L.map('leafletMap').setView([22.5937, 78.9629], 5);
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-    attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
-    subdomains: 'abcd',
-    maxZoom: 19
-  }).addTo(leafletMapInstance);
-
-  locations.forEach(loc => {
-    const color = loc.avgSvi >= 76 ? '#ef4444' : loc.avgSvi >= 51 ? '#f97316' : '#f59e0b';
-    const circle = L.circleMarker([loc.lat, loc.lng], { color, fillColor: color, fillOpacity: 0.6, radius: Math.min(25, loc.criticalCases * 0.6 + 8) }).addTo(leafletMapInstance);
-    circle.bindPopup(`<strong style="color:#000">${loc.district}, ${loc.state}</strong><br>Avg SVI: <strong>${loc.avgSvi}</strong><br>Cases: ${loc.totalCases}`);
+    // Simulate AI Response
+    setTimeout(() => {
+      const aiMsg = document.createElement('div');
+      aiMsg.className = 'chat-message ai-msg';
+      const randomReply = responses[Math.floor(Math.random() * responses.length)];
+      aiMsg.innerHTML = `<div class="msg-bubble-ai">${randomReply}</div>`;
+      chatBox.appendChild(aiMsg);
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }, 800);
   });
 }
 
-function initRiskPieChart(dist) {
-  const ctx = document.getElementById('riskPieChart');
-  if (!ctx) return;
-  if (riskPieChartInstance) riskPieChartInstance.destroy();
+/* ==========================================================================
+   5. SVI REAL-TIME INTERACTIVE CALCULATOR
+   ========================================================================== */
+function initSviCalculator() {
+  const acousticSlider = document.getElementById('svi-acoustic-slider');
+  const nlpSlider = document.getElementById('svi-nlp-slider');
+  const crimeSlider = document.getElementById('svi-crime-slider');
+  const districtSlider = document.getElementById('svi-district-slider');
+  const scoreDisplay = document.getElementById('svi-calculated-score');
+  const tierBadge = document.getElementById('svi-calculated-tier');
 
-  riskPieChartInstance = new Chart(ctx, {
-    type: 'doughnut',
-    data: {
-      labels: ['Critical Risk (P1)', 'High Risk (P2)', 'Moderate Risk (P3)', 'Low Risk (P4)'],
-      datasets: [{ data: [dist.critical, dist.high, dist.moderate, dist.low], backgroundColor: ['#ef4444', '#f97316', '#f59e0b', '#10b981'], borderWidth: 0 }]
-    },
-    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { color: '#9ca3af', font: { family: 'Inter' } } } } }
+  if (!acousticSlider || !scoreDisplay) return;
+
+  function recalculateSvi() {
+    const ac = parseFloat(acousticSlider.value) || 80;
+    const nlp = parseFloat(nlpSlider.value) || 85;
+    const cr = parseFloat(crimeSlider.value) || 90;
+    const dist = parseFloat(districtSlider.value) || 75;
+
+    const svi = (ac * 0.35) + (nlp * 0.30) + (cr * 0.20) + (dist * 0.15);
+    scoreDisplay.innerText = svi.toFixed(1);
+
+    if (tierBadge) {
+      if (svi >= 80) {
+        tierBadge.innerText = "CRITICAL RED (P1 IMMEDIATE)";
+        tierBadge.style.color = "#ff4d4d";
+      } else if (svi >= 60) {
+        tierBadge.innerText = "HIGH AMBER (P2 URGENT)";
+        tierBadge.style.color = "#ff9900";
+      } else {
+        tierBadge.innerText = "MODERATE YELLOW";
+        tierBadge.style.color = "#ffcc00";
+      }
+    }
+  }
+
+  [acousticSlider, nlpSlider, crimeSlider, districtSlider].forEach(slider => {
+    if (slider) slider.addEventListener('input', recalculateSvi);
   });
 }
 
-async function fetchCases() {
-  try {
-    const res = await fetch(`${API_BASE_URL}/api/cases`);
-    const data = await res.json();
-    const tbody = document.getElementById("casesTableBody");
-    if (!tbody) return;
-    tbody.innerHTML = "";
+/* ==========================================================================
+   6. STICKY NOTES MANAGER
+   ========================================================================== */
+function initStickyNotes() {
+  const board = document.getElementById('sticky-notes-board');
+  const addBtn = document.getElementById('add-sticky-note-btn');
 
-    data.cases.forEach(c => {
-      const tr = document.createElement("tr");
-      const badgeClass = c.sviScore >= 76 ? 'critical' : c.sviScore >= 51 ? 'high' : c.sviScore >= 26 ? 'moderate' : 'low';
-      tr.innerHTML = `
-        <td><strong>${c.id}</strong></td>
-        <td>${c.district}, ${c.state}</td>
-        <td>${c.casteCategory}</td>
-        <td>${c.incidentType}</td>
-        <td><strong style="color: ${c.sviScore >= 76 ? '#ef4444' : '#f97316'};">${c.sviScore}</strong></td>
-        <td><span class="svi-risk-badge ${badgeClass}">${c.riskCategory}</span></td>
-        <td>${c.status}</td>
-      `;
-      tbody.appendChild(tr);
-    });
-  } catch (err) { console.error(err); }
+  if (!board || !addBtn) return;
+
+  addBtn.addEventListener('click', () => {
+    const title = prompt("Enter Sticky Note Title:", "14566 Emergency Alert");
+    if (!title) return;
+    const content = prompt("Enter Note Details:", "Police station dispatch confirmed under SC/ST PoA Act Sec 18A.");
+
+    const note = document.createElement('div');
+    note.className = 'sticky-note-card EMERGENCY_RED';
+    note.innerHTML = `
+      <h4>${title}</h4>
+      <p style="font-size:0.9rem; color:#a1a1aa; margin:8px 0;">${content || 'Emergency dispatch notes'}</p>
+      <span style="font-size:0.75rem; color:#71717a;">Added by Operator #${Math.floor(Math.random()*9000 + 1000)}</span>
+    `;
+    board.prepend(note);
+  });
 }
 
-function submitVictimReport() {
-  const desc = document.getElementById("victimDescInput") ? document.getElementById("victimDescInput").value : "";
-  if (!desc) { alert("Please write your narrative."); return; }
-  alert("Your report has been encrypted & submitted to the Vernds AI Crisis Engine.");
-  document.getElementById("victimDescInput").value = "";
+/* ==========================================================================
+   7. 112 ERSS EMERGENCY SOS DISPATCH TRIGGER
+   ========================================================================== */
+function initErssDispatchTrigger() {
+  const sosBtn = document.getElementById('trigger-erss-sos-btn');
+  const statusBanner = document.getElementById('erss-dispatch-status-banner');
+
+  if (!sosBtn) return;
+
+  sosBtn.addEventListener('click', () => {
+    if (confirm("CONFIRM EMERGENCY SOS DISPATCH TO 112 POLICE CAD & TELE-MANAS (+91 14416)?")) {
+      if (statusBanner) {
+        statusBanner.style.display = 'block';
+        statusBanner.innerHTML = "🚨 <strong>P1 IMMEDIATE POLICE PATROL DISPATCHED!</strong> 112 CAD Unit #UP-32-P-9021 En Route to Lakhimpur Kheri.";
+      }
+      alert("ERSS 112 Emergency Dispatch Triggered Successfully!");
+    }
+  });
 }
