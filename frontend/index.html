@@ -5,37 +5,39 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Vernds AI | Real-Time Stress & Trauma Assessment Engine - NHAA (14566)</title>
   
-  <!-- Google Fonts & Font Awesome Icons -->
+  <!-- Google Fonts & Font Awesome -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
   <!-- Chart.js CDN -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-  <!-- Leaflet CSS & JS for Interactive Heatmap -->
+  <!-- Leaflet CSS & JS for GIS Heatmap -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
-  <!-- Custom Glassmorphism Stylesheet -->
+  <!-- Custom Enterprise Glassmorphism Stylesheet -->
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
 
-  <!-- Emergency SOS Alert Banner -->
-  <div class="sos-alert-bar">
-    <div>
-      <i class="fa-solid fa-triangle-exclamation fa-beat me-2"></i>
-      <strong>NATIONAL HELPLINE AGAINST ATROCITIES (14566) - CRISIS DISPATCH & TRIAGE ACTIVE</strong>
+  <!-- Official Government Top Utility Bar -->
+  <div class="gov-top-bar">
+    <div class="gov-emblem">
+      <i class="fa-solid fa-landmark text-amber" style="color: #f59e0b;"></i>
+      <span>Ministry of Social Justice and Empowerment (MoSJE) • Government of India</span>
+      <span class="status-badge-online"><i class="fa-solid fa-circle" style="font-size: 6px;"></i> LIVE AI TRIAGE ONLINE</span>
     </div>
-    <div>
-      <span class="me-3" id="liveClock">2026-09-12 20:40:00 IST</span>
-      <button class="btn-sos" onclick="triggerEmergencySOS()"><i class="fa-solid fa-shield-cat me-1"></i> INSTANT EMERGENCY SOS</button>
+    <div style="display: flex; align-items: center; gap: 16px;">
+      <span><i class="fa-solid fa-phone me-1 text-cyan"></i> Helpline: <strong>14566</strong></span>
+      <span style="color: rgba(255,255,255,0.2);">|</span>
+      <span id="liveClock">2026-09-12 22:28:00 IST</span>
     </div>
   </div>
 
-  <!-- Top Sticky Navigation Bar -->
+  <!-- Main Navigation Bar -->
   <nav class="navbar">
     <div class="nav-brand" onclick="navigateTo('page-landing')">
       <div class="logo-badge"><i class="fa-solid fa-brain"></i></div>
@@ -45,26 +47,70 @@
       </div>
     </div>
 
-    <!-- Scrollable Menu Bar Linking ALL 15 Pages -->
-    <div class="nav-menu-scroll">
-      <button class="nav-link-btn active" id="link-page-landing" onclick="navigateTo('page-landing')"><i class="fa-solid fa-house"></i> 1. Landing</button>
-      <button class="nav-link-btn" id="link-page-auth" onclick="navigateTo('page-auth')"><i class="fa-solid fa-right-to-bracket"></i> 2. Login</button>
-      <button class="nav-link-btn" id="link-page-home" onclick="navigateTo('page-home')"><i class="fa-solid fa-table-columns"></i> 3. Home Hub</button>
-      <button class="nav-link-btn" id="link-page-telephony" onclick="navigateTo('page-telephony')"><i class="fa-solid fa-headset"></i> 4. 14566 Telephony</button>
-      <button class="nav-link-btn" id="link-page-nlp" onclick="navigateTo('page-nlp')"><i class="fa-solid fa-language"></i> 5. NLP & Emotion</button>
-      <button class="nav-link-btn" id="link-page-svi" onclick="navigateTo('page-svi')"><i class="fa-solid fa-calculator"></i> 6. SVI Calculator</button>
-      <button class="nav-link-btn" id="link-page-emergency" onclick="navigateTo('page-emergency')"><i class="fa-solid fa-truck-medical"></i> 7. 112 Dispatch</button>
-      <button class="nav-link-btn" id="link-page-heatmap" onclick="navigateTo('page-heatmap')"><i class="fa-solid fa-map-location-dot"></i> 8. Atrocity Heatmap</button>
-      <button class="nav-link-btn" id="link-page-victim-report" onclick="navigateTo('page-victim-report')"><i class="fa-solid fa-file-shield"></i> 9. Victim Portal</button>
-      <button class="nav-link-btn" id="link-page-chatbot" onclick="navigateTo('page-chatbot')"><i class="fa-solid fa-robot"></i> 10. AI Chatbot</button>
-      <button class="nav-link-btn" id="link-page-cases" onclick="navigateTo('page-cases')"><i class="fa-solid fa-rectangle-list"></i> 11. Grievance Audit</button>
-      <button class="nav-link-btn" id="link-page-counselor" onclick="navigateTo('page-counselor')"><i class="fa-solid fa-user-doctor"></i> 12. Counselor Workspace</button>
-      <button class="nav-link-btn" id="link-page-legal" onclick="navigateTo('page-legal')"><i class="fa-solid fa-scale-balanced"></i> 13. Legal & Witness</button>
-      <button class="nav-link-btn" id="link-page-notes" onclick="navigateTo('page-notes')"><i class="fa-solid fa-note-sticky"></i> 14. Sticky Notes</button>
-      <button class="nav-link-btn" id="link-page-compliance" onclick="navigateTo('page-compliance')"><i class="fa-solid fa-shield-halved"></i> 15. Ethical AI</button>
+    <!-- Professional Categorized Navigation Bar -->
+    <div class="nav-menu-group">
+      <!-- 1. Overview Menu -->
+      <div class="nav-dropdown">
+        <button class="nav-item-btn active" id="btn-menu-overview">
+          <i class="fa-solid fa-compass"></i> Overview <i class="fa-solid fa-chevron-down" style="font-size: 9px; opacity: 0.7;"></i>
+        </button>
+        <div class="dropdown-content">
+          <div class="dropdown-item" onclick="navigateTo('page-landing')"><i class="fa-solid fa-house text-cyan"></i> Public Portal Home</div>
+          <div class="dropdown-item" onclick="navigateTo('page-home')"><i class="fa-solid fa-gauge-high text-blue"></i> Command Center Hub</div>
+          <div class="dropdown-item" onclick="navigateTo('page-heatmap')"><i class="fa-solid fa-map-location-dot text-purple"></i> All-India GIS Heatmap</div>
+        </div>
+      </div>
+
+      <!-- 2. AI & Telephony Menu -->
+      <div class="nav-dropdown">
+        <button class="nav-item-btn" id="btn-menu-ai">
+          <i class="fa-solid fa-microchip"></i> AI & Telephony <i class="fa-solid fa-chevron-down" style="font-size: 9px; opacity: 0.7;"></i>
+        </button>
+        <div class="dropdown-content">
+          <div class="dropdown-item" onclick="navigateTo('page-telephony')"><i class="fa-solid fa-headset text-cyan"></i> 14566 Live Call Console</div>
+          <div class="dropdown-item" onclick="navigateTo('page-nlp')"><i class="fa-solid fa-language text-purple"></i> Speech & NLP Emotion AI</div>
+          <div class="dropdown-item" onclick="navigateTo('page-svi')"><i class="fa-solid fa-calculator text-pink"></i> SVI Stress Calculator</div>
+          <div class="dropdown-item" onclick="navigateTo('page-emergency')"><i class="fa-solid fa-truck-medical text-red"></i> 112 ERSS Police Dispatch</div>
+        </div>
+      </div>
+
+      <!-- 3. Victim & Chatbot Services -->
+      <div class="nav-dropdown">
+        <button class="nav-item-btn" id="btn-menu-services">
+          <i class="fa-solid fa-hand-holding-heart"></i> Victim Services <i class="fa-solid fa-chevron-down" style="font-size: 9px; opacity: 0.7;"></i>
+        </button>
+        <div class="dropdown-content">
+          <div class="dropdown-item" onclick="navigateTo('page-victim-report')"><i class="fa-solid fa-file-shield text-cyan"></i> Incident Reporting Portal</div>
+          <div class="dropdown-item" onclick="navigateTo('page-chatbot')"><i class="fa-solid fa-bot text-purple"></i> SAMVEDNA AI Chatbot</div>
+          <div class="dropdown-item" onclick="navigateTo('page-notes')"><i class="fa-solid fa-note-sticky text-yellow"></i> Sticky Notes Workspace</div>
+        </div>
+      </div>
+
+      <!-- 4. Legal & Clinical Services -->
+      <div class="nav-dropdown">
+        <button class="nav-item-btn" id="btn-menu-legal">
+          <i class="fa-solid fa-scale-balanced"></i> Legal & Medical <i class="fa-solid fa-chevron-down" style="font-size: 9px; opacity: 0.7;"></i>
+        </button>
+        <div class="dropdown-content">
+          <div class="dropdown-item" onclick="navigateTo('page-counselor')"><i class="fa-solid fa-user-doctor text-pink"></i> Mental Health Desk</div>
+          <div class="dropdown-item" onclick="navigateTo('page-legal')"><i class="fa-solid fa-gavel text-yellow"></i> DLSA Legal Aid & Witness Protection</div>
+          <div class="dropdown-item" onclick="navigateTo('page-cases')"><i class="fa-solid fa-rectangle-list text-blue"></i> Grievance Audit Feed</div>
+        </div>
+      </div>
+
+      <!-- 5. Security & Governance -->
+      <div class="nav-dropdown">
+        <button class="nav-item-btn" id="btn-menu-governance">
+          <i class="fa-solid fa-shield-halved"></i> Governance <i class="fa-solid fa-chevron-down" style="font-size: 9px; opacity: 0.7;"></i>
+        </button>
+        <div class="dropdown-content">
+          <div class="dropdown-item" onclick="navigateTo('page-compliance')"><i class="fa-solid fa-lock text-cyan"></i> DPDP Act 2023 Ethics Center</div>
+          <div class="dropdown-item" onclick="navigateTo('page-auth')"><i class="fa-solid fa-right-to-bracket text-purple"></i> Official Portal Login</div>
+        </div>
+      </div>
     </div>
 
-    <!-- Language Selector -->
+    <!-- Quick Actions -->
     <div class="nav-actions">
       <select class="language-select" id="languageSelect" onchange="changeLanguage(this.value)">
         <option value="Hindi">🇮🇳 हिंदी (Hindi)</option>
@@ -73,11 +119,11 @@
         <option value="Odia">🇮🇳 ଓଡ଼ିଆ (Odia)</option>
         <option value="Marathi">🇮🇳 मराठी (Marathi)</option>
         <option value="Bengali">🇮🇳 বাংলা (Bengali)</option>
-        <option value="Kannada">🇮🇳 ಕನ್ನಡ (Kannada)</option>
-        <option value="Gujarati">🇮🇳 ગુજરાતી (Gujarati)</option>
-        <option value="Punjabi">🇮🇳 ਪੰਜਾਬੀ (Punjabi)</option>
         <option value="English" selected>🌐 English</option>
       </select>
+      <button class="btn btn-danger" style="padding: 9px 18px; font-size: 12px; border-radius: 10px;" onclick="triggerEmergencySOS()">
+        <i class="fa-solid fa-shield-halved me-1"></i> INSTANT SOS
+      </button>
     </div>
   </nav>
 
@@ -85,57 +131,87 @@
   <div class="app-container">
 
     <!-- ================================================================= -->
-    <!-- PAGE 1: PUBLIC LANDING PAGE & HERO PORTAL -->
+    <!-- PAGE 1: PUBLIC LANDING PAGE & ENTERPRISE HERO PORTAL -->
     <!-- ================================================================= -->
     <div id="page-landing" class="page-section active">
-      <div class="glass-card mb-4 text-center" style="padding: 48px 24px; background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(30, 41, 59, 0.8)); border-color: rgba(6, 182, 212, 0.3);">
-        <span style="background: rgba(6, 182, 212, 0.15); color: var(--accent-cyan); border: 1px solid var(--accent-cyan); padding: 6px 18px; border-radius: 30px; font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: 1px;">
-          National Helpline Against Atrocities (14566) • Ministry of Social Justice
-        </span>
-        <h1 style="font-size: 48px; font-weight: 900; margin: 18px 0 12px; background: linear-gradient(90deg, #fff, #93c5fd, #67e8f9); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+      <div class="hero-card text-center mb-5">
+        <div class="hero-tag">
+          <span class="rec-dot"></span>
+          <span>National Helpline Against Atrocities (14566) • MoSJE Government Portal</span>
+        </div>
+
+        <h1 class="hero-title">
           AI-Enabled Real-Time Stress & Trauma Assessment Engine
         </h1>
-        <p style="max-width: 850px; margin: 0 auto 28px; color: var(--text-muted); font-size: 16px; line-height: 1.7;">
-          Empowering SC/ST victims facing caste discrimination, violence, land displacement, social boycott, and threats with real-time vocal biomarker triaging, multilingual NLP emotion AI, standardized SVI scoring, and automated emergency police (112) & psychiatric dispatch.
+
+        <p class="hero-sub">
+          Empowering SC/ST victims facing caste discrimination, violence, and social boycott with real-time vocal prosody biomarker triaging, 10-language Indian NLP emotion AI, standardized SVI scoring, and automated 112 Police ERSS & Tele-MANAS emergency dispatch.
         </p>
 
-        <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
-          <button class="btn btn-primary" style="padding: 12px 28px; font-size: 15px;" onclick="navigateTo('page-auth')">
-            <i class="fa-solid fa-right-to-bracket"></i> Login to Portal
+        <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;" class="mb-4">
+          <button class="btn btn-primary" style="padding: 14px 32px; font-size: 15px;" onclick="navigateTo('page-telephony')">
+            <i class="fa-solid fa-headset me-1"></i> Launch 14566 Call Console
           </button>
-          <button class="btn btn-purple" style="padding: 12px 28px; font-size: 15px;" onclick="navigateTo('page-home')">
-            <i class="fa-solid fa-gauge-high"></i> Open Command Dashboard
+          <button class="btn btn-outline" style="padding: 14px 32px; font-size: 15px;" onclick="navigateTo('page-home')">
+            <i class="fa-solid fa-gauge-high me-1"></i> Open Command Dashboard
           </button>
-          <button class="btn btn-danger" style="padding: 12px 28px; font-size: 15px;" onclick="triggerEmergencySOS()">
-            <i class="fa-solid fa-phone-volume"></i> Dial Emergency SOS
+          <button class="btn btn-danger" style="padding: 14px 32px; font-size: 15px;" onclick="triggerEmergencySOS()">
+            <i class="fa-solid fa-phone-volume me-1"></i> Instant 112 SOS Dispatch
           </button>
+        </div>
+
+        <!-- Live Impact Counter Stats -->
+        <div class="grid-4 mt-5 text-start">
+          <div style="background: rgba(255, 255, 255, 0.03); padding: 20px; border-radius: 16px; border: 1px solid var(--border-color);">
+            <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">Victims Triaged</div>
+            <div style="font-size: 30px; font-weight: 900; color: var(--accent-cyan);" id="statVictims">14,892</div>
+            <div style="font-size: 11px; color: #34d399; margin-top: 3px;"><i class="fa-solid fa-arrow-trend-up"></i> Real-Time 14566 Stream</div>
+          </div>
+
+          <div style="background: rgba(255, 255, 255, 0.03); padding: 20px; border-radius: 16px; border: 1px solid var(--border-color);">
+            <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">112 Police Dispatch</div>
+            <div style="font-size: 30px; font-weight: 900; color: #34d399;">&lt; 4.2 Mins</div>
+            <div style="font-size: 11px; color: var(--text-muted); margin-top: 3px;">Automated ERSS Webhook Payload</div>
+          </div>
+
+          <div style="background: rgba(255, 255, 255, 0.03); padding: 20px; border-radius: 16px; border: 1px solid var(--border-color);">
+            <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">Tele-MANAS Doctor Bridge</div>
+            <div style="font-size: 30px; font-weight: 900; color: var(--accent-purple);">&lt; 2.8 Secs</div>
+            <div style="font-size: 11px; color: var(--text-muted); margin-top: 3px;">SIP Hotline Transfer</div>
+          </div>
+
+          <div style="background: rgba(255, 255, 255, 0.03); padding: 20px; border-radius: 16px; border: 1px solid var(--border-color);">
+            <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">Indian Languages</div>
+            <div style="font-size: 30px; font-weight: 900; color: var(--accent-pink);">10 Languages</div>
+            <div style="font-size: 11px; color: var(--text-muted); margin-top: 3px;">Hindi, Tamil, Telugu, Odia, etc.</div>
+          </div>
         </div>
       </div>
 
-      <!-- Quick Feature Grid -->
+      <!-- Feature Grid Cards -->
       <div class="grid-4 mb-4">
-        <div class="glass-card text-center" onclick="navigateTo('page-telephony')">
-          <i class="fa-solid fa-headset text-cyan" style="font-size: 32px; margin-bottom: 12px;"></i>
-          <h4 class="mb-2">1. 14566 Telephony</h4>
-          <p style="font-size: 12px; color: var(--text-muted);">Real-time pitch, tremor & pause ratio audio stream analysis.</p>
+        <div class="feature-card" onclick="navigateTo('page-telephony')">
+          <div class="feature-icon" style="background: rgba(56, 189, 248, 0.15); color: var(--accent-cyan);"><i class="fa-solid fa-headset"></i></div>
+          <h4 class="mb-2">14566 Telephony & Prosody AI</h4>
+          <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6;">Ingests 20ms WebRTC voice streams to calculate pitch variance, tremor jitter, and pause ratios in real time.</p>
         </div>
 
-        <div class="glass-card text-center" onclick="navigateTo('page-nlp')">
-          <i class="fa-solid fa-language text-purple" style="font-size: 32px; margin-bottom: 12px;"></i>
-          <h4 class="mb-2">2. Multilingual NLP</h4>
-          <p style="font-size: 12px; color: var(--text-muted);">10 Indian languages ASR + Location Address (NER) extractor.</p>
+        <div class="feature-card" onclick="navigateTo('page-nlp')">
+          <div class="feature-icon" style="background: rgba(168, 85, 247, 0.15); color: var(--accent-purple);"><i class="fa-solid fa-language"></i></div>
+          <h4 class="mb-2">Multilingual Indian Speech NLP</h4>
+          <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6;">Parses 10 Indian languages to detect atrocity crime categories and extract village/district addresses via NER.</p>
         </div>
 
-        <div class="glass-card text-center" onclick="navigateTo('page-emergency')">
-          <i class="fa-solid fa-truck-medical text-pink" style="font-size: 32px; margin-bottom: 12px;"></i>
-          <h4 class="mb-2">3. 112 Emergency Dispatch</h4>
-          <p style="font-size: 12px; color: var(--text-muted);">Automated 112 Police ERSS Webhook & Tele-MANAS hotline bridge.</p>
+        <div class="feature-card" onclick="navigateTo('page-emergency')">
+          <div class="feature-icon" style="background: rgba(239, 68, 68, 0.15); color: var(--risk-critical);"><i class="fa-solid fa-truck-medical"></i></div>
+          <h4 class="mb-2">112 ERSS Police Auto-Dispatch</h4>
+          <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6;">Auto-triggers emergency police Webhook payloads and Tele-MANAS hotline psychiatric doctor bridges.</p>
         </div>
 
-        <div class="glass-card text-center" onclick="navigateTo('page-heatmap')">
-          <i class="fa-solid fa-map-location-dot text-blue" style="font-size: 32px; margin-bottom: 12px;"></i>
-          <h4 class="mb-2">4. All-India Heatmap</h4>
-          <p style="font-size: 12px; color: var(--text-muted);">Interactive GIS district vulnerability clusters & SVI trends.</p>
+        <div class="feature-card" onclick="navigateTo('page-heatmap')">
+          <div class="feature-icon" style="background: rgba(59, 130, 246, 0.15); color: var(--accent-blue);"><i class="fa-solid fa-map-location-dot"></i></div>
+          <h4 class="mb-2">All-India GIS Heatmap Analytics</h4>
+          <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6;">Interactive state and district SC/ST atrocity vulnerability clusters with quantitative SVI trend analytics.</p>
         </div>
       </div>
     </div>
@@ -144,12 +220,12 @@
     <!-- PAGE 2: ROLE-BASED LOGIN / AUTH PORTAL -->
     <!-- ================================================================= -->
     <div id="page-auth" class="page-section">
-      <div style="max-width: 520px; margin: 40px auto;">
+      <div style="max-width: 480px; margin: 40px auto;">
         <div class="glass-card">
           <div class="text-center mb-4">
             <div class="logo-badge" style="margin: 0 auto 16px;"><i class="fa-solid fa-lock"></i></div>
-            <h2>Portal Authentication</h2>
-            <p style="font-size: 13px; color: var(--text-muted);">Select your official role to access authorized modules</p>
+            <h2>Official Portal Authentication</h2>
+            <p style="font-size: 13px; color: var(--text-muted);">Select authorized government role to access module</p>
           </div>
 
           <div class="mb-3">
@@ -184,17 +260,16 @@
     <!-- PAGE 3: MAIN COMMAND HOME DASHBOARD -->
     <!-- ================================================================= -->
     <div id="page-home" class="page-section">
-      <div class="glass-card mb-4" style="background: linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(6, 182, 212, 0.15)); border-color: rgba(139, 92, 246, 0.3);">
+      <div class="glass-card mb-4" style="background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(30, 41, 59, 0.8));">
         <div class="d-flex justify-between items-center">
           <div>
-            <h2><i class="fa-solid fa-gauge-high text-cyan me-2"></i> SAMVEDNA-AI Command Center</h2>
-            <p style="font-size: 13px; color: var(--text-muted);">Central Hub Connecting All 15 Real-Time Modules</p>
+            <h2><i class="fa-solid fa-gauge-high text-cyan me-2"></i> Vernds AI Command Center</h2>
+            <p style="font-size: 13px; color: var(--text-muted);">Central Management Hub Connecting All 15 Operational Modules</p>
           </div>
           <button class="btn btn-danger" onclick="triggerEmergencySOS()"><i class="fa-solid fa-bell"></i> CRISIS SOS</button>
         </div>
       </div>
 
-      <!-- Quick Hub Grid linking to all modules -->
       <div class="grid-3 mb-4">
         <div class="glass-card" onclick="navigateTo('page-telephony')" style="cursor: pointer;">
           <h4><i class="fa-solid fa-headset text-cyan me-2"></i> 14566 Telephony Console</h4>
@@ -258,7 +333,7 @@
           </div>
 
           <!-- Extracted Address Card -->
-          <div style="background: rgba(10, 15, 26, 0.6); padding: 12px 16px; border-radius: 10px; border: 1px solid var(--border-color);" class="mb-3">
+          <div style="background: rgba(15, 23, 42, 0.8); padding: 14px; border-radius: 12px; border: 1px solid var(--border-color);" class="mb-3">
             <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">
               <i class="fa-solid fa-location-dot text-pink me-1"></i> AI Extracted Location & Address (NER Parsed)
             </div>
@@ -289,7 +364,7 @@
           <!-- Auto Dispatch Log -->
           <div class="glass-card">
             <h4 class="mb-3" style="color: var(--accent-cyan);"><i class="fa-solid fa-robot me-2"></i> Auto Dispatch Status</h4>
-            <div style="font-size: 12px; background: rgba(10, 15, 26, 0.5); padding: 10px; border-radius: 8px; margin-bottom: 12px;" id="autoCallStatusLog">
+            <div style="font-size: 12px; background: rgba(15, 23, 42, 0.8); padding: 12px; border-radius: 10px; margin-bottom: 12px;" id="autoCallStatusLog">
               <div>📞 <strong>Auto-Call (Tele-MANAS Doctor):</strong> <span style="color: #34d399;">CONNECTED</span></div>
               <div style="margin-top: 4px;">📩 <strong>Auto-Message (112 Police):</strong> <span style="color: #f87171;">DISPATCHED (ETA: 8 mins)</span></div>
             </div>
@@ -464,7 +539,7 @@
       <div class="glass-card chat-container max-w-800" style="max-width: 850px; margin: 0 auto;">
         <div style="padding-bottom: 12px; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;">
           <div>
-            <strong><i class="fa-solid fa-bot text-cyan me-2"></i> SAMVEDNA Empathetic AI Assistant</strong>
+            <strong><i class="fa-solid fa-bot text-cyan me-2"></i> Vernds AI Empathetic Assistant</strong>
             <div style="font-size: 11px; color: var(--text-muted);">24x7 Helpline Connected • Multilingual</div>
           </div>
           <button class="btn btn-danger" style="padding: 4px 12px; font-size: 12px;" onclick="triggerEmergencySOS()"><i class="fa-solid fa-bell"></i> SOS Call</button>
@@ -472,7 +547,7 @@
 
         <div class="chat-messages" id="chatMessages">
           <div class="chat-bubble bot">
-            Namaste 🙏 Welcome to the National Helpline Against Atrocities (14566). I am SAMVEDNA, your empathetic support assistant. Please tell me what happened or how you are feeling right now. We are here to protect you.
+            Namaste 🙏 Welcome to the National Helpline Against Atrocities (14566). I am Vernds AI, your empathetic support assistant. Please tell me what happened or how you are feeling right now. We are here to protect you.
           </div>
         </div>
 
