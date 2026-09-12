@@ -1,4 +1,9 @@
-// SAMVEDNA-AI Client Application Logic (All 15 Pages Router & Features)
+// Vernds AI Client Application Logic (Supports Separate Frontend & Backend Deployment)
+
+// Dynamic API Base URL Configuration (Render / Vercel Separate Deployment Support)
+const API_BASE_URL = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+  ? '' 
+  : 'https://vernds-ai-backend.onrender.com'; // Replace with your deployed Render/Railway backend URL
 
 let audioCtx = null;
 let analyser = null;
@@ -64,7 +69,7 @@ function changeLanguage(lang) {
 // --- ROLE AUTH SIMULATION ---
 function simulateLogin() {
   const role = document.getElementById("loginRoleSelect").value;
-  alert(`Authenticated successfully as Official Role: [${role.toUpperCase()}]. Welcome to SAMVEDNA-AI Command Center.`);
+  alert(`Authenticated successfully as Official Role: [${role.toUpperCase()}]. Welcome to Vernds AI Command Center.`);
   navigateTo('page-home');
 }
 
@@ -137,7 +142,7 @@ async function analyzeNlpOnly() {
   }
 
   try {
-    const res = await fetch('/api/analyze-text', {
+    const res = await fetch(`${API_BASE_URL}/api/analyze-text`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ text })
@@ -324,7 +329,7 @@ async function runComprehensiveAnalysis() {
   }
 
   try {
-    const textRes = await fetch('/api/analyze-text', {
+    const textRes = await fetch(`${API_BASE_URL}/api/analyze-text`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ text: textNarrative })
@@ -335,14 +340,14 @@ async function runComprehensiveAnalysis() {
       document.getElementById("extractedAddressDisplay").innerHTML = `${textData.extractedLocation} <span style="font-size:12px; color:#34d399">(NER Parsed)</span>`;
     }
 
-    const voiceRes = await fetch('/api/analyze-voice', {
+    const voiceRes = await fetch(`${API_BASE_URL}/api/analyze-voice`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ pitchVariance: 42, pauseRatio: 0.38, volumeSpikes: 5 })
     });
     const voiceData = await voiceRes.json();
 
-    const sviRes = await fetch('/api/calculate-svi', {
+    const sviRes = await fetch(`${API_BASE_URL}/api/calculate-svi`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -390,7 +395,7 @@ function updateEmotionBars(emotions) {
 
 async function executeEmergencyDispatch() {
   try {
-    const res = await fetch('/api/dispatch/emergency-sos', {
+    const res = await fetch(`${API_BASE_URL}/api/dispatch/emergency-sos`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ sviScore: currentSVI, district: "Hathras", state: "Uttar Pradesh" })
@@ -427,7 +432,7 @@ function sendChatMessage() {
 
 async function initAdminAnalytics() {
   try {
-    const res = await fetch('/api/analytics/heatmap');
+    const res = await fetch(`${API_BASE_URL}/api/analytics/heatmap`);
     const data = await res.json();
     initLeafletMap(data.heatmapData);
     initRiskPieChart(data.riskDistribution);
@@ -469,7 +474,7 @@ function initRiskPieChart(dist) {
 
 async function fetchCases() {
   try {
-    const res = await fetch('/api/cases');
+    const res = await fetch(`${API_BASE_URL}/api/cases`);
     const data = await res.json();
     const tbody = document.getElementById("casesTableBody");
     if (!tbody) return;
@@ -495,6 +500,6 @@ async function fetchCases() {
 function submitVictimReport() {
   const desc = document.getElementById("victimDescInput") ? document.getElementById("victimDescInput").value : "";
   if (!desc) { alert("Please write your narrative."); return; }
-  alert("Your report has been encrypted & submitted to the NHAA 14566 Crisis Engine.");
+  alert("Your report has been encrypted & submitted to the Vernds AI Crisis Engine.");
   document.getElementById("victimDescInput").value = "";
 }
