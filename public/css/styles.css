@@ -8,16 +8,22 @@
 /* --------------------------------------------------------------------------
    1. CORE DESIGN TOKENS & TYPOGRAPHY
    -------------------------------------------------------------------------- */
-@import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
 :root {
   /* Color Palette - Framer Conicorn Deep Metallic Dark Theme */
   --bg-main: #0a0a0c;
+  --bg-secondary: #121216;
   --bg-card: rgba(22, 22, 28, 0.65);
-  --bg-card-hover: rgba(30, 30, 38, 0.85);
-  --bg-glass-pill: rgba(18, 18, 24, 0.75);
+  --bg-card-hover: rgba(30, 30, 38, 0.88);
+  --bg-card-solid: #16161c;
+  --bg-glass-pill: rgba(18, 18, 24, 0.78);
+  --bg-input: rgba(255, 255, 255, 0.05);
+
+  /* Glass Borders */
   --border-glass: rgba(255, 255, 255, 0.08);
   --border-glass-bright: rgba(255, 255, 255, 0.18);
+  --border-glass-rainbow: linear-gradient(90deg, rgba(201, 170, 255, 0.4), rgba(131, 153, 255, 0.4));
 
   /* Typography */
   --font-geist: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -27,18 +33,24 @@
   /* Computed 5-Stop Holographic Rainbow Gradient (Framer Conicorn Exact) */
   --rainbow-gradient: linear-gradient(90deg, #C9AAFF 0%, #FDFFBC 25%, #FFCCFD 50%, #B3E1FF 75%, #8399FF 100%);
   --rainbow-gradient-hover: linear-gradient(90deg, #d8beff 0%, #ffffce 25%, #ffdbff 50%, #c4e9ff 75%, #9cb0ff 100%);
+  --rainbow-gradient-subtle: linear-gradient(90deg, rgba(201, 170, 255, 0.15) 0%, rgba(253, 255, 188, 0.15) 25%, rgba(255, 204, 253, 0.15) 50%, rgba(179, 225, 255, 0.15) 75%, rgba(131, 153, 255, 0.15) 100%);
 
   /* Text Colors */
   --text-primary: #ffffff;
   --text-secondary: #a1a1aa;
   --text-muted: #71717a;
   --text-highlight: #f4f4f5;
+  --text-inverse: #000000;
 
   /* Risk Matrix Tiers */
   --risk-critical-red: #ff4d4d;
+  --risk-critical-bg: rgba(255, 77, 77, 0.12);
   --risk-high-amber: #ff9900;
+  --risk-high-bg: rgba(255, 153, 0, 0.12);
   --risk-moderate-yellow: #ffcc00;
+  --risk-moderate-bg: rgba(255, 204, 0, 0.12);
   --risk-stable-green: #10b981;
+  --risk-stable-bg: rgba(16, 185, 129, 0.12);
 
   /* Spacing */
   --category-section-gap: 88px;
@@ -49,6 +61,7 @@
   /* Transitions */
   --transition-smooth: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   --transition-bounce: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  --transition-slow: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* Reset & Global Canvas */
@@ -75,7 +88,23 @@ body {
   background: radial-gradient(circle at 50% 0%, rgba(201, 170, 255, 0.08) 0%, rgba(10, 10, 12, 1) 70%);
 }
 
-/* Background Mesh Animation */
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #0a0a0c;
+}
+::-webkit-scrollbar-thumb {
+  background: #27272a;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #3f3f46;
+}
+
+/* Background Mesh Pulse Canvas Animation */
 .background-pulse-canvas {
   position: fixed;
   top: 0;
@@ -104,7 +133,7 @@ body {
    -------------------------------------------------------------------------- */
 .reveal {
   opacity: 0;
-  transform: translateY(30px);
+  transform: translateY(35px);
   transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -116,6 +145,7 @@ body {
 .reveal-delay-1 { transition-delay: 0.15s; }
 .reveal-delay-2 { transition-delay: 0.30s; }
 .reveal-delay-3 { transition-delay: 0.45s; }
+.reveal-delay-4 { transition-delay: 0.60s; }
 
 /* --------------------------------------------------------------------------
    3. FLOATING CAPSULE NAVBAR (Framer Conicorn Exact)
@@ -189,7 +219,7 @@ body {
 .navbar-links {
   display: flex;
   align-items: center;
-  gap: 28px;
+  gap: 24px;
   list-style: none;
 }
 
@@ -265,7 +295,7 @@ body {
 }
 
 /* --------------------------------------------------------------------------
-   4. 10 DISTINCT SPACED CATEGORY SECTIONS (Framer Conicorn Exact Layout)
+   4. 10 DISTINCT SPACED CATEGORY SECTIONS (Framer Conicorn Layout)
    -------------------------------------------------------------------------- */
 .category-section-block {
   margin-bottom: var(--category-section-gap);
@@ -329,9 +359,10 @@ body {
 .section-description-lead {
   font-size: 1.15rem;
   color: var(--text-secondary);
-  max-width: 760px;
+  max-width: 780px;
   margin: 0 auto;
   font-weight: 400;
+  line-height: 1.7;
 }
 
 /* --------------------------------------------------------------------------
@@ -569,6 +600,119 @@ canvas.waveform-canvas {
 .sticky-note-card.TELE_MANAS { border-left-color: var(--risk-high-amber); }
 .sticky-note-card.DLSA_RELIEF { border-left-color: var(--risk-stable-green); }
 
+/* Chatbot Styles */
+.chatbot-box {
+  background: var(--bg-card-solid);
+  border-radius: var(--radius-card);
+  border: 1px solid var(--border-glass-bright);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 500px;
+}
+
+.chat-messages {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.chat-message.user-msg {
+  align-self: flex-end;
+}
+.chat-message.user-msg .msg-bubble {
+  background: var(--rainbow-gradient);
+  color: #000000;
+  font-weight: 600;
+  padding: 12px 18px;
+  border-radius: 18px 18px 2px 18px;
+  max-width: 80%;
+}
+
+.chat-message.ai-msg {
+  align-self: flex-start;
+}
+.chat-message.ai-msg .msg-bubble-ai {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border-glass-bright);
+  color: var(--text-primary);
+  padding: 14px 20px;
+  border-radius: 18px 18px 18px 2px;
+  max-width: 85%;
+}
+
+.chat-input-area {
+  padding: 16px;
+  background: rgba(0, 0, 0, 0.4);
+  border-top: 1px solid var(--border-glass);
+  display: flex;
+  gap: 12px;
+}
+
+.chat-input-field {
+  flex: 1;
+  background: var(--bg-input);
+  border: 1px solid var(--border-glass-bright);
+  border-radius: var(--radius-capsule);
+  padding: 12px 20px;
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  outline: none;
+}
+.chat-input-field:focus {
+  border-color: #C9AAFF;
+  box-shadow: 0 0 15px rgba(201, 170, 255, 0.3);
+}
+
+/* Advanced Component Utilities */
+.badge-rainbow-outline {
+  border: 1px solid #C9AAFF;
+  color: #C9AAFF;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-family: var(--font-mono);
+}
+
+.pulse-beacon-red {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  background-color: var(--risk-critical-red);
+  border-radius: 50%;
+  box-shadow: 0 0 0 rgba(255, 77, 77, 0.4);
+  animation: pulseBeacon 2s infinite;
+}
+
+@keyframes pulseBeacon {
+  0% { box-shadow: 0 0 0 0 rgba(255, 77, 77, 0.7); }
+  70% { box-shadow: 0 0 0 10px rgba(255, 77, 77, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 77, 77, 0); }
+}
+
+.table-custom-dark {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 16px;
+}
+.table-custom-dark th {
+  background: rgba(255, 255, 255, 0.04);
+  padding: 14px;
+  border-bottom: 1px solid var(--border-glass-bright);
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  text-align: left;
+}
+.table-custom-dark td {
+  padding: 14px;
+  border-bottom: 1px solid var(--border-glass);
+  font-size: 0.9rem;
+}
+
 /* Responsive Adjustments */
 @media (max-width: 992px) {
   .bento-grid-3col, .bento-grid-4col { grid-template-columns: repeat(2, 1fr); }
@@ -579,4 +723,191 @@ canvas.waveform-canvas {
 @media (max-width: 600px) {
   .bento-grid-2col, .bento-grid-3col, .bento-grid-4col { grid-template-columns: 1fr; }
   .hero-headline-large { font-size: 2.2rem; }
+}
+
+
+/* ==========================================================================
+   ADVANCED ENTERPRISE COMPONENT MODULES & THEME SPECIFICATIONS
+   ========================================================================== */
+
+/* 1. Modal Dialog & Overlay Containers */
+.modal-overlay-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(10, 10, 12, 0.85);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: var(--transition-smooth);
+}
+
+.modal-overlay-backdrop.modal-active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-window-container {
+  width: 90%;
+  max-width: 680px;
+  background: var(--bg-card-solid);
+  border: 1px solid var(--border-glass-bright);
+  border-radius: var(--radius-card);
+  padding: 36px;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(201, 170, 255, 0.2);
+  transform: translateY(20px) scale(0.95);
+  transition: var(--transition-bounce);
+}
+
+.modal-overlay-backdrop.modal-active .modal-window-container {
+  transform: translateY(0) scale(1);
+}
+
+.modal-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border-glass);
+}
+
+.modal-close-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: none;
+  color: var(--text-secondary);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.modal-close-btn:hover {
+  background: rgba(255, 77, 77, 0.2);
+  color: var(--risk-critical-red);
+}
+
+/* 2. Custom Radio & Checkbox Controls */
+.custom-checkbox-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  user-select: none;
+  font-size: 0.92rem;
+  color: var(--text-secondary);
+}
+
+.custom-checkbox-input {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--border-glass-bright);
+  border-radius: 6px;
+  background: var(--bg-input);
+  cursor: pointer;
+  position: relative;
+  transition: var(--transition-smooth);
+}
+
+.custom-checkbox-input:checked {
+  background: #C9AAFF;
+  border-color: #C9AAFF;
+}
+
+.custom-checkbox-input:checked::after {
+  content: '✓';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #000000;
+  font-weight: 800;
+  font-size: 0.75rem;
+}
+
+/* 3. Risk Gauge Pulse Animations */
+.risk-gauge-ring {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  border: 8px solid rgba(255, 255, 255, 0.08);
+  border-top-color: var(--risk-critical-red);
+  border-right-color: var(--risk-high-amber);
+  animation: spinGauge 8s infinite linear;
+  margin: 0 auto;
+}
+
+@keyframes spinGauge {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* 4. Tooltip Overlay Utilities */
+.tooltip-trigger-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip-popup-box {
+  position: absolute;
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%) translateY(10px);
+  padding: 8px 14px;
+  background: #1c1c24;
+  border: 1px solid var(--border-glass-bright);
+  border-radius: 8px;
+  font-size: 0.78rem;
+  color: var(--text-primary);
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: var(--transition-smooth);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+  z-index: 100;
+}
+
+.tooltip-trigger-wrapper:hover .tooltip-popup-box {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* 5. Additional Bento Card Layout Modifiers */
+.dome-card-featured {
+  background: linear-gradient(135deg, rgba(30, 30, 42, 0.9) 0%, rgba(18, 18, 24, 0.9) 100%);
+  border: 1px solid rgba(201, 170, 255, 0.3);
+  box-shadow: 0 0 35px rgba(201, 170, 255, 0.15);
+}
+
+.dome-card-featured::after {
+  content: 'FEATURED';
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  padding: 3px 10px;
+  background: var(--rainbow-gradient);
+  color: #000000;
+  border-radius: 10px;
+  font-weight: 700;
+}
+
+/* 6. High-Contrast Print & Mobile Adaptations */
+@media print {
+  body { background: #ffffff; color: #000000; }
+  .navbar-capsule-wrapper, .background-pulse-canvas { display: none; }
+  .dome-card { border: 1px solid #000000; background: none; color: #000000; }
 }

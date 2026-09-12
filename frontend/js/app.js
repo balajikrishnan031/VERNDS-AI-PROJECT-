@@ -2,6 +2,18 @@
  * VERNDS AI - Master Frontend Application & Operational SPA Controller
  * Vernds AI (Formerly SAMVEDNA-AI) | National Helpline Against Atrocities (14566)
  * Ministry of Social Justice & Empowerment, Govt. of India
+ *
+ * Full Client-Side Application Architecture:
+ * 1. SPA View Router & Hash Navigator
+ * 2. Real-Time Web Audio API Mic Stream Processor & FFT Visualizer
+ * 3. Multilingual Chatbot Conversational Engine
+ * 4. Stress & Vulnerability Index (SVI 0-100) Multi-Factor Interactive Calculator
+ * 5. ERSS 112 Emergency Police Patrol SOS Dispatch Countdown Engine
+ * 6. Tele-MANAS (+91 14416) VoIP 3-Way Psychiatric Conference Simulator
+ * 7. DLSA SC/ST Rule 12(4) Victim Relief Compensation Calculator
+ * 8. DPDP Act 2023 Zero-Trust PII Redaction Live Tester
+ * 9. Leaflet Spatial GIS Risk Cluster Map Renderer
+ * 10. Sticky Notes Drag-and-Drop Operational Dashboard
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -27,6 +39,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 7. Initialize 112 ERSS SOS Dispatch Sequence
   initErssDispatchTrigger();
+
+  // 8. Initialize Leaflet Spatial Heatmap
+  initSpatialHeatmap();
+
+  // 9. Initialize DLSA Compensation Calculator
+  initDlsaCompensationCalculator();
+
+  // 10. Initialize DPDP PII Scrubbing Tester
+  initDpdpPiiTester();
+
+  // 11. Start Periodic Live Telemetry Stream Simulation
+  startLiveTelemetrySimulation();
 });
 
 /* ==========================================================================
@@ -46,7 +70,7 @@ function initScrollReveal() {
         entry.target.classList.add('reveal-active');
       }
     });
-  }, { threshold: 0.12 });
+  }, { threshold: 0.10 });
 
   revealElements.forEach(el => observer.observe(el));
 }
@@ -319,3 +343,177 @@ function initErssDispatchTrigger() {
     }
   });
 }
+
+/* ==========================================================================
+   8. LEAFLET SPATIAL HEATMAP INITIALIZER
+   ========================================================================== */
+function initSpatialHeatmap() {
+  const mapContainer = document.getElementById('leaflet-heatmap-container');
+  if (!mapContainer) return;
+
+  if (typeof L !== 'undefined') {
+    const map = L.map(mapContainer).setView([22.5937, 78.9629], 5);
+
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+      attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
+      maxZoom: 18
+    }).addTo(map);
+
+    const hotspots = [
+      { name: "Lakhimpur Kheri (UP)", lat: 28.4333, lng: 80.5833, svi: 92.4, tier: "CRITICAL_RED" },
+      { name: "Gaya (Bihar)", lat: 24.7964, lng: 85.0077, svi: 88.1, tier: "CRITICAL_RED" },
+      { name: "Nagaur (Rajasthan)", lat: 27.2000, lng: 73.7333, svi: 89.5, tier: "CRITICAL_RED" },
+      { name: "Chhatarpur (MP)", lat: 24.9167, lng: 79.5833, svi: 86.0, tier: "CRITICAL_RED" },
+      { name: "Villupuram (Tamil Nadu)", lat: 11.9401, lng: 79.4861, svi: 84.5, tier: "CRITICAL_RED" }
+    ];
+
+    hotspots.forEach(spot => {
+      const circle = L.circle([spot.lat, spot.lng], {
+        color: '#ff4d4d',
+        fillColor: '#ff4d4d',
+        fillOpacity: 0.5,
+        radius: 45000
+      }).addTo(map);
+
+      circle.bindPopup(`<strong>${spot.name}</strong><br>SVI Score: <strong>${spot.svi}</strong><br>Tier: CRITICAL RED`);
+    });
+  }
+}
+
+/* ==========================================================================
+   9. DLSA COMPENSATION CALCULATOR
+   ========================================================================== */
+function initDlsaCompensationCalculator() {
+  const selectSec = document.getElementById('dlsa-section-select');
+  const amountDisplay = document.getElementById('dlsa-calculated-amount');
+
+  if (!selectSec || !amountDisplay) return;
+
+  selectSec.addEventListener('change', () => {
+    const val = selectSec.value;
+    let amount = "₹1,00,000";
+
+    if (val === "3(2)(v)") amount = "₹8,25,000 + ₹5,00,000 Pension + Govt Job";
+    else if (val === "3(1)(w)") amount = "₹5,00,000 (50% FIR Disbursement)";
+    else if (val === "3(2)(iv)") amount = "₹4,00,000 (50% FIR Disbursement)";
+    else if (val === "3(1)(r)") amount = "₹1,00,000 (50% FIR Disbursement)";
+
+    amountDisplay.innerText = amount;
+  });
+}
+
+/* ==========================================================================
+   10. DPDP PII TESTER
+   ========================================================================== */
+function initDpdpPiiTester() {
+  const inputEl = document.getElementById('dpdp-raw-text-input');
+  const outputEl = document.getElementById('dpdp-scrubbed-output');
+  const btn = document.getElementById('dpdp-run-test-btn');
+
+  if (!inputEl || !outputEl || !btn) return;
+
+  btn.addEventListener('click', () => {
+    let text = inputEl.value;
+    if (!text) text = "Call from Ramesh Kumar (+91 98765 43210), Aadhaar: 4321 8765 9901";
+
+    const scrubbed = text
+      .replace(/\b[2-9]\d{3}\s?\d{4}\s?\d{4}\b/g, '[REDACTED_AADHAAR]')
+      .replace(/\b(?:\+?91[\-\s]?)?[6-9]\d{9}\b/g, '[REDACTED_PHONE]');
+
+    outputEl.innerText = scrubbed;
+  });
+}
+
+/* ==========================================================================
+   11. PERIODIC LIVE TELEMETRY SIMULATION
+   ========================================================================== */
+function startLiveTelemetrySimulation() {
+  setInterval(() => {
+    const f0 = (240 + Math.random() * 30).toFixed(1);
+    const f0El = document.getElementById('live-f0-display');
+    if (f0El) f0El.innerText = `${f0} Hz`;
+  }, 3000);
+}
+
+
+/* ==========================================================================
+   12. ADVANCED FRONTEND UTILITIES & DATA FORMATTERS
+   ========================================================================== */
+
+/**
+ * Format Currency in Indian Rupees (INR)
+ */
+function formatInrCurrency(amount) {
+  if (typeof amount !== 'number') return amount;
+  return new Intl.NumberFormat('en-IN', {
+    style: 'currency',
+    currency: 'INR',
+    maximumFractionDigits: 0
+  }).format(amount);
+}
+
+/**
+ * Format ISO Timestamp to Local Indian Standard Time (IST)
+ */
+function formatIstTimestamp(isoString) {
+  if (!isoString) return new Date().toLocaleString('en-IN');
+  const date = new Date(isoString);
+  return date.toLocaleString('en-IN', {
+    timeZone: 'Asia/Kolkata',
+    day: '2-digit',
+    month: 'short',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit'
+  });
+}
+
+/**
+ * Export Active Telemetry Session as JSON File
+ */
+function exportSessionTelemetryJson(sessionData) {
+  const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(sessionData || { session: "VERNDS-AI-TELEMETRY" }, null, 2));
+  const downloadAnchor = document.createElement('a');
+  downloadAnchor.setAttribute("href", dataStr);
+  downloadAnchor.setAttribute("download", `VERNDS_AI_TELEMETRY_${Date.now()}.json`);
+  document.body.appendChild(downloadAnchor);
+  downloadAnchor.click();
+  downloadAnchor.remove();
+}
+
+/**
+ * Trigger Toast Notification Alert
+ */
+function showToastNotification(message, type = 'info') {
+  const toast = document.createElement('div');
+  toast.style.position = 'fixed';
+  toast.style.bottom = '24px';
+  toast.style.right = '24px';
+  toast.style.padding = '14px 24px';
+  toast.style.borderRadius = '12px';
+  toast.style.background = type === 'error' ? '#ff4d4d' : '#181820';
+  toast.style.color = '#ffffff';
+  toast.style.border = '1px solid rgba(255,255,255,0.2)';
+  toast.style.boxShadow = '0 10px 30px rgba(0,0,0,0.6)';
+  toast.style.zIndex = '3000';
+  toast.style.fontFamily = 'var(--font-geist)';
+  toast.style.fontSize = '0.9rem';
+  toast.innerHTML = message;
+
+  document.body.appendChild(toast);
+
+  setTimeout(() => {
+    toast.style.opacity = '0';
+    toast.style.transition = 'opacity 0.4s ease';
+    setTimeout(() => toast.remove(), 400);
+  }, 3500);
+}
+
+// Global Window API Exports for Inline HTML Callbacks
+window.VerndsFront = {
+  formatInrCurrency,
+  formatIstTimestamp,
+  exportSessionTelemetryJson,
+  showToastNotification
+};
