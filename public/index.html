@@ -136,20 +136,23 @@
       
       <!-- Hero Header Section -->
       <div class="conicorn-hero">
-        <div class="conicorn-tag-pill">
+        <!-- Animated Fluid Neural Orb Backdrop Artwork -->
+        <div class="hero-fluid-artwork"></div>
+
+        <div class="conicorn-tag-pill reveal">
           <span class="rec-dot"></span>
           <span>✨ MoSJE Helpline 14566 • AI Crisis Triage Engine</span>
         </div>
 
-        <h1 class="conicorn-hero-title">
+        <h1 class="conicorn-hero-title reveal reveal-delay-1">
           AI-Powered Real-Time Stress & Trauma Assessment Engine
         </h1>
 
-        <p class="conicorn-hero-sub">
+        <p class="conicorn-hero-sub reveal reveal-delay-2">
           Empowering SC/ST victims facing atrocities with real-time vocal prosody biomarker triaging, 10-language Indian NLP emotion AI, standardized SVI scoring, and automated 112 ERSS Police & Tele-MANAS emergency doctor dispatch.
         </p>
 
-        <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;" class="mb-5">
+        <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;" class="mb-5 reveal reveal-delay-3">
           <button class="conicorn-btn-primary" style="padding: 14px 32px; font-size: 15px;" onclick="navigateTo('page-telephony')">
             Launch 14566 Call Console <i class="fa-solid fa-arrow-right arrow-icon"></i>
           </button>
@@ -163,25 +166,25 @@
 
         <!-- Live Metrics Impact Grid -->
         <div class="grid-4 mb-5 text-start">
-          <div class="glass-card">
+          <div class="glass-card reveal reveal-delay-1">
             <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">Victims Triaged</div>
             <div style="font-size: 32px; font-weight: 900; color: var(--accent-cyan);" id="statVictims">14,892</div>
             <div style="font-size: 11px; color: #34d399; margin-top: 4px;"><i class="fa-solid fa-arrow-trend-up"></i> Real-Time 14566 Feed</div>
           </div>
 
-          <div class="glass-card">
+          <div class="glass-card reveal reveal-delay-2">
             <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">112 Police Dispatch</div>
             <div style="font-size: 32px; font-weight: 900; color: #34d399;">&lt; 4.2 Mins</div>
             <div style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">Automated Webhook Payload</div>
           </div>
 
-          <div class="glass-card">
+          <div class="glass-card reveal reveal-delay-3">
             <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">Tele-MANAS Doctor Bridge</div>
             <div style="font-size: 32px; font-weight: 900; color: var(--accent-purple);">&lt; 2.8 Secs</div>
             <div style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">SIP Hotline Transfer</div>
           </div>
 
-          <div class="glass-card">
+          <div class="glass-card reveal reveal-delay-4">
             <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">Indian Languages</div>
             <div style="font-size: 32px; font-weight: 900; color: var(--accent-pink);">10 Languages</div>
             <div style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">Hindi, Tamil, Telugu, Odia, etc.</div>
@@ -190,14 +193,14 @@
       </div>
 
       <!-- 3D Metallic Dome Cards ("Why Choose Vernds AI?") -->
-      <div style="text-align: center; margin-bottom: 32px;">
-        <h2 style="font-size: 36px; font-weight: 900; margin-bottom: 10px;">Built for Mission-Critical Protection</h2>
-        <p style="font-size: 15px; color: var(--text-muted);">Standardized AI Triage, Prosody Biomarkers & Automated Emergency Dispatch</p>
+      <div style="text-align: center; margin-bottom: 32px;" class="reveal">
+        <h2 style="font-size: 38px; font-weight: 900; margin-bottom: 10px;">Built for Mission-Critical Protection</h2>
+        <p style="font-size: 16px; color: var(--text-muted);">Standardized AI Triage, Prosody Biomarkers & Automated Emergency Dispatch</p>
       </div>
 
       <div class="grid-4 mb-5">
         <!-- Dome Card 1 -->
-        <div class="conicorn-card" onclick="navigateTo('page-telephony')">
+        <div class="conicorn-card reveal reveal-delay-1" onclick="navigateTo('page-telephony')">
           <div class="conicorn-inner-dome">
             <div class="conicorn-3d-orb"><i class="fa-solid fa-headset"></i></div>
             <span class="conicorn-index-badge">01</span>
@@ -207,9 +210,9 @@
         </div>
 
         <!-- Dome Card 2 -->
-        <div class="conicorn-card" onclick="navigateTo('page-nlp')">
+        <div class="conicorn-card reveal reveal-delay-2" onclick="navigateTo('page-nlp')">
           <div class="conicorn-inner-dome">
-            <div class="conicorn-3d-orb" style="background: linear-gradient(135deg, rgba(168, 85, 247, 0.25), rgba(236, 72, 153, 0.25)); border-color: rgba(168, 85, 247, 0.4); color: var(--accent-purple);"><i class="fa-solid fa-language"></i></div>
+            <div class="conicorn-3d-orb" style="background: linear-gradient(135deg, rgba(168, 85, 247, 0.3), rgba(236, 72, 153, 0.3)); border-color: rgba(168, 85, 247, 0.5); color: var(--accent-purple); box-shadow: 0 0 35px rgba(168, 85, 247, 0.4);"><i class="fa-solid fa-language"></i></div>
             <span class="conicorn-index-badge">02</span>
           </div>
           <h3>Multilingual Indian Speech NLP</h3>
@@ -217,9 +220,9 @@
         </div>
 
         <!-- Dome Card 3 -->
-        <div class="conicorn-card" onclick="navigateTo('page-emergency')">
+        <div class="conicorn-card reveal reveal-delay-3" onclick="navigateTo('page-emergency')">
           <div class="conicorn-inner-dome">
-            <div class="conicorn-3d-orb" style="background: linear-gradient(135deg, rgba(239, 68, 68, 0.25), rgba(245, 158, 11, 0.25)); border-color: rgba(239, 68, 68, 0.4); color: var(--accent-crimson);"><i class="fa-solid fa-truck-medical"></i></div>
+            <div class="conicorn-3d-orb" style="background: linear-gradient(135deg, rgba(239, 68, 68, 0.3), rgba(245, 158, 11, 0.3)); border-color: rgba(239, 68, 68, 0.5); color: var(--accent-crimson); box-shadow: 0 0 35px rgba(239, 68, 68, 0.4);"><i class="fa-solid fa-truck-medical"></i></div>
             <span class="conicorn-index-badge">03</span>
           </div>
           <h3>112 ERSS Police Auto-Dispatch</h3>
@@ -227,9 +230,9 @@
         </div>
 
         <!-- Dome Card 4 -->
-        <div class="conicorn-card" onclick="navigateTo('page-heatmap')">
+        <div class="conicorn-card reveal reveal-delay-4" onclick="navigateTo('page-heatmap')">
           <div class="conicorn-inner-dome">
-            <div class="conicorn-3d-orb" style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.25), rgba(16, 185, 129, 0.25)); border-color: rgba(59, 130, 246, 0.4); color: var(--accent-blue);"><i class="fa-solid fa-map-location-dot"></i></div>
+            <div class="conicorn-3d-orb" style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.3), rgba(16, 185, 129, 0.3)); border-color: rgba(59, 130, 246, 0.5); color: var(--accent-blue); box-shadow: 0 0 35px rgba(59, 130, 246, 0.4);"><i class="fa-solid fa-map-location-dot"></i></div>
             <span class="conicorn-index-badge">04</span>
           </div>
           <h3>All-India GIS Heatmap</h3>
@@ -238,7 +241,7 @@
       </div>
 
       <!-- Holographic Mesh Gradient Card -->
-      <div class="conicorn-holo-card mb-5">
+      <div class="conicorn-holo-card mb-5 reveal">
         <div class="grid-2 align-items-center">
           <div>
             <span class="conicorn-tag-pill" style="background: rgba(236, 72, 153, 0.15); border-color: rgba(236, 72, 153, 0.4); color: #f472b6;">🔒 Enterprise Ethics & Compliance</span>
@@ -261,13 +264,13 @@
       </div>
 
       <!-- Vertical Timeline Section ("How 14566 Crisis Triage Works") -->
-      <div style="text-align: center; margin: 56px 0 32px;">
-        <h2 style="font-size: 36px; font-weight: 900; margin-bottom: 10px;">Real-Time AI Triage Workflow</h2>
-        <p style="font-size: 15px; color: var(--text-muted);">From 14566 Call Ingestion to Emergency Police & Tele-MANAS Bridge</p>
+      <div style="text-align: center; margin: 56px 0 32px;" class="reveal">
+        <h2 style="font-size: 38px; font-weight: 900; margin-bottom: 10px;">Real-Time AI Triage Workflow</h2>
+        <p style="font-size: 16px; color: var(--text-muted);">From 14566 Call Ingestion to Emergency Police & Tele-MANAS Bridge</p>
       </div>
 
       <div class="conicorn-timeline">
-        <div class="conicorn-timeline-item">
+        <div class="conicorn-timeline-item reveal reveal-delay-1">
           <div class="conicorn-timeline-node">01</div>
           <div class="conicorn-timeline-card">
             <h4 style="color: var(--accent-cyan); margin-bottom: 6px;"><i class="fa-solid fa-headset me-2"></i> 1. Voice Ingestion & Prosody AI</h4>
@@ -275,7 +278,7 @@
           </div>
         </div>
 
-        <div class="conicorn-timeline-item">
+        <div class="conicorn-timeline-item reveal reveal-delay-2">
           <div class="conicorn-timeline-node">02</div>
           <div class="conicorn-timeline-card">
             <h4 style="color: var(--accent-purple); margin-bottom: 6px;"><i class="fa-solid fa-language me-2"></i> 2. Multilingual NLP & Location NER</h4>
@@ -283,7 +286,7 @@
           </div>
         </div>
 
-        <div class="conicorn-timeline-item">
+        <div class="conicorn-timeline-item reveal reveal-delay-3">
           <div class="conicorn-timeline-node">03</div>
           <div class="conicorn-timeline-card">
             <h4 style="color: var(--accent-pink); margin-bottom: 6px;"><i class="fa-solid fa-calculator me-2"></i> 3. Standardized SVI Scoring (0-100)</h4>
@@ -291,7 +294,7 @@
           </div>
         </div>
 
-        <div class="conicorn-timeline-item">
+        <div class="conicorn-timeline-item reveal reveal-delay-4">
           <div class="conicorn-timeline-node">04</div>
           <div class="conicorn-timeline-card">
             <h4 style="color: var(--accent-crimson); margin-bottom: 6px;"><i class="fa-solid fa-truck-medical me-2"></i> 4. Emergency Auto-Dispatch</h4>
@@ -301,7 +304,7 @@
       </div>
 
       <!-- Integrations Ecosystem Pills Marquee -->
-      <div style="text-align: center; margin: 48px 0 24px;">
+      <div style="text-align: center; margin: 48px 0 24px;" class="reveal">
         <h3 style="font-size: 20px; font-weight: 800; color: var(--text-muted);">Integrated with National Protection Frameworks</h3>
         <div class="conicorn-pill-marquee">
           <div class="conicorn-integration-pill"><i class="fa-solid fa-building-columns text-amber"></i> MoSJE Helpline 14566</div>

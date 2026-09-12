@@ -28,7 +28,26 @@ document.addEventListener("DOMContentLoaded", () => {
   initAdminAnalytics();
   updateClock();
   setInterval(updateClock, 1000);
+  initScrollRevealAnimations();
 });
+
+function initScrollRevealAnimations() {
+  const observerOptions = {
+    root: null,
+    rootMargin: "0px 0px -40px 0px",
+    threshold: 0.1
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("reveal-active");
+      }
+    });
+  }, observerOptions);
+
+  document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
+}
 
 function updateClock() {
   const clockEl = document.getElementById("liveClock");
@@ -48,6 +67,9 @@ function navigateTo(pageId) {
 
   if (targetPage) targetPage.classList.add("active");
   if (targetLink) targetLink.classList.add("active");
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  setTimeout(() => initScrollRevealAnimations(), 50);
 
   window.scrollTo({ top: 0, behavior: 'smooth' });
 
