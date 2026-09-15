@@ -19,7 +19,9 @@ const legalController = require('../controllers/legalController');
 // 1. Telephony & Acoustic WebRTC Ingestion Routes
 router.post('/telephony/ingest-frame', telephonyController.ingestFrame);
 router.post('/telephony/twiml-gather', telephonyController.handleTwimlGather);
+router.post('/telephony/track-live-call', telephonyController.trackLiveCall);
 router.get('/telephony/session-prosody/:sessionId', telephonyController.getSessionProsody);
+
 
 // 2. Multilingual ASR & Legal NLP Routes
 router.post('/nlp/process-transcript', nlpController.processTranscript);
