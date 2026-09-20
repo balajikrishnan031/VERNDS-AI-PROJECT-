@@ -10,9 +10,9 @@ app.use(cors());
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
 
-// Serve Frontend Static Assets
-app.use(express.static(path.join(__dirname, '../public')));
+// Serve Frontend Static Assets (frontend priority)
 app.use(express.static(path.join(__dirname, '../frontend')));
+app.use(express.static(path.join(__dirname, '../public')));
 
 // Mount Modular API Routes
 app.use('/api', apiRoutes);

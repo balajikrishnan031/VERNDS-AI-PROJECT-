@@ -34,6 +34,10 @@ exports.triggerErssDispatch = async (req, res) => {
     return res.status(200).json({
       success: true,
       message: "112 ERSS Emergency Police Dispatch Triggered Successfully",
+      cadTicketNumber: payloadId,
+      assignedPatrolUnit: dispatchVehicle,
+      estimatedArrival: "8-12 Minutes (Rural Fast-Track SLA)",
+      gpsCoordinates: `${erssPayload.targetLocation.gpsCoordinates.latitude}° N, ${erssPayload.targetLocation.gpsCoordinates.longitude}° E`,
       erssPayload
     });
   } catch (error) {

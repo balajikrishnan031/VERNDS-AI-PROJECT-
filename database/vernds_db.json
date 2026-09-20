@@ -1,13 +1,1448 @@
 {
   "systemMetadata": {
-    "name": "VERNDS AI Engine (Formerly SAMVEDNA-AI)",
-    "helpline": "14566 National Helpline Against Atrocities",
+    "name": "Vernds AI Enterprise Database",
+    "platform": "National Helpline Against Atrocities (14566)",
     "ministry": "Ministry of Social Justice & Empowerment, Govt. of India",
-    "version": "4.2.0-ENTERPRISE",
-    "totalCasesInDb": 600,
-    "lastDatabaseUpdate": "2026-09-12T18:29:43.089Z"
+    "version": "5.0.0-ENTERPRISE",
+    "totalCasesInDb": 610,
+    "architecture": "Decoupled 3-Layer + Safety Override Engine",
+    "lastDatabaseUpdate": "2026-09-20T10:50:24.978Z"
   },
   "cases": [
+    {
+      "id": "NHAA-20260920-654620",
+      "caseId": "NHAA-20260920-654620",
+      "victimId": "VIC-VI-6595",
+      "victimName": "K. Selvam",
+      "callerNumber": "+91 9342636595",
+      "callerType": "VICTIM_DIRECT",
+      "state": "Tamil Nadu",
+      "district": "Villupuram",
+      "village": "Kandachipuram",
+      "policeStation": "Kandachipuram Special SC/ST PS",
+      "coordinates": {
+        "lat": 11.9912,
+        "lng": 79.3087
+      },
+      "helplineChannel": "VOICE_14566_MIC_PORTAL",
+      "audioUrl": "/uploads/audio/complaint_1789901424903_8867.wav",
+      "audioDuration": "02:18",
+      "spokenTranscript": "வணக்கம், எங்கள் ஊரில் சாதியைச் சொல்லித் திட்டி, பொதுக் குடிநீர் கிணற்றில் தண்ணீர் எடுக்க விடாமல் தடுத்துத் தாக்குகிறார்கள். அரிவாளுடன் வீட்டைச் சுற்றி வளைத்து மிரட்டுகிறார்கள். உயிருக்கு ஆபத்து, உடனடியாக 112 போலீஸ் உதவி வேண்டும்.",
+      "translatedTranscript": "They insulted our caste, blocked access to water, and armed perpetrators are threatening outside our house. Immediate police intervention required.",
+      "language": "Tamil (தமிழ்) / Tanglish",
+      "sviScore": 86,
+      "avcsScore": 97,
+      "ssiScore": 95,
+      "riskCategory": "CRITICAL_RED",
+      "safetyOverride": true,
+      "overrideReason": "Armed perpetrators with deadly weapon encircling residence | Immediate danger to life",
+      "acousticFearScore": 0.94,
+      "nlpTraumaScore": 0.91,
+      "emotions": {
+        "fear": 94,
+        "distress": 89,
+        "anxiety": 86,
+        "helplessness": 82,
+        "sadness": 72,
+        "vocalTremorScore": 88,
+        "overallEmotionalState": "ACUTE_FEAR_AND_TRAUMA"
+      },
+      "problemsIdentified": [
+        "Denial of Drinking Water from Public Village Well [PoA Sec 3(1)(b)]",
+        "Public Caste-based Verbal Abuse & Humiliation [PoA Sec 3(1)(r) & 3(1)(s)]",
+        "Physical Assault & Threat with Deadly Weapons (Aruval / Sickle) [IPC 324 / PoA Sec 3(2)(v)]",
+        "Armed Accused Encircled Outside Residence (Life Threat & Hostage Risk)"
+      ],
+      "crimeCategory": "Denial of Drinking Water, Public Caste Abuse & Armed Intimidation",
+      "legalSections": [
+        {
+          "sectionCode": "Sec 3(1)(r) & 3(1)(s)",
+          "description": "Intentional Caste Insult & Public Humiliation"
+        },
+        {
+          "sectionCode": "Sec 3(1)(b)",
+          "description": "Denial of Drinking Water & Community Access"
+        },
+        {
+          "sectionCode": "Sec 3(1)(r) & IPC 323/324",
+          "description": "Physical Assault & Grievous Hurt"
+        }
+      ],
+      "firStatus": "DRAFT_FIR_SEC18A_GENERATED",
+      "erssDispatchStatus": "P1_EMERGENCY_PATROL_MOBILIZED",
+      "assignedPatrolUnit": "TN-PRV-9021 (Villupuram Special Cell Patrol)",
+      "cadIncidentId": "CAD-14566-424920",
+      "teleManasSessionId": "TM-SESS-4620",
+      "nalsaLegalAid15100": true,
+      "dlsaReliefRupees": 100000,
+      "witnessProtectionActive": true,
+      "statutoryActions": {
+        "erss112": {
+          "cadIncidentId": "CAD-14566-424920",
+          "status": "DISPATCHED",
+          "priority": "P1_IMMEDIATE_LIFE_THREAT",
+          "assignedUnit": "TN-PRV-9021 (Villupuram Special Cell Patrol)",
+          "etaMinutes": 8,
+          "timestamp": "2026-09-20T10:50:24.920Z"
+        },
+        "firMandate": {
+          "section": "Sec 18A SC/ST (PoA) Act",
+          "status": "DRAFT_FIR_AUTOMATICALLY_GENERATED",
+          "policeStation": "Kandachipuram Special SC/ST Police Station",
+          "cognizableOffence": true,
+          "preliminaryInquiryBypassed": true
+        },
+        "dlsaRelief": {
+          "rule": "Rule 12(4) SC/ST (PoA) Rules 1995",
+          "sanctionAmount": 100000,
+          "totalEntitlement": 450000,
+          "disbursementMode": "Aadhaar Direct Benefit Transfer (DBT)",
+          "status": "SANCTION_ORDER_ISSUED"
+        },
+        "teleManas": {
+          "helpline": "14416 (Tele-MANAS NIMHANS)",
+          "assignedDoctor": "Dr. Ananya Iyer, MD (Psychiatry)",
+          "status": "CRISIS_COUNSELING_BRIDGE_QUEUED"
+        },
+        "legalAid": {
+          "helpline": "15100 (NALSA / DLSA Free Legal Aid)",
+          "assignedAdvocate": "Adv. S. Subramaniam, DLSA Legal Defense Counsel",
+          "specialCourt": "Special Court for SC/ST Cases, Villupuram"
+        }
+      },
+      "prosodyMetrics": {
+        "f0Hz": 312.4,
+        "f0Variance": 120,
+        "jitterPercent": 4.62,
+        "shimmerPercent": 5.84,
+        "pauseRatioPercent": 46.5,
+        "tremorDetected": true,
+        "traumaSeverity": "MODERATE",
+        "vocalTremorHz": 6.4,
+        "panicDetected": true
+      },
+      "humanReview": {
+        "status": "PENDING_OFFICER_REVIEW",
+        "reviewedBy": null,
+        "reviewNotes": "Auto-triaged by Vernds AI Master Multimodal Engine. Escalated to District Nodal Officer.",
+        "reviewedAt": null
+      },
+      "statutoryProgress": [
+        {
+          "step": 1,
+          "title": "Voice Ingestion & Audio Recorded",
+          "status": "COMPLETED",
+          "date": "20/09/2026, 04:20 PM",
+          "notes": "Audio preserved with SHA-256 DPDP consent token."
+        },
+        {
+          "step": 2,
+          "title": "Multimodal Emotion & PoA Assessment",
+          "status": "COMPLETED",
+          "date": "20/09/2026, 04:20 PM",
+          "notes": "SVI 88/100, SSI 95/100. Safety Override activated for armed perpetrators."
+        },
+        {
+          "step": 3,
+          "title": "Emergency 112 Patrol Dispatched",
+          "status": "DISPATCHED",
+          "date": "20/09/2026, 04:20 PM",
+          "notes": "CAD Incident CAD-14566-424920 sent to Unit TN-PRV-9021 (Villupuram Special Cell Patrol). ETA 8 mins."
+        },
+        {
+          "step": 4,
+          "title": "Section 18A Mandatory FIR",
+          "status": "GENERATED",
+          "date": "20/09/2026",
+          "notes": "Pre-formatted FIR ready for Special SC/ST Court filing."
+        },
+        {
+          "step": 5,
+          "title": "Rule 12(4) Relief (₹1,00,000 DBT)",
+          "status": "SANCTIONED",
+          "date": "20/09/2026",
+          "notes": "Initial 50% installment sanctioned for direct account transfer."
+        }
+      ],
+      "createdAt": "2026-09-20T10:50:24.923Z",
+      "updatedAt": "2026-09-20T10:50:24.971Z"
+    },
+    {
+      "id": "NHAA-20260920-949211",
+      "caseId": "NHAA-20260920-949211",
+      "victimId": "VIC-VI-6595",
+      "victimName": "K. Selvam",
+      "callerNumber": "+91 9342636595",
+      "callerType": "VICTIM_DIRECT",
+      "state": "Tamil Nadu",
+      "district": "Villupuram",
+      "village": "Kandachipuram",
+      "policeStation": "Kandachipuram Special SC/ST PS",
+      "coordinates": {
+        "lat": 11.9912,
+        "lng": 79.3087
+      },
+      "helplineChannel": "VOICE_14566_MIC_PORTAL",
+      "audioUrl": "/uploads/audio/complaint_1789901185095_6490.wav",
+      "audioDuration": "02:18",
+      "spokenTranscript": "வணக்கம், எங்கள் ஊரில் சாதியைச் சொல்லித் திட்டி, பொதுக் குடிநீர் கிணற்றில் தண்ணீர் எடுக்க விடாமல் தடுத்துத் தாக்குகிறார்கள். அரிவாளுடன் வீட்டைச் சுற்றி வளைத்து மிரட்டுகிறார்கள். உயிருக்கு ஆபத்து, உடனடியாக 112 போலீஸ் உதவி வேண்டும்.",
+      "translatedTranscript": "They insulted our caste, blocked access to water, and armed perpetrators are threatening outside our house. Immediate police intervention required.",
+      "language": "Tamil (தமிழ்) / Tanglish",
+      "sviScore": 86,
+      "avcsScore": 97,
+      "ssiScore": 95,
+      "riskCategory": "CRITICAL_RED",
+      "safetyOverride": true,
+      "overrideReason": "Armed perpetrators with deadly weapon encircling residence | Immediate danger to life",
+      "acousticFearScore": 0.94,
+      "nlpTraumaScore": 0.91,
+      "emotions": {
+        "fear": 94,
+        "distress": 89,
+        "anxiety": 86,
+        "helplessness": 82,
+        "sadness": 72,
+        "vocalTremorScore": 88,
+        "overallEmotionalState": "ACUTE_FEAR_AND_TRAUMA"
+      },
+      "problemsIdentified": [
+        "Denial of Drinking Water from Public Village Well [PoA Sec 3(1)(b)]",
+        "Public Caste-based Verbal Abuse & Humiliation [PoA Sec 3(1)(r) & 3(1)(s)]",
+        "Physical Assault & Threat with Deadly Weapons (Aruval / Sickle) [IPC 324 / PoA Sec 3(2)(v)]",
+        "Armed Accused Encircled Outside Residence (Life Threat & Hostage Risk)"
+      ],
+      "crimeCategory": "Denial of Drinking Water, Public Caste Abuse & Armed Intimidation",
+      "legalSections": [
+        {
+          "sectionCode": "Sec 3(1)(r) & 3(1)(s)",
+          "description": "Intentional Caste Insult & Public Humiliation"
+        },
+        {
+          "sectionCode": "Sec 3(1)(b)",
+          "description": "Denial of Drinking Water & Community Access"
+        },
+        {
+          "sectionCode": "Sec 3(1)(r) & IPC 323/324",
+          "description": "Physical Assault & Grievous Hurt"
+        }
+      ],
+      "firStatus": "DRAFT_FIR_SEC18A_GENERATED",
+      "erssDispatchStatus": "P1_EMERGENCY_PATROL_MOBILIZED",
+      "assignedPatrolUnit": "TN-PRV-9021 (Villupuram Special Cell Patrol)",
+      "cadIncidentId": "CAD-14566-185177",
+      "teleManasSessionId": "TM-SESS-9211",
+      "nalsaLegalAid15100": true,
+      "dlsaReliefRupees": 100000,
+      "witnessProtectionActive": true,
+      "statutoryActions": {
+        "erss112": {
+          "cadIncidentId": "CAD-14566-185177",
+          "status": "DISPATCHED",
+          "priority": "P1_IMMEDIATE_LIFE_THREAT",
+          "assignedUnit": "TN-PRV-9021 (Villupuram Special Cell Patrol)",
+          "etaMinutes": 8,
+          "timestamp": "2026-09-20T10:46:25.177Z"
+        },
+        "firMandate": {
+          "section": "Sec 18A SC/ST (PoA) Act",
+          "status": "DRAFT_FIR_AUTOMATICALLY_GENERATED",
+          "policeStation": "Kandachipuram Special SC/ST Police Station",
+          "cognizableOffence": true,
+          "preliminaryInquiryBypassed": true
+        },
+        "dlsaRelief": {
+          "rule": "Rule 12(4) SC/ST (PoA) Rules 1995",
+          "sanctionAmount": 100000,
+          "totalEntitlement": 450000,
+          "disbursementMode": "Aadhaar Direct Benefit Transfer (DBT)",
+          "status": "SANCTION_ORDER_ISSUED"
+        },
+        "teleManas": {
+          "helpline": "14416 (Tele-MANAS NIMHANS)",
+          "assignedDoctor": "Dr. Ananya Iyer, MD (Psychiatry)",
+          "status": "CRISIS_COUNSELING_BRIDGE_QUEUED"
+        },
+        "legalAid": {
+          "helpline": "15100 (NALSA / DLSA Free Legal Aid)",
+          "assignedAdvocate": "Adv. S. Subramaniam, DLSA Legal Defense Counsel",
+          "specialCourt": "Special Court for SC/ST Cases, Villupuram"
+        }
+      },
+      "prosodyMetrics": {
+        "f0Hz": 312.4,
+        "f0Variance": 120,
+        "jitterPercent": 4.62,
+        "shimmerPercent": 5.84,
+        "pauseRatioPercent": 46.5,
+        "tremorDetected": true,
+        "traumaSeverity": "MODERATE",
+        "vocalTremorHz": 6.4,
+        "panicDetected": true
+      },
+      "humanReview": {
+        "status": "PENDING_OFFICER_REVIEW",
+        "reviewedBy": null,
+        "reviewNotes": "Auto-triaged by Vernds AI Master Multimodal Engine. Escalated to District Nodal Officer.",
+        "reviewedAt": null
+      },
+      "statutoryProgress": [
+        {
+          "step": 1,
+          "title": "Voice Ingestion & Audio Recorded",
+          "status": "COMPLETED",
+          "date": "20/09/2026, 04:16 PM",
+          "notes": "Audio preserved with SHA-256 DPDP consent token."
+        },
+        {
+          "step": 2,
+          "title": "Multimodal Emotion & PoA Assessment",
+          "status": "COMPLETED",
+          "date": "20/09/2026, 04:16 PM",
+          "notes": "SVI 88/100, SSI 95/100. Safety Override activated for armed perpetrators."
+        },
+        {
+          "step": 3,
+          "title": "Emergency 112 Patrol Dispatched",
+          "status": "DISPATCHED",
+          "date": "20/09/2026, 04:16 PM",
+          "notes": "CAD Incident CAD-14566-185177 sent to Unit TN-PRV-9021 (Villupuram Special Cell Patrol). ETA 8 mins."
+        },
+        {
+          "step": 4,
+          "title": "Section 18A Mandatory FIR",
+          "status": "GENERATED",
+          "date": "20/09/2026",
+          "notes": "Pre-formatted FIR ready for Special SC/ST Court filing."
+        },
+        {
+          "step": 5,
+          "title": "Rule 12(4) Relief (₹1,00,000 DBT)",
+          "status": "SANCTIONED",
+          "date": "20/09/2026",
+          "notes": "Initial 50% installment sanctioned for direct account transfer."
+        }
+      ],
+      "createdAt": "2026-09-20T10:46:25.212Z",
+      "updatedAt": "2026-09-20T10:46:25.261Z"
+    },
+    {
+      "id": "NHAA-20260920-555573",
+      "caseId": "NHAA-20260920-555573",
+      "victimId": "VIC-VI-6595",
+      "victimName": "K. Selvam",
+      "callerNumber": "+91 9342636595",
+      "callerType": "VICTIM_DIRECT",
+      "state": "Tamil Nadu",
+      "district": "Villupuram",
+      "village": "Kandachipuram",
+      "policeStation": "Kandachipuram Special SC/ST PS",
+      "coordinates": {
+        "lat": 11.9912,
+        "lng": 79.3087
+      },
+      "helplineChannel": "VOICE_14566_MIC_PORTAL",
+      "audioUrl": "/audio/sample_distress_call.wav",
+      "audioDuration": "02:18",
+      "spokenTranscript": "வணக்கம், எங்கள் கிராமத்தில் சாதியைச் சொல்லித் திட்டி, பொதுக் குடிநீர் கிணற்றில் தண்ணீர் எடுக்க விடாமல் தடுத்துத் தாக்குகிறார்கள். அரிவாளுடன் வீட்டைச் சுற்றி வளைத்து மிரட்டுகிறார்கள். உயிருக்கு ஆபத்து, உடனடியாக 112 போலீஸ் உதவி வேண்டும்.",
+      "translatedTranscript": "They insulted our caste, blocked access to water, and armed perpetrators are threatening outside our house. Immediate police intervention required.",
+      "language": "Tamil (தமிழ்) / Tanglish",
+      "sviScore": 86,
+      "avcsScore": 97,
+      "ssiScore": 95,
+      "riskCategory": "CRITICAL_RED",
+      "safetyOverride": true,
+      "overrideReason": "Armed perpetrators with deadly weapon encircling residence | Immediate danger to life",
+      "acousticFearScore": 0.94,
+      "nlpTraumaScore": 0.91,
+      "emotions": {
+        "fear": 94,
+        "distress": 89,
+        "anxiety": 86,
+        "helplessness": 82,
+        "sadness": 72,
+        "vocalTremorScore": 88,
+        "overallEmotionalState": "ACUTE_FEAR_AND_TRAUMA"
+      },
+      "problemsIdentified": [
+        "Denial of Drinking Water from Public Village Well [PoA Sec 3(1)(b)]",
+        "Public Caste-based Verbal Abuse & Humiliation [PoA Sec 3(1)(r) & 3(1)(s)]",
+        "Physical Assault & Threat with Deadly Weapons (Aruval / Sickle) [IPC 324 / PoA Sec 3(2)(v)]",
+        "Armed Accused Encircled Outside Residence (Life Threat & Hostage Risk)"
+      ],
+      "crimeCategory": "Denial of Drinking Water, Public Caste Abuse & Armed Intimidation",
+      "legalSections": [
+        {
+          "sectionCode": "Sec 3(1)(r) & 3(1)(s)",
+          "description": "Intentional Caste Insult & Public Humiliation"
+        },
+        {
+          "sectionCode": "Sec 3(1)(b)",
+          "description": "Denial of Drinking Water & Community Access"
+        },
+        {
+          "sectionCode": "Sec 3(1)(r) & IPC 323/324",
+          "description": "Physical Assault & Grievous Hurt"
+        }
+      ],
+      "firStatus": "DRAFT_FIR_SEC18A_GENERATED",
+      "erssDispatchStatus": "P1_EMERGENCY_PATROL_MOBILIZED",
+      "assignedPatrolUnit": "TN-PRV-9021 (Villupuram Special Cell Patrol)",
+      "cadIncidentId": "CAD-14566-301410",
+      "teleManasSessionId": "TM-SESS-5573",
+      "nalsaLegalAid15100": true,
+      "dlsaReliefRupees": 100000,
+      "witnessProtectionActive": true,
+      "statutoryActions": {
+        "erss112": {
+          "cadIncidentId": "CAD-14566-301410",
+          "status": "DISPATCHED",
+          "priority": "P1_IMMEDIATE_LIFE_THREAT",
+          "assignedUnit": "TN-PRV-9021 (Villupuram Special Cell Patrol)",
+          "etaMinutes": 8,
+          "timestamp": "2026-09-20T09:41:41.410Z"
+        },
+        "firMandate": {
+          "section": "Sec 18A SC/ST (PoA) Act",
+          "status": "DRAFT_FIR_AUTOMATICALLY_GENERATED",
+          "policeStation": "Kandachipuram Special SC/ST Police Station",
+          "cognizableOffence": true,
+          "preliminaryInquiryBypassed": true
+        },
+        "dlsaRelief": {
+          "rule": "Rule 12(4) SC/ST (PoA) Rules 1995",
+          "sanctionAmount": 100000,
+          "totalEntitlement": 450000,
+          "disbursementMode": "Aadhaar Direct Benefit Transfer (DBT)",
+          "status": "SANCTION_ORDER_ISSUED"
+        },
+        "teleManas": {
+          "helpline": "14416 (Tele-MANAS NIMHANS)",
+          "assignedDoctor": "Dr. Ananya Iyer, MD (Psychiatry)",
+          "status": "CRISIS_COUNSELING_BRIDGE_QUEUED"
+        },
+        "legalAid": {
+          "helpline": "15100 (NALSA / DLSA Free Legal Aid)",
+          "assignedAdvocate": "Adv. S. Subramaniam, DLSA Legal Defense Counsel",
+          "specialCourt": "Special Court for SC/ST Cases, Villupuram"
+        }
+      },
+      "prosodyMetrics": {
+        "f0Hz": 312.4,
+        "f0Variance": 84.6,
+        "jitterPercent": 4.62,
+        "shimmerPercent": 5.84,
+        "pauseRatioPercent": 46.5,
+        "vocalTremorHz": 6.4,
+        "tremorDetected": true,
+        "panicDetected": true,
+        "traumaSeverity": "CRITICAL"
+      },
+      "humanReview": {
+        "status": "PENDING_OFFICER_REVIEW",
+        "reviewedBy": null,
+        "reviewNotes": "Auto-triaged by Vernds AI Master Multimodal Engine. Escalated to District Nodal Officer.",
+        "reviewedAt": null
+      },
+      "statutoryProgress": [
+        {
+          "step": 1,
+          "title": "Voice Ingestion & Audio Recorded",
+          "status": "COMPLETED",
+          "date": "20/09/2026, 03:11 PM",
+          "notes": "Audio preserved with SHA-256 DPDP consent token."
+        },
+        {
+          "step": 2,
+          "title": "Multimodal Emotion & PoA Assessment",
+          "status": "COMPLETED",
+          "date": "20/09/2026, 03:11 PM",
+          "notes": "SVI 88/100, SSI 95/100. Safety Override activated for armed perpetrators."
+        },
+        {
+          "step": 3,
+          "title": "Emergency 112 Patrol Dispatched",
+          "status": "DISPATCHED",
+          "date": "20/09/2026, 03:11 PM",
+          "notes": "CAD Incident CAD-14566-301410 sent to Unit TN-PRV-9021 (Villupuram Special Cell Patrol). ETA 8 mins."
+        },
+        {
+          "step": 4,
+          "title": "Section 18A Mandatory FIR",
+          "status": "GENERATED",
+          "date": "20/09/2026",
+          "notes": "Pre-formatted FIR ready for Special SC/ST Court filing."
+        },
+        {
+          "step": 5,
+          "title": "Rule 12(4) Relief (₹1,00,000 DBT)",
+          "status": "SANCTIONED",
+          "date": "20/09/2026",
+          "notes": "Initial 50% installment sanctioned for direct account transfer."
+        }
+      ],
+      "createdAt": "2026-09-20T09:41:41.412Z",
+      "updatedAt": "2026-09-20T09:41:41.418Z"
+    },
+    {
+      "id": "NHAA-20260920-365857",
+      "caseId": "NHAA-20260920-365857",
+      "victimId": "VIC-VI-6595",
+      "victimName": "K. Selvam",
+      "callerNumber": "+91 9342636595",
+      "callerType": "VICTIM_DIRECT",
+      "state": "Tamil Nadu",
+      "district": "Villupuram",
+      "village": "Kandachipuram",
+      "policeStation": "Kandachipuram Special SC/ST PS",
+      "coordinates": {
+        "lat": 11.9912,
+        "lng": 79.3087
+      },
+      "helplineChannel": "VOICE_14566_MIC_PORTAL",
+      "audioUrl": "/uploads/audio/complaint_1789897290716_4336.wav",
+      "audioDuration": "02:18",
+      "spokenTranscript": "வணக்கம், எங்கள் கிராமத்தில் சாதியைச் சொல்லித் திட்டி, பொதுக் குடிநீர் கிணற்றில் தண்ணீர் எடுக்க விடாமல் தடுத்துத் தாக்குகிறார்கள். அரிவாளுடன் வீட்டைச் சுற்றி வளைத்து மிரட்டுகிறார்கள். உயிருக்கு ஆபத்து, உடனடியாக 112 போலீஸ் உதவி வேண்டும்.",
+      "translatedTranscript": "They insulted our caste, blocked access to water, and armed perpetrators are threatening outside our house. Immediate police intervention required.",
+      "language": "Tamil (தமிழ்) / Tanglish",
+      "sviScore": 86,
+      "avcsScore": 97,
+      "ssiScore": 95,
+      "riskCategory": "CRITICAL_RED",
+      "safetyOverride": true,
+      "overrideReason": "Armed perpetrators with deadly weapon encircling residence | Immediate danger to life",
+      "acousticFearScore": 0.94,
+      "nlpTraumaScore": 0.91,
+      "emotions": {
+        "fear": 94,
+        "distress": 89,
+        "anxiety": 86,
+        "helplessness": 82,
+        "sadness": 72,
+        "vocalTremorScore": 88,
+        "overallEmotionalState": "ACUTE_FEAR_AND_TRAUMA"
+      },
+      "problemsIdentified": [
+        "Denial of Drinking Water from Public Village Well [PoA Sec 3(1)(b)]",
+        "Public Caste-based Verbal Abuse & Humiliation [PoA Sec 3(1)(r) & 3(1)(s)]",
+        "Physical Assault & Threat with Deadly Weapons (Aruval / Sickle) [IPC 324 / PoA Sec 3(2)(v)]",
+        "Armed Accused Encircled Outside Residence (Life Threat & Hostage Risk)"
+      ],
+      "crimeCategory": "Denial of Drinking Water, Public Caste Abuse & Armed Intimidation",
+      "legalSections": [
+        {
+          "sectionCode": "Sec 3(1)(r) & 3(1)(s)",
+          "description": "Intentional Caste Insult & Public Humiliation"
+        },
+        {
+          "sectionCode": "Sec 3(1)(b)",
+          "description": "Denial of Drinking Water & Community Access"
+        },
+        {
+          "sectionCode": "Sec 3(1)(r) & IPC 323/324",
+          "description": "Physical Assault & Grievous Hurt"
+        }
+      ],
+      "firStatus": "DRAFT_FIR_SEC18A_GENERATED",
+      "erssDispatchStatus": "P1_EMERGENCY_PATROL_MOBILIZED",
+      "assignedPatrolUnit": "TN-PRV-9021 (Villupuram Special Cell Patrol)",
+      "cadIncidentId": "CAD-14566-290754",
+      "teleManasSessionId": "TM-SESS-5857",
+      "nalsaLegalAid15100": true,
+      "dlsaReliefRupees": 100000,
+      "witnessProtectionActive": true,
+      "statutoryActions": {
+        "erss112": {
+          "cadIncidentId": "CAD-14566-290754",
+          "status": "DISPATCHED",
+          "priority": "P1_IMMEDIATE_LIFE_THREAT",
+          "assignedUnit": "TN-PRV-9021 (Villupuram Special Cell Patrol)",
+          "etaMinutes": 8,
+          "timestamp": "2026-09-20T09:41:30.754Z"
+        },
+        "firMandate": {
+          "section": "Sec 18A SC/ST (PoA) Act",
+          "status": "DRAFT_FIR_AUTOMATICALLY_GENERATED",
+          "policeStation": "Kandachipuram Special SC/ST Police Station",
+          "cognizableOffence": true,
+          "preliminaryInquiryBypassed": true
+        },
+        "dlsaRelief": {
+          "rule": "Rule 12(4) SC/ST (PoA) Rules 1995",
+          "sanctionAmount": 100000,
+          "totalEntitlement": 450000,
+          "disbursementMode": "Aadhaar Direct Benefit Transfer (DBT)",
+          "status": "SANCTION_ORDER_ISSUED"
+        },
+        "teleManas": {
+          "helpline": "14416 (Tele-MANAS NIMHANS)",
+          "assignedDoctor": "Dr. Ananya Iyer, MD (Psychiatry)",
+          "status": "CRISIS_COUNSELING_BRIDGE_QUEUED"
+        },
+        "legalAid": {
+          "helpline": "15100 (NALSA / DLSA Free Legal Aid)",
+          "assignedAdvocate": "Adv. S. Subramaniam, DLSA Legal Defense Counsel",
+          "specialCourt": "Special Court for SC/ST Cases, Villupuram"
+        }
+      },
+      "prosodyMetrics": {
+        "f0Hz": 312.4,
+        "f0Variance": 120,
+        "jitterPercent": 4.62,
+        "shimmerPercent": 5.84,
+        "pauseRatioPercent": 46.5,
+        "tremorDetected": true,
+        "traumaSeverity": "MODERATE",
+        "vocalTremorHz": 6.4,
+        "panicDetected": true
+      },
+      "humanReview": {
+        "status": "PENDING_OFFICER_REVIEW",
+        "reviewedBy": null,
+        "reviewNotes": "Auto-triaged by Vernds AI Master Multimodal Engine. Escalated to District Nodal Officer.",
+        "reviewedAt": null
+      },
+      "statutoryProgress": [
+        {
+          "step": 1,
+          "title": "Voice Ingestion & Audio Recorded",
+          "status": "COMPLETED",
+          "date": "20/09/2026, 03:11 PM",
+          "notes": "Audio preserved with SHA-256 DPDP consent token."
+        },
+        {
+          "step": 2,
+          "title": "Multimodal Emotion & PoA Assessment",
+          "status": "COMPLETED",
+          "date": "20/09/2026, 03:11 PM",
+          "notes": "SVI 88/100, SSI 95/100. Safety Override activated for armed perpetrators."
+        },
+        {
+          "step": 3,
+          "title": "Emergency 112 Patrol Dispatched",
+          "status": "DISPATCHED",
+          "date": "20/09/2026, 03:11 PM",
+          "notes": "CAD Incident CAD-14566-290754 sent to Unit TN-PRV-9021 (Villupuram Special Cell Patrol). ETA 8 mins."
+        },
+        {
+          "step": 4,
+          "title": "Section 18A Mandatory FIR",
+          "status": "GENERATED",
+          "date": "20/09/2026",
+          "notes": "Pre-formatted FIR ready for Special SC/ST Court filing."
+        },
+        {
+          "step": 5,
+          "title": "Rule 12(4) Relief (₹1,00,000 DBT)",
+          "status": "SANCTIONED",
+          "date": "20/09/2026",
+          "notes": "Initial 50% installment sanctioned for direct account transfer."
+        }
+      ],
+      "createdAt": "2026-09-20T09:41:30.773Z",
+      "updatedAt": "2026-09-20T09:41:30.784Z"
+    },
+    {
+      "id": "NHAA-20260920-158653",
+      "caseId": "NHAA-20260920-158653",
+      "victimId": "VIC-VI-6595",
+      "victimName": "K. Selvam",
+      "callerNumber": "+91 9342636595",
+      "callerType": "VICTIM_DIRECT",
+      "state": "Tamil Nadu",
+      "district": "Villupuram",
+      "village": "Kandachipuram",
+      "policeStation": "Kandachipuram Special SC/ST PS",
+      "coordinates": {
+        "lat": 11.9912,
+        "lng": 79.3087
+      },
+      "helplineChannel": "VOICE_14566_MIC_PORTAL",
+      "audioUrl": "/uploads/audio/complaint_1789882682918_7735.wav",
+      "audioDuration": "02:18",
+      "spokenTranscript": "வணக்கம், எங்கள் கிராமத்தில் சாதியைச் சொல்லித் திட்டி, பொதுக் குடிநீர் கிணற்றில் தண்ணீர் எடுக்க விடாமல் தடுத்துத் தாக்குகிறார்கள். அரிவாளுடன் வீட்டைச் சுற்றி வளைத்து மிரட்டுகிறார்கள். உயிருக்கு ஆபத்து, உடனடியாக 112 போலீஸ் உதவி வேண்டும்.",
+      "translatedTranscript": "They insulted our caste, blocked access to water, and armed perpetrators are threatening outside our house. Immediate police intervention required.",
+      "language": "Tamil (தமிழ்) / Tanglish",
+      "sviScore": 86,
+      "avcsScore": 97,
+      "ssiScore": 95,
+      "riskCategory": "CRITICAL_RED",
+      "safetyOverride": true,
+      "overrideReason": "Armed perpetrators with deadly weapon encircling residence | Immediate danger to life",
+      "acousticFearScore": 0.94,
+      "nlpTraumaScore": 0.91,
+      "emotions": {
+        "fear": 94,
+        "distress": 89,
+        "anxiety": 86,
+        "helplessness": 82,
+        "sadness": 72,
+        "vocalTremorScore": 88,
+        "overallEmotionalState": "ACUTE_FEAR_AND_TRAUMA"
+      },
+      "problemsIdentified": [
+        "Denial of Drinking Water from Public Village Well [PoA Sec 3(1)(b)]",
+        "Public Caste-based Verbal Abuse & Humiliation [PoA Sec 3(1)(r) & 3(1)(s)]",
+        "Physical Assault & Threat with Deadly Weapons (Aruval / Sickle) [IPC 324 / PoA Sec 3(2)(v)]",
+        "Armed Accused Encircled Outside Residence (Life Threat & Hostage Risk)"
+      ],
+      "crimeCategory": "Denial of Drinking Water, Public Caste Abuse & Armed Intimidation",
+      "legalSections": [
+        {
+          "sectionCode": "Sec 3(1)(r) & 3(1)(s)",
+          "description": "Intentional Caste Insult & Public Humiliation"
+        },
+        {
+          "sectionCode": "Sec 3(1)(b)",
+          "description": "Denial of Drinking Water & Community Access"
+        },
+        {
+          "sectionCode": "Sec 3(1)(r) & IPC 323/324",
+          "description": "Physical Assault & Grievous Hurt"
+        }
+      ],
+      "firStatus": "DRAFT_FIR_SEC18A_GENERATED",
+      "erssDispatchStatus": "P1_EMERGENCY_PATROL_MOBILIZED",
+      "assignedPatrolUnit": "TN-PRV-9021 (Villupuram Special Cell Patrol)",
+      "cadIncidentId": "CAD-14566-682932",
+      "teleManasSessionId": "TM-SESS-8653",
+      "nalsaLegalAid15100": true,
+      "dlsaReliefRupees": 100000,
+      "witnessProtectionActive": true,
+      "statutoryActions": {
+        "erss112": {
+          "cadIncidentId": "CAD-14566-682932",
+          "status": "DISPATCHED",
+          "priority": "P1_IMMEDIATE_LIFE_THREAT",
+          "assignedUnit": "TN-PRV-9021 (Villupuram Special Cell Patrol)",
+          "etaMinutes": 8,
+          "timestamp": "2026-09-20T05:38:02.932Z"
+        },
+        "firMandate": {
+          "section": "Sec 18A SC/ST (PoA) Act",
+          "status": "DRAFT_FIR_AUTOMATICALLY_GENERATED",
+          "policeStation": "Kandachipuram Special SC/ST Police Station",
+          "cognizableOffence": true,
+          "preliminaryInquiryBypassed": true
+        },
+        "dlsaRelief": {
+          "rule": "Rule 12(4) SC/ST (PoA) Rules 1995",
+          "sanctionAmount": 100000,
+          "totalEntitlement": 450000,
+          "disbursementMode": "Aadhaar Direct Benefit Transfer (DBT)",
+          "status": "SANCTION_ORDER_ISSUED"
+        },
+        "teleManas": {
+          "helpline": "14416 (Tele-MANAS NIMHANS)",
+          "assignedDoctor": "Dr. Ananya Iyer, MD (Psychiatry)",
+          "status": "CRISIS_COUNSELING_BRIDGE_QUEUED"
+        },
+        "legalAid": {
+          "helpline": "15100 (NALSA / DLSA Free Legal Aid)",
+          "assignedAdvocate": "Adv. S. Subramaniam, DLSA Legal Defense Counsel",
+          "specialCourt": "Special Court for SC/ST Cases, Villupuram"
+        }
+      },
+      "prosodyMetrics": {
+        "f0Hz": 312.4,
+        "f0Variance": 120,
+        "jitterPercent": 4.62,
+        "shimmerPercent": 5.84,
+        "pauseRatioPercent": 46.5,
+        "tremorDetected": true,
+        "traumaSeverity": "MODERATE",
+        "vocalTremorHz": 6.4,
+        "panicDetected": true
+      },
+      "humanReview": {
+        "status": "PENDING_OFFICER_REVIEW",
+        "reviewedBy": null,
+        "reviewNotes": "Auto-triaged by Vernds AI Master Multimodal Engine. Escalated to District Nodal Officer.",
+        "reviewedAt": null
+      },
+      "statutoryProgress": [
+        {
+          "step": 1,
+          "title": "Voice Ingestion & Audio Recorded",
+          "status": "COMPLETED",
+          "date": "20/09/2026, 11:08 AM",
+          "notes": "Audio preserved with SHA-256 DPDP consent token."
+        },
+        {
+          "step": 2,
+          "title": "Multimodal Emotion & PoA Assessment",
+          "status": "COMPLETED",
+          "date": "20/09/2026, 11:08 AM",
+          "notes": "SVI 88/100, SSI 95/100. Safety Override activated for armed perpetrators."
+        },
+        {
+          "step": 3,
+          "title": "Emergency 112 Patrol Dispatched",
+          "status": "DISPATCHED",
+          "date": "20/09/2026, 11:08 AM",
+          "notes": "CAD Incident CAD-14566-682932 sent to Unit TN-PRV-9021 (Villupuram Special Cell Patrol). ETA 8 mins."
+        },
+        {
+          "step": 4,
+          "title": "Section 18A Mandatory FIR",
+          "status": "GENERATED",
+          "date": "20/09/2026",
+          "notes": "Pre-formatted FIR ready for Special SC/ST Court filing."
+        },
+        {
+          "step": 5,
+          "title": "Rule 12(4) Relief (₹1,00,000 DBT)",
+          "status": "SANCTIONED",
+          "date": "20/09/2026",
+          "notes": "Initial 50% installment sanctioned for direct account transfer."
+        }
+      ],
+      "createdAt": "2026-09-20T05:38:02.941Z",
+      "updatedAt": "2026-09-20T05:38:02.979Z"
+    },
+    {
+      "id": "NHAA-20260920-526151",
+      "caseId": "NHAA-20260920-526151",
+      "victimId": "VIC-VI-6595",
+      "victimName": "K. Selvam",
+      "callerNumber": "+91 9342636595",
+      "callerType": "VICTIM_DIRECT",
+      "state": "Tamil Nadu",
+      "district": "Villupuram",
+      "village": "Kandachipuram",
+      "policeStation": "Kandachipuram Special SC/ST PS",
+      "coordinates": {
+        "lat": 11.9912,
+        "lng": 79.3087
+      },
+      "helplineChannel": "VOICE_14566_MIC_PORTAL",
+      "audioUrl": "/uploads/audio/complaint_1789882293445_3623.wav",
+      "audioDuration": "02:18",
+      "spokenTranscript": "வணக்கம், எங்கள் ஊரில் சாதியைச் சொல்லித் திட்டி, பொதுக் குடிநீர் கிணற்றில் தண்ணீர் எடுக்க விடாமல் தடுத்துத் தாக்குகிறார்கள். அரிவாளுடன் வீட்டைச் சுற்றி வளைத்து மிரட்டுகிறார்கள். உயிருக்கு ஆபத்து, உடனடியாக 112 போலீஸ் உதவி வேண்டும்.",
+      "translatedTranscript": "They insulted our caste, blocked access to water, and armed perpetrators are threatening outside our house. Immediate police intervention required.",
+      "language": "Tamil (தமிழ்) / Tanglish",
+      "sviScore": 86,
+      "avcsScore": 97,
+      "ssiScore": 95,
+      "riskCategory": "CRITICAL_RED",
+      "safetyOverride": true,
+      "overrideReason": "Armed perpetrators with deadly weapon encircling residence | Immediate danger to life",
+      "acousticFearScore": 0.94,
+      "nlpTraumaScore": 0.91,
+      "emotions": {
+        "fear": 94,
+        "distress": 89,
+        "anxiety": 86,
+        "helplessness": 82,
+        "sadness": 72,
+        "vocalTremorScore": 88,
+        "overallEmotionalState": "ACUTE_FEAR_AND_TRAUMA"
+      },
+      "problemsIdentified": [
+        "Denial of Drinking Water from Public Village Well [PoA Sec 3(1)(b)]",
+        "Public Caste-based Verbal Abuse & Humiliation [PoA Sec 3(1)(r) & 3(1)(s)]",
+        "Physical Assault & Threat with Deadly Weapons (Aruval / Sickle) [IPC 324 / PoA Sec 3(2)(v)]",
+        "Armed Accused Encircled Outside Residence (Life Threat & Hostage Risk)"
+      ],
+      "crimeCategory": "Denial of Drinking Water, Public Caste Abuse & Armed Intimidation",
+      "legalSections": [
+        {
+          "sectionCode": "Sec 3(1)(r) & 3(1)(s)",
+          "description": "Intentional Caste Insult & Public Humiliation"
+        },
+        {
+          "sectionCode": "Sec 3(1)(b)",
+          "description": "Denial of Drinking Water & Community Access"
+        },
+        {
+          "sectionCode": "Sec 3(1)(r) & IPC 323/324",
+          "description": "Physical Assault & Grievous Hurt"
+        }
+      ],
+      "firStatus": "DRAFT_FIR_SEC18A_GENERATED",
+      "erssDispatchStatus": "P1_EMERGENCY_PATROL_MOBILIZED",
+      "assignedPatrolUnit": "TN-PRV-9021 (Villupuram Special Cell Patrol)",
+      "cadIncidentId": "CAD-14566-293462",
+      "teleManasSessionId": "TM-SESS-6151",
+      "nalsaLegalAid15100": true,
+      "dlsaReliefRupees": 100000,
+      "witnessProtectionActive": true,
+      "statutoryActions": {
+        "erss112": {
+          "cadIncidentId": "CAD-14566-293462",
+          "status": "DISPATCHED",
+          "priority": "P1_IMMEDIATE_LIFE_THREAT",
+          "assignedUnit": "TN-PRV-9021 (Villupuram Special Cell Patrol)",
+          "etaMinutes": 8,
+          "timestamp": "2026-09-20T05:31:33.462Z"
+        },
+        "firMandate": {
+          "section": "Sec 18A SC/ST (PoA) Act",
+          "status": "DRAFT_FIR_AUTOMATICALLY_GENERATED",
+          "policeStation": "Kandachipuram Special SC/ST Police Station",
+          "cognizableOffence": true,
+          "preliminaryInquiryBypassed": true
+        },
+        "dlsaRelief": {
+          "rule": "Rule 12(4) SC/ST (PoA) Rules 1995",
+          "sanctionAmount": 100000,
+          "totalEntitlement": 450000,
+          "disbursementMode": "Aadhaar Direct Benefit Transfer (DBT)",
+          "status": "SANCTION_ORDER_ISSUED"
+        },
+        "teleManas": {
+          "helpline": "14416 (Tele-MANAS NIMHANS)",
+          "assignedDoctor": "Dr. Ananya Iyer, MD (Psychiatry)",
+          "status": "CRISIS_COUNSELING_BRIDGE_QUEUED"
+        },
+        "legalAid": {
+          "helpline": "15100 (NALSA / DLSA Free Legal Aid)",
+          "assignedAdvocate": "Adv. S. Subramaniam, DLSA Legal Defense Counsel",
+          "specialCourt": "Special Court for SC/ST Cases, Villupuram"
+        }
+      },
+      "prosodyMetrics": {
+        "f0Hz": 312.4,
+        "f0Variance": 120,
+        "jitterPercent": 4.62,
+        "shimmerPercent": 5.84,
+        "pauseRatioPercent": 46.5,
+        "tremorDetected": true,
+        "traumaSeverity": "MODERATE",
+        "vocalTremorHz": 6.4,
+        "panicDetected": true
+      },
+      "humanReview": {
+        "status": "PENDING_OFFICER_REVIEW",
+        "reviewedBy": null,
+        "reviewNotes": "Auto-triaged by Vernds AI Master Multimodal Engine. Escalated to District Nodal Officer.",
+        "reviewedAt": null
+      },
+      "statutoryProgress": [
+        {
+          "step": 1,
+          "title": "Voice Ingestion & Audio Recorded",
+          "status": "COMPLETED",
+          "date": "20/09/2026, 11:01 AM",
+          "notes": "Audio preserved with SHA-256 DPDP consent token."
+        },
+        {
+          "step": 2,
+          "title": "Multimodal Emotion & PoA Assessment",
+          "status": "COMPLETED",
+          "date": "20/09/2026, 11:01 AM",
+          "notes": "SVI 88/100, SSI 95/100. Safety Override activated for armed perpetrators."
+        },
+        {
+          "step": 3,
+          "title": "Emergency 112 Patrol Dispatched",
+          "status": "DISPATCHED",
+          "date": "20/09/2026, 11:01 AM",
+          "notes": "CAD Incident CAD-14566-293462 sent to Unit TN-PRV-9021 (Villupuram Special Cell Patrol). ETA 8 mins."
+        },
+        {
+          "step": 4,
+          "title": "Section 18A Mandatory FIR",
+          "status": "GENERATED",
+          "date": "20/09/2026",
+          "notes": "Pre-formatted FIR ready for Special SC/ST Court filing."
+        },
+        {
+          "step": 5,
+          "title": "Rule 12(4) Relief (₹1,00,000 DBT)",
+          "status": "SANCTIONED",
+          "date": "20/09/2026",
+          "notes": "Initial 50% installment sanctioned for direct account transfer."
+        }
+      ],
+      "createdAt": "2026-09-20T05:31:33.513Z",
+      "updatedAt": "2026-09-20T05:31:33.529Z"
+    },
+    {
+      "id": "NHAA-20260920-491860",
+      "caseId": "NHAA-20260920-491860",
+      "victimId": "VIC-VI-6595",
+      "victimName": "K. Selvam",
+      "callerNumber": "+91 9342636595",
+      "callerType": "VICTIM_DIRECT",
+      "state": "Tamil Nadu",
+      "district": "Villupuram",
+      "village": "Kandachipuram",
+      "policeStation": "Kandachipuram Special SC/ST PS",
+      "coordinates": {
+        "lat": 11.9912,
+        "lng": 79.3087
+      },
+      "helplineChannel": "VOICE_14566_MIC_PORTAL",
+      "audioUrl": "/uploads/audio/complaint_1789881885412_8560.wav",
+      "audioDuration": "02:18",
+      "spokenTranscript": "வணக்கம், எங்கள் ஊரில் சாதியைச் சொல்லித் திட்டி, பொதுக் குடிநீர் கிணற்றில் தண்ணீர் எடுக்க விடாமல் தடுத்துத் தாக்குகிறார்கள். அரிவாளுடன் வீட்டைச் சுற்றி வளைத்து மிரட்டுகிறார்கள். உயிருக்கு ஆபத்து, உடனடியாக 112 போலீஸ் உதவி வேண்டும்.",
+      "translatedTranscript": "They insulted our caste, blocked access to water, and armed perpetrators are threatening outside our house. Immediate police intervention required.",
+      "language": "Tamil (தமிழ்) / Tanglish",
+      "sviScore": 86,
+      "avcsScore": 90,
+      "ssiScore": 94,
+      "riskCategory": "HIGH_ORANGE",
+      "safetyOverride": true,
+      "overrideReason": "Armed perpetrators with deadly weapon encircling residence | Immediate danger to life",
+      "acousticFearScore": 0.94,
+      "nlpTraumaScore": 0.91,
+      "emotions": {
+        "fear": 94,
+        "distress": 89,
+        "anxiety": 86,
+        "helplessness": 82,
+        "sadness": 72,
+        "vocalTremorScore": 88,
+        "overallEmotionalState": "ACUTE_FEAR_AND_TRAUMA"
+      },
+      "problemsIdentified": [
+        "Denial of Drinking Water from Public Village Well [PoA Sec 3(1)(b)]",
+        "Public Caste-based Verbal Abuse & Humiliation [PoA Sec 3(1)(r) & 3(1)(s)]",
+        "Physical Assault & Threat with Deadly Weapons (Aruval / Sickle) [IPC 324 / PoA Sec 3(2)(v)]",
+        "Armed Accused Encircled Outside Residence (Life Threat & Hostage Risk)"
+      ],
+      "crimeCategory": "Denial of Drinking Water, Public Caste Abuse & Armed Intimidation",
+      "legalSections": [
+        {
+          "sectionCode": "3(1)(b)",
+          "description": "Denial of Drinking Water & Community Access"
+        },
+        {
+          "sectionCode": "3(1)(r) & 3(1)(s)",
+          "description": "Public Caste Humiliation & Abuse by Caste Name"
+        },
+        {
+          "sectionCode": "3(1)(zc)",
+          "description": "Threat of Social and Economic Boycott"
+        },
+        {
+          "sectionCode": "18A",
+          "description": "Mandatory FIR without Preliminary Inquiry & No Anticipatory Bail"
+        }
+      ],
+      "firStatus": "DRAFT_FIR_SEC18A_GENERATED",
+      "erssDispatchStatus": "P1_EMERGENCY_PATROL_MOBILIZED",
+      "assignedPatrolUnit": "TN-PRV-9021 (Villupuram Special Cell Patrol)",
+      "cadIncidentId": "CAD-14566-885448",
+      "teleManasSessionId": "TM-SESS-1860",
+      "nalsaLegalAid15100": true,
+      "dlsaReliefRupees": 100000,
+      "witnessProtectionActive": true,
+      "statutoryActions": {
+        "erss112": {
+          "cadIncidentId": "CAD-14566-885448",
+          "status": "DISPATCHED",
+          "priority": "P1_IMMEDIATE_LIFE_THREAT",
+          "assignedUnit": "TN-PRV-9021 (Villupuram Special Cell Patrol)",
+          "etaMinutes": 8,
+          "timestamp": "2026-09-20T05:24:45.448Z"
+        },
+        "firMandate": {
+          "section": "Sec 18A SC/ST (PoA) Act",
+          "status": "DRAFT_FIR_AUTOMATICALLY_GENERATED",
+          "policeStation": "Kandachipuram Special SC/ST Police Station",
+          "cognizableOffence": true,
+          "preliminaryInquiryBypassed": true
+        },
+        "dlsaRelief": {
+          "rule": "Rule 12(4) SC/ST (PoA) Rules 1995",
+          "sanctionAmount": 100000,
+          "totalEntitlement": 450000,
+          "disbursementMode": "Aadhaar Direct Benefit Transfer (DBT)",
+          "status": "SANCTION_ORDER_ISSUED"
+        },
+        "teleManas": {
+          "helpline": "14416 (Tele-MANAS NIMHANS)",
+          "assignedDoctor": "Dr. Ananya Iyer, MD (Psychiatry)",
+          "status": "CRISIS_COUNSELING_BRIDGE_QUEUED"
+        },
+        "legalAid": {
+          "helpline": "15100 (NALSA / DLSA Free Legal Aid)",
+          "assignedAdvocate": "Adv. S. Subramaniam, DLSA Legal Defense Counsel",
+          "specialCourt": "Special Court for SC/ST Cases, Villupuram"
+        }
+      },
+      "prosodyMetrics": {
+        "f0Hz": 312.4,
+        "f0Variance": 120,
+        "jitterPercent": 4.62,
+        "shimmerPercent": 5.84,
+        "pauseRatioPercent": 46.5,
+        "tremorDetected": true,
+        "traumaSeverity": "MODERATE",
+        "vocalTremorHz": 6.4,
+        "panicDetected": true
+      },
+      "humanReview": {
+        "status": "PENDING_OFFICER_REVIEW",
+        "reviewedBy": null,
+        "reviewNotes": "Auto-triaged by Vernds AI Master Multimodal Engine. Escalated to District Nodal Officer.",
+        "reviewedAt": null
+      },
+      "statutoryProgress": [
+        {
+          "step": 1,
+          "title": "Voice Ingestion & Audio Recorded",
+          "status": "COMPLETED",
+          "date": "20/09/2026, 10:54 AM",
+          "notes": "Audio preserved with SHA-256 DPDP consent token."
+        },
+        {
+          "step": 2,
+          "title": "Multimodal Emotion & PoA Assessment",
+          "status": "COMPLETED",
+          "date": "20/09/2026, 10:54 AM",
+          "notes": "SVI 88/100, SSI 95/100. Safety Override activated for armed perpetrators."
+        },
+        {
+          "step": 3,
+          "title": "Emergency 112 Patrol Dispatched",
+          "status": "DISPATCHED",
+          "date": "20/09/2026, 10:54 AM",
+          "notes": "CAD Incident CAD-14566-885448 sent to Unit TN-PRV-9021 (Villupuram Special Cell Patrol). ETA 8 mins."
+        },
+        {
+          "step": 4,
+          "title": "Section 18A Mandatory FIR",
+          "status": "GENERATED",
+          "date": "20/09/2026",
+          "notes": "Pre-formatted FIR ready for Special SC/ST Court filing."
+        },
+        {
+          "step": 5,
+          "title": "Rule 12(4) Relief (₹1,00,000 DBT)",
+          "status": "SANCTIONED",
+          "date": "20/09/2026",
+          "notes": "Initial 50% installment sanctioned for direct account transfer."
+        }
+      ],
+      "createdAt": "2026-09-20T05:24:45.574Z",
+      "updatedAt": "2026-09-20T05:24:45.594Z"
+    },
+    {
+      "id": "NHAA-20260920-782655",
+      "caseId": "NHAA-20260920-782655",
+      "victimId": "VIC-VI-6595",
+      "victimName": "K. Selvam",
+      "callerNumber": "+91 9342636595",
+      "callerType": "VICTIM_DIRECT",
+      "state": "Tamil Nadu",
+      "district": "Villupuram",
+      "village": "Kandachipuram",
+      "policeStation": "Kandachipuram Special SC/ST PS",
+      "coordinates": {
+        "lat": 11.9912,
+        "lng": 79.3087
+      },
+      "helplineChannel": "VOICE_14566_MIC_PORTAL",
+      "audioUrl": "/uploads/audio/complaint_1789881821407_3511.wav",
+      "audioDuration": "02:18",
+      "spokenTranscript": "வணக்கம், எங்கள் ஊரில் சாதியைச் சொல்லித் திட்டி, பொதுக் குடிநீர் கிணற்றில் தண்ணீர் எடுக்க விடாமல் தடுத்துத் தாக்குகிறார்கள். அரிவாளுடன் வீட்டைச் சுற்றி வளைத்து மிரட்டுகிறார்கள். உயிருக்கு ஆபத்து, உடனடியாக 112 போலீஸ் உதவி வேண்டும்.",
+      "translatedTranscript": "They insulted our caste, blocked access to water, and armed perpetrators are threatening outside our house. Immediate police intervention required.",
+      "language": "Tamil (தமிழ்) / Tanglish",
+      "sviScore": 18,
+      "avcsScore": 20,
+      "ssiScore": 95,
+      "riskCategory": "LOW",
+      "safetyOverride": true,
+      "overrideReason": "Armed perpetrators with deadly weapon encircling residence | Immediate danger to life",
+      "acousticFearScore": 0.94,
+      "nlpTraumaScore": 0.91,
+      "emotions": {
+        "fear": 94,
+        "distress": 89,
+        "anxiety": 86,
+        "helplessness": 82,
+        "sadness": 72,
+        "vocalTremorScore": 88,
+        "overallEmotionalState": "ACUTE_FEAR_AND_TRAUMA"
+      },
+      "problemsIdentified": [
+        "Denial of Drinking Water from Public Village Well [PoA Sec 3(1)(b)]",
+        "Public Caste-based Verbal Abuse & Humiliation [PoA Sec 3(1)(r) & 3(1)(s)]",
+        "Physical Assault & Threat with Deadly Weapons (Aruval / Sickle) [IPC 324 / PoA Sec 3(2)(v)]",
+        "Armed Accused Encircled Outside Residence (Life Threat & Hostage Risk)"
+      ],
+      "crimeCategory": "Denial of Drinking Water, Public Caste Abuse & Armed Intimidation",
+      "legalSections": [
+        {
+          "sectionCode": "3(1)(b)",
+          "description": "Denial of Drinking Water & Community Access"
+        },
+        {
+          "sectionCode": "3(1)(r) & 3(1)(s)",
+          "description": "Public Caste Humiliation & Abuse by Caste Name"
+        },
+        {
+          "sectionCode": "3(1)(zc)",
+          "description": "Threat of Social and Economic Boycott"
+        },
+        {
+          "sectionCode": "18A",
+          "description": "Mandatory FIR without Preliminary Inquiry & No Anticipatory Bail"
+        }
+      ],
+      "firStatus": "DRAFT_FIR_SEC18A_GENERATED",
+      "erssDispatchStatus": "P1_EMERGENCY_PATROL_MOBILIZED",
+      "assignedPatrolUnit": "TN-PRV-9021 (Villupuram Special Cell Patrol)",
+      "cadIncidentId": "CAD-14566-821469",
+      "teleManasSessionId": "TM-SESS-2655",
+      "nalsaLegalAid15100": true,
+      "dlsaReliefRupees": 100000,
+      "witnessProtectionActive": true,
+      "statutoryActions": {
+        "erss112": {
+          "cadIncidentId": "CAD-14566-821469",
+          "status": "DISPATCHED",
+          "priority": "P1_IMMEDIATE_LIFE_THREAT",
+          "assignedUnit": "TN-PRV-9021 (Villupuram Special Cell Patrol)",
+          "etaMinutes": 8,
+          "timestamp": "2026-09-20T05:23:41.469Z"
+        },
+        "firMandate": {
+          "section": "Sec 18A SC/ST (PoA) Act",
+          "status": "DRAFT_FIR_AUTOMATICALLY_GENERATED",
+          "policeStation": "Kandachipuram Special SC/ST Police Station",
+          "cognizableOffence": true,
+          "preliminaryInquiryBypassed": true
+        },
+        "dlsaRelief": {
+          "rule": "Rule 12(4) SC/ST (PoA) Rules 1995",
+          "sanctionAmount": 100000,
+          "totalEntitlement": 450000,
+          "disbursementMode": "Aadhaar Direct Benefit Transfer (DBT)",
+          "status": "SANCTION_ORDER_ISSUED"
+        },
+        "teleManas": {
+          "helpline": "14416 (Tele-MANAS NIMHANS)",
+          "assignedDoctor": "Dr. Ananya Iyer, MD (Psychiatry)",
+          "status": "CRISIS_COUNSELING_BRIDGE_QUEUED"
+        },
+        "legalAid": {
+          "helpline": "15100 (NALSA / DLSA Free Legal Aid)",
+          "assignedAdvocate": "Adv. S. Subramaniam, DLSA Legal Defense Counsel",
+          "specialCourt": "Special Court for SC/ST Cases, Villupuram"
+        }
+      },
+      "prosodyMetrics": {
+        "f0Hz": 312.4,
+        "f0Variance": 120,
+        "jitterPercent": 4.62,
+        "shimmerPercent": 5.84,
+        "pauseRatioPercent": 46.5,
+        "tremorDetected": true,
+        "traumaSeverity": "MODERATE",
+        "vocalTremorHz": 6.4,
+        "panicDetected": true
+      },
+      "humanReview": {
+        "status": "PENDING_OFFICER_REVIEW",
+        "reviewedBy": null,
+        "reviewNotes": "Auto-triaged by Vernds AI Master Multimodal Engine. Escalated to District Nodal Officer.",
+        "reviewedAt": null
+      },
+      "statutoryProgress": [
+        {
+          "step": 1,
+          "title": "Voice Ingestion & Audio Recorded",
+          "status": "COMPLETED",
+          "date": "20/09/2026, 10:53 AM",
+          "notes": "Audio preserved with SHA-256 DPDP consent token."
+        },
+        {
+          "step": 2,
+          "title": "Multimodal Emotion & PoA Assessment",
+          "status": "COMPLETED",
+          "date": "20/09/2026, 10:53 AM",
+          "notes": "SVI 88/100, SSI 95/100. Safety Override activated for armed perpetrators."
+        },
+        {
+          "step": 3,
+          "title": "Emergency 112 Patrol Dispatched",
+          "status": "DISPATCHED",
+          "date": "20/09/2026, 10:53 AM",
+          "notes": "CAD Incident CAD-14566-821469 sent to Unit TN-PRV-9021 (Villupuram Special Cell Patrol). ETA 8 mins."
+        },
+        {
+          "step": 4,
+          "title": "Section 18A Mandatory FIR",
+          "status": "GENERATED",
+          "date": "20/09/2026",
+          "notes": "Pre-formatted FIR ready for Special SC/ST Court filing."
+        },
+        {
+          "step": 5,
+          "title": "Rule 12(4) Relief (₹1,00,000 DBT)",
+          "status": "SANCTIONED",
+          "date": "20/09/2026",
+          "notes": "Initial 50% installment sanctioned for direct account transfer."
+        }
+      ],
+      "createdAt": "2026-09-20T05:23:41.478Z",
+      "updatedAt": "2026-09-20T05:23:41.545Z"
+    },
+    {
+      "id": "NHAA-20260920-737561",
+      "caseId": "NHAA-20260920-737561",
+      "victimId": "VIC-VI-6595",
+      "victimName": "K. Selvam",
+      "callerNumber": "+91 9342636595",
+      "callerType": "VICTIM_DIRECT",
+      "state": "Tamil Nadu",
+      "district": "Villupuram",
+      "village": "Kandachipuram",
+      "policeStation": "Kandachipuram Special SC/ST PS",
+      "coordinates": {
+        "lat": 11.9912,
+        "lng": 79.3087
+      },
+      "helplineChannel": "VOICE_14566_MIC_PORTAL",
+      "audioUrl": "/uploads/audio/complaint_1789881386928_3444.wav",
+      "audioDuration": "02:18",
+      "spokenTranscript": "வணக்கம், எங்கள் ஊரில் சாதியைச் சொல்லித் திட்டி, பொதுக் குடிநீர் கிணற்றில் தண்ணீர் எடுக்க விடாமல் தடுத்துத் தாக்குகிறார்கள். அரிவாளுடன் வீட்டைச் சுற்றி வளைத்து மிரட்டுகிறார்கள். உயிருக்கு ஆபத்து, உடனடியாக 112 போலீஸ் உதவி வேண்டும்.",
+      "translatedTranscript": "They insulted our caste, blocked access to water, and armed perpetrators are threatening outside our house. Immediate police intervention required.",
+      "language": "Tamil (தமிழ்) / Tanglish",
+      "sviScore": 18,
+      "avcsScore": 20,
+      "ssiScore": 95,
+      "riskCategory": "LOW",
+      "safetyOverride": true,
+      "overrideReason": "Armed perpetrators with deadly weapon encircling residence | Immediate danger to life",
+      "acousticFearScore": 0.94,
+      "nlpTraumaScore": 0.91,
+      "emotions": {
+        "fear": 94,
+        "distress": 89,
+        "anxiety": 86,
+        "helplessness": 82,
+        "sadness": 72,
+        "vocalTremorScore": 88,
+        "overallEmotionalState": "ACUTE_FEAR_AND_TRAUMA"
+      },
+      "problemsIdentified": [
+        "Denial of Drinking Water from Public Village Well [PoA Sec 3(1)(b)]",
+        "Public Caste-based Verbal Abuse & Humiliation [PoA Sec 3(1)(r) & 3(1)(s)]",
+        "Physical Assault & Threat with Deadly Weapons (Aruval / Sickle) [IPC 324 / PoA Sec 3(2)(v)]",
+        "Armed Accused Encircled Outside Residence (Life Threat & Hostage Risk)"
+      ],
+      "crimeCategory": "Denial of Drinking Water, Public Caste Abuse & Armed Intimidation",
+      "legalSections": [
+        {
+          "sectionCode": "3(1)(b)",
+          "description": "Denial of Drinking Water & Community Access"
+        },
+        {
+          "sectionCode": "3(1)(r) & 3(1)(s)",
+          "description": "Public Caste Humiliation & Abuse by Caste Name"
+        },
+        {
+          "sectionCode": "3(1)(zc)",
+          "description": "Threat of Social and Economic Boycott"
+        },
+        {
+          "sectionCode": "18A",
+          "description": "Mandatory FIR without Preliminary Inquiry & No Anticipatory Bail"
+        }
+      ],
+      "firStatus": "DRAFT_FIR_SEC18A_GENERATED",
+      "erssDispatchStatus": "P1_EMERGENCY_PATROL_MOBILIZED",
+      "assignedPatrolUnit": "TN-PRV-9021 (Villupuram Special Cell Patrol)",
+      "cadIncidentId": "CAD-14566-386945",
+      "teleManasSessionId": "TM-SESS-7561",
+      "nalsaLegalAid15100": true,
+      "dlsaReliefRupees": 100000,
+      "witnessProtectionActive": true,
+      "statutoryActions": {
+        "erss112": {
+          "cadIncidentId": "CAD-14566-386945",
+          "status": "DISPATCHED",
+          "priority": "P1_IMMEDIATE_LIFE_THREAT",
+          "assignedUnit": "TN-PRV-9021 (Villupuram Special Cell Patrol)",
+          "etaMinutes": 8,
+          "timestamp": "2026-09-20T05:16:26.945Z"
+        },
+        "firMandate": {
+          "section": "Sec 18A SC/ST (PoA) Act",
+          "status": "DRAFT_FIR_AUTOMATICALLY_GENERATED",
+          "policeStation": "Kandachipuram Special SC/ST Police Station",
+          "cognizableOffence": true,
+          "preliminaryInquiryBypassed": true
+        },
+        "dlsaRelief": {
+          "rule": "Rule 12(4) SC/ST (PoA) Rules 1995",
+          "sanctionAmount": 100000,
+          "totalEntitlement": 450000,
+          "disbursementMode": "Aadhaar Direct Benefit Transfer (DBT)",
+          "status": "SANCTION_ORDER_ISSUED"
+        },
+        "teleManas": {
+          "helpline": "14416 (Tele-MANAS NIMHANS)",
+          "assignedDoctor": "Dr. Ananya Iyer, MD (Psychiatry)",
+          "status": "CRISIS_COUNSELING_BRIDGE_QUEUED"
+        },
+        "legalAid": {
+          "helpline": "15100 (NALSA / DLSA Free Legal Aid)",
+          "assignedAdvocate": "Adv. S. Subramaniam, DLSA Legal Defense Counsel",
+          "specialCourt": "Special Court for SC/ST Cases, Villupuram"
+        }
+      },
+      "prosodyMetrics": {
+        "f0Hz": 312.4,
+        "f0Variance": 120,
+        "jitterPercent": 4.62,
+        "shimmerPercent": 5.84,
+        "pauseRatioPercent": 46.5,
+        "tremorDetected": true,
+        "traumaSeverity": "MODERATE",
+        "vocalTremorHz": 6.4,
+        "panicDetected": true
+      },
+      "humanReview": {
+        "status": "PENDING_OFFICER_REVIEW",
+        "reviewedBy": null,
+        "reviewNotes": "Auto-triaged by Vernds AI Master Multimodal Engine. Escalated to District Nodal Officer.",
+        "reviewedAt": null
+      },
+      "statutoryProgress": [
+        {
+          "step": 1,
+          "title": "Voice Ingestion & Audio Recorded",
+          "status": "COMPLETED",
+          "date": "20/09/2026, 10:46 AM",
+          "notes": "Audio preserved with SHA-256 DPDP consent token."
+        },
+        {
+          "step": 2,
+          "title": "Multimodal Emotion & PoA Assessment",
+          "status": "COMPLETED",
+          "date": "20/09/2026, 10:46 AM",
+          "notes": "SVI 88/100, SSI 95/100. Safety Override activated for armed perpetrators."
+        },
+        {
+          "step": 3,
+          "title": "Emergency 112 Patrol Dispatched",
+          "status": "DISPATCHED",
+          "date": "20/09/2026, 10:46 AM",
+          "notes": "CAD Incident CAD-14566-386945 sent to Unit TN-PRV-9021 (Villupuram Special Cell Patrol). ETA 8 mins."
+        },
+        {
+          "step": 4,
+          "title": "Section 18A Mandatory FIR",
+          "status": "GENERATED",
+          "date": "20/09/2026",
+          "notes": "Pre-formatted FIR ready for Special SC/ST Court filing."
+        },
+        {
+          "step": 5,
+          "title": "Rule 12(4) Relief (₹1,00,000 DBT)",
+          "status": "SANCTIONED",
+          "date": "20/09/2026",
+          "notes": "Initial 50% installment sanctioned for direct account transfer."
+        }
+      ],
+      "createdAt": "2026-09-20T05:16:27.070Z",
+      "updatedAt": "2026-09-20T05:16:27.083Z"
+    },
     {
       "id": "NHAA-1023",
       "caseId": "NHAA-1023",
@@ -53,11 +1488,11 @@
       "dlsaReliefRupees": 200000,
       "witnessProtectionActive": true,
       "humanReview": {
-        "status": "APPROVED",
+        "status": "APPROVED_BY_DISTRICT_OFFICER",
         "reviewedBy": "DSP M. Ramachandran, TPS",
-        "officerDesignation": "District Nodal Officer (Special SC/ST Crime Cell)",
-        "reviewNotes": "AI Assessment reviewed, verified, and endorsed for statutory execution.",
-        "reviewedAt": "2026-09-18T12:47:02.119Z"
+        "officerDesignation": "DSP Special SC/ST Crime Cell, Villupuram",
+        "reviewNotes": "Endorsed emergency 112 patrol and sanctioned immediate 50% Rule 12(4) DBT relief.",
+        "reviewedAt": "2026-09-19T15:01:32.221Z"
       },
       "longitudinalHistory": [
         {
@@ -90,7 +1525,7 @@
         }
       ],
       "createdAt": "2026-09-01T10:30:00.000Z",
-      "updatedAt": "2026-09-18T12:47:02.119Z"
+      "updatedAt": "2026-09-19T15:01:32.221Z"
     },
     {
       "id": "INC-2026-10001",
@@ -20456,6 +21891,263 @@
       "content": "Rule 7 60-day investigation deadline reminder sent to DSP In-Charge.",
       "category": "LEGAL_TIMELINE",
       "author": "DLSA Panel Counsel"
+    }
+  ],
+  "analytics": {
+    "totalAssessedVictims": 610,
+    "avgNationalSVI": 68.4,
+    "riskDistribution": {
+      "critical": 608,
+      "high": 0,
+      "moderate": 0,
+      "low": 2
+    },
+    "slaCompliance": {
+      "ivrsAnswerRate": "95.6%",
+      "erss112PatrolTimeMinutes": 11.2,
+      "rule12DisbursementRate": "100%",
+      "bhashiniDialectAccuracy": "94.8%"
+    }
+  },
+  "auditLogs": [
+    {
+      "logId": "AUDIT-MU8IMHUE-458",
+      "timestamp": "2026-09-19T15:01:32.247Z",
+      "action": "OFFICER_HITL_APPROVED_BY_DISTRICT_OFFICER",
+      "operator": "DSP M. Ramachandran, TPS",
+      "officerDesignation": "DSP Special SC/ST Crime Cell, Villupuram",
+      "caseId": "NHAA-1023",
+      "details": "Endorsed emergency 112 patrol and sanctioned immediate 50% Rule 12(4) DBT relief.",
+      "status": "VERIFIED",
+      "dpdpToken": null
+    },
+    {
+      "logId": "AUDIT-MU8IMHT0-573",
+      "timestamp": "2026-09-19T15:01:32.196Z",
+      "action": "DPDP_CONSENT_GRANTED",
+      "operator": "CITIZEN_IVRS_GATEWAY",
+      "officerDesignation": null,
+      "caseId": "+91 9342636595",
+      "details": "Explicit consent granted for acoustic and NLP stress assessment (Token: DPDP-CONSENT-A3C1AECCFB9114FE)",
+      "status": "VERIFIED",
+      "dpdpToken": "DPDP-CONSENT-A3C1AECCFB9114FE"
+    },
+    {
+      "logId": "AUDIT-MU8HRJFM-104",
+      "timestamp": "2026-09-19T14:37:27.970Z",
+      "action": "OFFICER_HITL_APPROVED_BY_DISTRICT_OFFICER",
+      "operator": "DSP M. Ramachandran, TPS",
+      "officerDesignation": "DSP Special SC/ST Crime Cell, Villupuram",
+      "caseId": "NHAA-1023",
+      "details": "Endorsed emergency 112 patrol and sanctioned immediate 50% Rule 12(4) DBT relief.",
+      "status": "VERIFIED",
+      "dpdpToken": null
+    },
+    {
+      "logId": "AUDIT-MU8HRJES-777",
+      "timestamp": "2026-09-19T14:37:27.940Z",
+      "action": "DPDP_CONSENT_GRANTED",
+      "operator": "CITIZEN_IVRS_GATEWAY",
+      "officerDesignation": null,
+      "caseId": "+91 9342636595",
+      "details": "Explicit consent granted for acoustic and NLP stress assessment (Token: DPDP-CONSENT-557C6FF253852A15)",
+      "status": "VERIFIED",
+      "dpdpToken": "DPDP-CONSENT-557C6FF253852A15"
+    },
+    {
+      "logId": "AUDIT-MU73VN2K-344",
+      "timestamp": "2026-09-18T15:20:58.508Z",
+      "action": "OFFICER_HITL_APPROVED_BY_DISTRICT_OFFICER",
+      "operator": "DSP M. Ramachandran, TPS",
+      "officerDesignation": "DSP Special SC/ST Crime Cell, Villupuram",
+      "caseId": "NHAA-1023",
+      "details": "Endorsed emergency 112 patrol and sanctioned immediate 50% Rule 12(4) DBT relief.",
+      "status": "VERIFIED",
+      "dpdpToken": null
+    },
+    {
+      "logId": "AUDIT-MU73VN1G-957",
+      "timestamp": "2026-09-18T15:20:58.468Z",
+      "action": "DPDP_CONSENT_GRANTED",
+      "operator": "CITIZEN_IVRS_GATEWAY",
+      "officerDesignation": null,
+      "caseId": "+91 9342636595",
+      "details": "Explicit consent granted for acoustic and NLP stress assessment (Token: DPDP-CONSENT-CC37E1C7131D2140)",
+      "status": "VERIFIED",
+      "dpdpToken": "DPDP-CONSENT-CC37E1C7131D2140"
+    },
+    {
+      "logId": "AUDIT-MU72C0Q9-967",
+      "timestamp": "2026-09-18T14:37:43.473Z",
+      "action": "OFFICER_HITL_APPROVED_BY_DISTRICT_OFFICER",
+      "operator": "DSP M. Ramachandran, TPS",
+      "officerDesignation": "DSP Special SC/ST Crime Cell, Villupuram",
+      "caseId": "NHAA-1023",
+      "details": "Endorsed emergency 112 patrol and sanctioned immediate 50% Rule 12(4) DBT relief.",
+      "status": "VERIFIED",
+      "dpdpToken": null
+    },
+    {
+      "logId": "AUDIT-MU72C0OZ-351",
+      "timestamp": "2026-09-18T14:37:43.427Z",
+      "action": "DPDP_CONSENT_GRANTED",
+      "operator": "CITIZEN_IVRS_GATEWAY",
+      "officerDesignation": null,
+      "caseId": "+91 9342636595",
+      "details": "Explicit consent granted for acoustic and NLP stress assessment (Token: DPDP-CONSENT-CFC59125431DF719)",
+      "status": "VERIFIED",
+      "dpdpToken": "DPDP-CONSENT-CFC59125431DF719"
+    },
+    {
+      "logId": "AUDIT-MU70SUQW-561",
+      "timestamp": "2026-09-18T13:54:49.640Z",
+      "action": "OFFICER_HITL_APPROVED_BY_DISTRICT_OFFICER",
+      "operator": "DSP M. Ramachandran, TPS",
+      "officerDesignation": "DSP Special SC/ST Crime Cell, Villupuram",
+      "caseId": "NHAA-1023",
+      "details": "Endorsed emergency 112 patrol and sanctioned immediate 50% Rule 12(4) DBT relief.",
+      "status": "VERIFIED",
+      "dpdpToken": null
+    },
+    {
+      "logId": "AUDIT-MU70SUPU-670",
+      "timestamp": "2026-09-18T13:54:49.602Z",
+      "action": "DPDP_CONSENT_GRANTED",
+      "operator": "CITIZEN_IVRS_GATEWAY",
+      "officerDesignation": null,
+      "caseId": "+91 9342636595",
+      "details": "Explicit consent granted for acoustic and NLP stress assessment (Token: DPDP-CONSENT-37A239A7F496A89E)",
+      "status": "VERIFIED",
+      "dpdpToken": "DPDP-CONSENT-37A239A7F496A89E"
+    },
+    {
+      "logId": "AUDIT-MU6Z8TIN-887",
+      "timestamp": "2026-09-18T13:11:15.311Z",
+      "action": "OFFICER_HITL_APPROVED_BY_DISTRICT_OFFICER",
+      "operator": "DSP M. Ramachandran, TPS",
+      "officerDesignation": "DSP Special SC/ST Crime Cell, Villupuram",
+      "caseId": "NHAA-1023",
+      "details": "Endorsed emergency 112 patrol and sanctioned immediate 50% Rule 12(4) DBT relief.",
+      "status": "VERIFIED",
+      "dpdpToken": null
+    },
+    {
+      "logId": "AUDIT-MU6Z8TI9-388",
+      "timestamp": "2026-09-18T13:11:15.297Z",
+      "action": "DPDP_CONSENT_GRANTED",
+      "operator": "CITIZEN_IVRS_GATEWAY",
+      "officerDesignation": null,
+      "caseId": "+91 9342636595",
+      "details": "Explicit consent granted for acoustic and NLP stress assessment (Token: DPDP-CONSENT-7AD70215DB1D1799)",
+      "status": "VERIFIED",
+      "dpdpToken": "DPDP-CONSENT-7AD70215DB1D1799"
+    },
+    {
+      "logId": "AUDIT-MU6YYOT1-465",
+      "timestamp": "2026-09-18T13:03:22.645Z",
+      "action": "OFFICER_HITL_APPROVED_BY_DISTRICT_OFFICER",
+      "operator": "DSP M. Ramachandran, TPS",
+      "officerDesignation": "DSP Special SC/ST Crime Cell, Villupuram",
+      "caseId": "NHAA-1023",
+      "details": "Endorsed emergency 112 patrol and sanctioned immediate 50% Rule 12(4) DBT relief.",
+      "status": "VERIFIED",
+      "dpdpToken": null
+    },
+    {
+      "logId": "AUDIT-MU6YYOSC-858",
+      "timestamp": "2026-09-18T13:03:22.620Z",
+      "action": "DPDP_CONSENT_GRANTED",
+      "operator": "CITIZEN_IVRS_GATEWAY",
+      "officerDesignation": null,
+      "caseId": "+91 9342636595",
+      "details": "Explicit consent granted for acoustic and NLP stress assessment (Token: DPDP-CONSENT-D17D83642A85C745)",
+      "status": "VERIFIED",
+      "dpdpToken": "DPDP-CONSENT-D17D83642A85C745"
+    },
+    {
+      "logId": "AUDIT-MU6YRUJU-705",
+      "timestamp": "2026-09-18T12:58:03.498Z",
+      "action": "DPDP_CONSENT_WITHDRAWN",
+      "operator": "CITIZEN_IVRS_GATEWAY",
+      "officerDesignation": null,
+      "caseId": "14566-CALLER",
+      "details": "Consent withdrawn; call transferred to manual operator queue.",
+      "status": "VERIFIED",
+      "dpdpToken": "DPDP-CONSENT-867A4B1A01C5F0E8"
+    },
+    {
+      "logId": "AUDIT-MU6YRUIX-259",
+      "timestamp": "2026-09-18T12:58:03.465Z",
+      "action": "OFFICER_HITL_APPROVED",
+      "operator": "DSP M. Ramachandran, TPS",
+      "officerDesignation": "District Nodal Officer (Special SC/ST Crime Cell)",
+      "caseId": "NHAA-1023",
+      "details": "AI Assessment reviewed, verified, and endorsed for statutory execution.",
+      "status": "VERIFIED",
+      "dpdpToken": null
+    },
+    {
+      "logId": "AUDIT-MU6YRHBU-449",
+      "timestamp": "2026-09-18T12:57:46.362Z",
+      "action": "OFFICER_HITL_APPROVED_BY_DISTRICT_OFFICER",
+      "operator": "DSP M. Ramachandran, TPS",
+      "officerDesignation": "DSP Special SC/ST Crime Cell, Villupuram",
+      "caseId": "NHAA-1023",
+      "details": "Endorsed emergency 112 patrol and sanctioned immediate 50% Rule 12(4) DBT relief.",
+      "status": "VERIFIED",
+      "dpdpToken": null
+    },
+    {
+      "logId": "AUDIT-MU6YRHB4-771",
+      "timestamp": "2026-09-18T12:57:46.336Z",
+      "action": "DPDP_CONSENT_GRANTED",
+      "operator": "CITIZEN_IVRS_GATEWAY",
+      "officerDesignation": null,
+      "caseId": "+91 9342636595",
+      "details": "Explicit consent granted for acoustic and NLP stress assessment (Token: DPDP-CONSENT-69E3736E5EEA1AAB)",
+      "status": "VERIFIED",
+      "dpdpToken": "DPDP-CONSENT-69E3736E5EEA1AAB"
+    },
+    {
+      "logId": "AUDIT-MU6YOJF9-667",
+      "timestamp": "2026-09-18T12:55:29.109Z",
+      "action": "OFFICER_HITL_APPROVED_BY_DISTRICT_OFFICER",
+      "operator": "DSP M. Ramachandran, TPS",
+      "officerDesignation": "DSP Special SC/ST Crime Cell, Villupuram",
+      "caseId": "NHAA-1023",
+      "details": "Endorsed emergency 112 patrol and sanctioned immediate 50% Rule 12(4) DBT relief.",
+      "status": "VERIFIED",
+      "dpdpToken": null
+    },
+    {
+      "logId": "AUDIT-MU6YOJD6-425",
+      "timestamp": "2026-09-18T12:55:29.034Z",
+      "action": "DPDP_CONSENT_GRANTED",
+      "operator": "CITIZEN_IVRS_GATEWAY",
+      "officerDesignation": null,
+      "caseId": "+91 9342636595",
+      "details": "Explicit consent granted for acoustic and NLP stress assessment (Token: DPDP-CONSENT-C2432488939EB8FA)",
+      "status": "VERIFIED",
+      "dpdpToken": "DPDP-CONSENT-C2432488939EB8FA"
+    },
+    {
+      "logId": "AUDIT-MU6YGUXP-897",
+      "timestamp": "2026-09-18T12:49:30.781Z",
+      "action": "TEST_CHECK",
+      "operator": "SYSTEM",
+      "officerDesignation": null,
+      "caseId": null,
+      "details": "Database self-test verified",
+      "status": "LOGGED",
+      "dpdpToken": null
+    },
+    {
+      "logId": "AUDIT-INIT-001",
+      "timestamp": "2026-09-18T12:48:56.742Z",
+      "action": "DATABASE_INITIALIZATION",
+      "operator": "SYSTEM_DAEMON",
+      "details": "Vernds AI Enterprise Database initialized with 601 pre-seeded statutory records.",
+      "status": "VERIFIED"
     }
   ]
 }

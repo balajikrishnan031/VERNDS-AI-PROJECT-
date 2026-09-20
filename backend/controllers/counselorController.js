@@ -22,9 +22,15 @@ exports.connectTeleManasBridge = (req, res) => {
   try {
     const { caseId, victimPhone, sviScore } = req.body;
     const bridge = teleManasSipService.initiateConferenceBridge(caseId, victimPhone, sviScore);
-    return res.status(200).json({ status: "success", message: "Tele-MANAS (+91 14416) VoIP 3-Way Bridge Initiated", bridge });
+    return res.status(200).json({
+      status: "success",
+      success: true,
+      message: "Tele-MANAS (+91 14416) VoIP 3-Way Bridge Initiated",
+      sipSessionId: bridge.sipUri || bridge.bridgeId,
+      bridge
+    });
   } catch (err) {
-    return res.status(500).json({ status: "error", message: err.message });
+    return res.status(500).json({ status: "error", success: false, message: err.message });
   }
 };
 

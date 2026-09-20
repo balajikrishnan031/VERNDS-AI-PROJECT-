@@ -9,6 +9,7 @@
 
 const SviModel = require('../models/SviModel');
 const CaseModel = require('../models/CaseModel');
+const verndsIntelligenceEngine = require('../services/verndsIntelligenceEngine');
 
 // In-memory active 14566 telephony session cache
 const activeCallSessions = new Map();
@@ -190,24 +191,11 @@ exports.trackLiveCall = async (req, res) => {
     const language = req.body.language || 'ta-IN';
     const district = req.body.district || 'Villupuram';
     const state = req.body.state || 'Tamil Nadu';
+    const consentGranted = req.body.consentGranted !== false;
 
     console.log(`[14566 Telephony] Live tracking call from ${callerNumber} (${language})`);
 
-    // Real-time NLP Problem Extraction & Classification
-    let problemSummary = "Verbal Caste Insult, Denial of Public Water Access & Physical Intimidation";
-    let sections = ["Sec 3(1)(r)", "Sec 3(1)(za)", "Sec 18A FIR Mandate"];
-    let sviScore = 88.5;
-    let riskTier = "CRITICAL RED (P1 IMMEDIATE 112 DISPATCH)";
-    let dlsaRelief = "₹1,00,000 (50% Immediate FIR Disbursement)";
-
-    if (spokenText.includes("जमीन") || spokenText.includes("घर")) {
-      problemSummary = "Forced Land Dispossession & Property Intimidation";
-      sections = ["Sec 3(1)(g)", "Sec 3(1)(f)", "Sec 18A FIR Mandate"];
-      sviScore = 91.2;
-      dlsaRelief = "₹4,50,000 (Property Damage Relief)";
-    }
-
-    // Biometric Prosody Simulation
+    // Voice Acoustic Telemetry Simulation
     const prosodyMetrics = {
       f0Hz: 318.4,
       f0Variance: 84.2,
@@ -218,6 +206,40 @@ exports.trackLiveCall = async (req, res) => {
       panicDetected: true
     };
 
+    // 8 kHz Telephony Audio Meta
+    const audioMeta = {
+      sampleRate: 8000,
+      snrDb: req.body.snrDb || 14.2,
+      clippingRatio: 0.02
+    };
+
+    // Run Master 3-Layer Multimodal Assessment with Safety Override Engine
+    const intelAssessment = await verndsIntelligenceEngine.assessVictimVulnerability({
+      caseId: `NHAA-${callerNumber.slice(-4)}`,
+      transcript: spokenText,
+      language,
+      audioMeta,
+      voiceMetrics: prosodyMetrics,
+      consentGranted
+    });
+
+    // Problem Summary & Section Mapping
+    const atrocityContext = intelAssessment.layer1AtrocityContext || {};
+    let problemSummary = atrocityContext.summary || "Allegation of Caste-Based Discrimination & Intimidation";
+    let sections = (atrocityContext.matchedOffences || []).map(o => o.section);
+    if (sections.length === 0) sections = ["Sec 3(1)(r)", "Sec 3(1)(s)", "Sec 18A FIR Mandate"];
+
+    let sviScore = intelAssessment.sviScore || 85;
+    let riskTier = intelAssessment.riskTier || "HIGH";
+    if (intelAssessment.safetyOverride && intelAssessment.safetyOverride.active) {
+      riskTier = "CRITICAL (SAFETY OVERRIDE ACTIVATED 🚨)";
+    }
+
+    let dlsaRelief = "₹1,00,000 (Initial 50% Rule 12(4) Disbursement)";
+    if (atrocityContext.avcsScore >= 85) {
+      dlsaRelief = "₹4,50,000 - ₹8,50,000 (Severe Atrocity Rehabilitation)";
+    }
+
     // Emergency 112 CAD Payload
     const erssPayload = {
       cadIncidentId: `CAD-14566-${Date.now().toString().slice(-6)}`,
@@ -226,7 +248,7 @@ exports.trackLiveCall = async (req, res) => {
       district: district,
       state: state,
       sviScore: sviScore,
-      priority: "P1_CRITICAL_EMERGENCY",
+      priority: intelAssessment.safetyOverride.active ? "P1_IMMEDIATE_PATROL_MOBILIZED" : "P2_URGENT_DISPATCH",
       dispatchStatus: "PATROL_UNIT_ASSIGNED",
       assignedUnit: "TN-PRV-9021 (Villupuram Patrol)"
     };
@@ -245,7 +267,8 @@ exports.trackLiveCall = async (req, res) => {
       riskTier,
       dlsaRelief,
       prosodyMetrics,
-      erssPayload
+      erssPayload,
+      intelligenceAssessment: intelAssessment
     });
   } catch (error) {
     console.error('[14566 Telephony] Error in live call tracking:', error);

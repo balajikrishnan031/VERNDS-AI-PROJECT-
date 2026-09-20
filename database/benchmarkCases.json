@@ -1,0 +1,121 @@
+[
+  {
+    "id": "CASE-001",
+    "title": "Case 001: Tamil Social Boycott & Water Denial",
+    "description": "Complainant reports caste abuses and blocking of public drinking water well.",
+    "language": "ta-IN",
+    "district": "Villupuram",
+    "state": "Tamil Nadu",
+    "transcript": "வணக்கம், எங்கள் கிராமத்தில் சாதியைச் சொல்லித் திட்டி, குடிநீர் எடுக்க விடாமல் தடுத்துத் அச்சுறுத்துகிறார்கள். உடனடியாக உதவி வேண்டும்.",
+    "audioMeta": { "sampleRate": 8000, "snrDb": 16.5, "clippingRatio": 0.01 },
+    "voiceMetrics": { "f0Hz": 268.0, "jitterPercent": 3.4, "shimmerPercent": 5.2, "pauseRatioPercent": 42.0 },
+    "expected": { "svi": 72, "avcs": 89, "ssi": 55, "risk": "HIGH", "override": false }
+  },
+  {
+    "id": "CASE-002",
+    "title": "Case 002: Hindi Armed Mob Outside with Family Death Threat",
+    "description": "Accused armed mob surrounding premises with explicit death threat to family.",
+    "language": "hi-IN",
+    "district": "Lakhimpur Kheri",
+    "state": "Uttar Pradesh",
+    "transcript": "गाँव के दबंगों ने हमारे घर को घेर लिया है, बाहर हथियार लेकर खड़े हैं और जान से मारने की धमकी दे रहे हैं। बच्चे बहुत डरे हुए हैं।",
+    "audioMeta": { "sampleRate": 8000, "snrDb": 14.8, "clippingRatio": 0.02 },
+    "voiceMetrics": { "f0Hz": 312.0, "jitterPercent": 4.1, "shimmerPercent": 6.8, "pauseRatioPercent": 48.5 },
+    "expected": { "svi": 86, "avcs": 90, "ssi": 95, "risk": "CRITICAL", "override": true }
+  },
+  {
+    "id": "CASE-003",
+    "title": "Case 003: Code-Mixed Tanglish Witness Intimidation (#NHAA1023)",
+    "description": "Victim reports daily retaliatory threats and intimidation following police complaint.",
+    "language": "ta-IN / Tanglish",
+    "district": "Villupuram",
+    "state": "Tamil Nadu",
+    "transcript": "Naan complaint kuduthathukku apram avanga daily threaten panranga. En family-kum danger irukku. Naan romba bayama irukken. Ippo veetukku veliya aal nikkuranga.",
+    "audioMeta": { "sampleRate": 8000, "snrDb": 15.0, "clippingRatio": 0.02 },
+    "voiceMetrics": { "f0Hz": 272.5, "jitterPercent": 3.8, "shimmerPercent": 5.4, "pauseRatioPercent": 44.0 },
+    "expected": { "svi": 86, "avcs": 88, "ssi": 95, "risk": "CRITICAL", "override": true }
+  },
+  {
+    "id": "CASE-004",
+    "title": "Case 004: Patta Land Dispossession & Crop Arson",
+    "description": "Forcible seizure of agricultural patta land and destruction of dwelling.",
+    "language": "ta-IN",
+    "district": "Perambalur",
+    "state": "Tamil Nadu",
+    "transcript": "எங்கள் பட்டா நிலத்தை ஆக்கிரமித்து பயிர்களை தீ வைத்து கொளுத்திவிட்டார்கள். கேட்டதற்கு கொலை மிரட்டல் விடுக்கிறார்கள்.",
+    "audioMeta": { "sampleRate": 8000, "snrDb": 15.5, "clippingRatio": 0.01 },
+    "voiceMetrics": { "f0Hz": 258.0, "jitterPercent": 3.1, "shimmerPercent": 4.9, "pauseRatioPercent": 39.0 },
+    "expected": { "svi": 68, "avcs": 98, "ssi": 65, "risk": "HIGH", "override": false }
+  },
+  {
+    "id": "CASE-005",
+    "title": "Case 005: Noisy 8 kHz Telephony Audio (Low Confidence Test)",
+    "description": "Phone audio with high line noise (SNR 7.2 dB) testing dynamic weight shifting.",
+    "language": "hi-IN",
+    "district": "Gaya",
+    "state": "Bihar",
+    "transcript": "आवाज कट रही है... हमारे मोहल्ले में पंचायत ने सामाजिक बहिष्कार का फैसला सुनाया है।",
+    "audioMeta": { "sampleRate": 8000, "snrDb": 7.2, "clippingRatio": 0.08 },
+    "voiceMetrics": { "f0Hz": 210.0, "jitterPercent": 2.1, "shimmerPercent": 3.5, "pauseRatioPercent": 28.0 },
+    "expected": { "svi": 48, "avcs": 85, "ssi": 40, "risk": "MODERATE", "confidence": 0.42, "override": false }
+  },
+  {
+    "id": "CASE-006",
+    "title": "Case 006: Severe Psychological Crisis & Explicit Self-Harm Signal",
+    "description": "Victim expressing complete despair and explicit suicidal ideation following ostracization.",
+    "language": "ta-IN",
+    "district": "Madurai",
+    "state": "Tamil Nadu",
+    "transcript": "ஊர்ல எல்லாரும் என்னை ஒதுக்கிட்டாங்க... எனக்கு இனி வாழவே பிடிக்கல, என் உயிரை மாய்த்துக்கொள்ள போகிறேன்.",
+    "audioMeta": { "sampleRate": 8000, "snrDb": 14.5, "clippingRatio": 0.01 },
+    "voiceMetrics": { "f0Hz": 230.0, "jitterPercent": 3.9, "shimmerPercent": 5.8, "pauseRatioPercent": 52.0 },
+    "expected": { "svi": 91, "avcs": 70, "ssi": 95, "risk": "CRITICAL", "override": true, "teleManasImmediate": true }
+  },
+  {
+    "id": "CASE-007",
+    "title": "Case 007: Calm Voice Whispering Immediate Armed Danger (Emotion != Risk)",
+    "description": "Complainant speaks in low, calm whispers (F0 178Hz) but whispers that an armed attacker is outside.",
+    "language": "ta-IN / Tanglish",
+    "district": "Salem",
+    "state": "Tamil Nadu",
+    "transcript": "Amaidhiya pesuren... avan aruval vechu veetukku veliya nikkuran, kathavai thoraikama irukken, udane police anuppunga.",
+    "audioMeta": { "sampleRate": 8000, "snrDb": 16.0, "clippingRatio": 0.01 },
+    "voiceMetrics": { "f0Hz": 178.0, "jitterPercent": 1.2, "shimmerPercent": 2.1, "pauseRatioPercent": 24.0 },
+    "expected": { "svi": 48, "avcs": 60, "ssi": 95, "risk": "CRITICAL", "override": true }
+  },
+  {
+    "id": "CASE-008",
+    "title": "Case 008: High Emotional Distress with Low Immediate Threat",
+    "description": "Complainant sobbing intensely over delayed certificates and non-violent bureaucratic delays.",
+    "language": "hi-IN",
+    "district": "Bhopal",
+    "state": "Madhya Pradesh",
+    "transcript": "मैं बहुत रो रहा हूँ, मेरा दाखिला नहीं हो पा रहा है और कोई अधिकारी नहीं सुन रहा है, मुझे बहुत दुख हो रहा है।",
+    "audioMeta": { "sampleRate": 8000, "snrDb": 15.0, "clippingRatio": 0.02 },
+    "voiceMetrics": { "f0Hz": 320.0, "jitterPercent": 4.5, "shimmerPercent": 6.9, "pauseRatioPercent": 49.0 },
+    "expected": { "svi": 76, "avcs": 20, "ssi": 25, "risk": "MODERATE", "override": false }
+  },
+  {
+    "id": "CASE-009",
+    "title": "Case 009: Longitudinal Follow-up Trajectory (Recovery: 84 -> 41)",
+    "description": "Case demonstrating 14-day Dynamic SVI recovery following 112 police and Tele-MANAS support.",
+    "history": [
+      { "day": 1, "svi": 84, "risk": "CRITICAL", "note": "Day 1 Intake & Emergency Dispatch" },
+      { "day": 3, "svi": 69, "risk": "HIGH", "note": "Day 3 Post-FIR & Psychiatrist Session" },
+      { "day": 7, "svi": 52, "risk": "MODERATE", "note": "Day 7 DLSA Legal Counsel Assigned" },
+      { "day": 14, "svi": 41, "risk": "LOW", "note": "Day 14 Stabilized Welfare Check" }
+    ],
+    "expected": { "trajectory": "IMPROVING_RECOVERY ↘", "delta": -43 }
+  },
+  {
+    "id": "CASE-010",
+    "title": "Case 010: Longitudinal Follow-up Trajectory (Escalation: 48 -> 84)",
+    "description": "Case demonstrating risk escalation requiring immediate re-escalation to District Officer.",
+    "history": [
+      { "day": 1, "svi": 48, "risk": "MODERATE", "note": "Initial Grievance Call" },
+      { "day": 4, "svi": 67, "risk": "HIGH", "note": "Accused Began Intimidation" },
+      { "day": 8, "svi": 84, "risk": "CRITICAL", "note": "Armed Threat to Family - Re-escalated" }
+    ],
+    "expected": { "trajectory": "RISK_ESCALATING ↗", "delta": 36 }
+  }
+]

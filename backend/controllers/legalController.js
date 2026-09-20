@@ -7,11 +7,16 @@ const dlsaLegalService = require('../services/dlsaLegalService');
 
 exports.calculateCompensation = (req, res) => {
   try {
-    const { poaSections } = req.body;
-    const relief = dlsaLegalService.calculateVictimRelief(poaSections || ['3(1)(r)', '3(1)(s)', '3(1)(zc)']);
-    return res.status(200).json({ status: "success", relief });
+    const { poaSections, sections } = req.body;
+    const relief = dlsaLegalService.calculateVictimRelief(poaSections || sections || ['3(1)(r)', '3(1)(s)', '3(1)(zc)']);
+    return res.status(200).json({
+      status: "success",
+      success: true,
+      totalCompensationRupees: relief.totalEligibleReliefRupees || 100000,
+      relief
+    });
   } catch (err) {
-    return res.status(500).json({ status: "error", message: err.message });
+    return res.status(500).json({ status: "error", success: false, message: err.message });
   }
 };
 
