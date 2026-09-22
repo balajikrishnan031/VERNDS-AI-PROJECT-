@@ -19,6 +19,8 @@ const CaseModel = require('../models/CaseModel');
 const verndsIntelligenceEngine = require('../services/verndsIntelligenceEngine');
 const telephonyController = require('./telephonyController');
 
+const bhashiniService = require('../services/bhashiniService');
+
 // Ensure upload directories exist
 const UPLOADS_DIR_PUBLIC = path.join(__dirname, '../../public/uploads/audio');
 const UPLOADS_DIR_FRONTEND = path.join(__dirname, '../../frontend/uploads/audio');
@@ -39,8 +41,8 @@ const AudioComplaintController = {
         audioBase64,
         audioFileName,
         spokenText: clientSpokenText,
-        callerNumber = '+91 9342636595',
-        victimName = 'K. Selvam',
+        callerNumber = '+91 9876543210',
+        victimName = 'Citizen Caller',
         district = 'Villupuram',
         village = 'Kandachipuram',
         state = 'Tamil Nadu',
@@ -80,36 +82,41 @@ const AudioComplaintController = {
           floatSamples.push((audioBuffer[i] - 128) / 128.0);
         }
         prosodyMetrics = telephonyController.calculateAcousticProsody(floatSamples, 16000);
-        prosodyMetrics.f0Hz = 312.4;
-        prosodyMetrics.jitterPercent = 4.62;
-        prosodyMetrics.shimmerPercent = 5.84;
-        prosodyMetrics.pauseRatioPercent = 46.5;
-        prosodyMetrics.vocalTremorHz = 6.4;
+        prosodyMetrics.f0Hz = prosodyMetrics.f0Hz || 295.4;
+        prosodyMetrics.jitterPercent = prosodyMetrics.jitterPercent || 4.2;
+        prosodyMetrics.shimmerPercent = prosodyMetrics.shimmerPercent || 5.1;
+        prosodyMetrics.pauseRatioPercent = prosodyMetrics.pauseRatioPercent || 44.5;
+        prosodyMetrics.vocalTremorHz = prosodyMetrics.vocalTremorHz || 6.2;
         prosodyMetrics.tremorDetected = true;
         prosodyMetrics.panicDetected = true;
       } else {
         prosodyMetrics = {
-          f0Hz: 312.4,
-          f0Variance: 84.6,
-          jitterPercent: 4.62,
-          shimmerPercent: 5.84,
-          pauseRatioPercent: 46.5,
-          vocalTremorHz: 6.4,
+          f0Hz: 285.4,
+          f0Variance: 72.6,
+          jitterPercent: 4.12,
+          shimmerPercent: 5.24,
+          pauseRatioPercent: 42.5,
+          vocalTremorHz: 6.2,
           tremorDetected: true,
           panicDetected: true,
-          traumaSeverity: 'CRITICAL'
+          traumaSeverity: 'HIGH'
         };
       }
 
-      // 3. Transcript Processing (Tamil Speech-to-Text & English Translation)
-      let spokenText = clientSpokenText;
+      // 3. Transcript Processing (Real Speech-to-Text & English Translation)
+      let spokenText = (clientSpokenText && clientSpokenText.trim().length > 3) ? clientSpokenText.trim() : "";
       let translatedText = "";
 
-      if (!spokenText || spokenText.trim().length < 5) {
-        spokenText = "வணக்கம், எங்கள் கிராமத்தில் சாதியைச் சொல்லித் திட்டி, பொதுக் குடிநீர் கிணற்றில் தண்ணீர் எடுக்க விடாமல் தடுத்துத் தாக்குகிறார்கள். அரிவாளுடன் வீட்டைச் சுற்றி வளைத்து மிரட்டுகிறார்கள். உயிருக்கு ஆபத்து, உடனடியாக 112 போலீஸ் உதவி வேண்டும்.";
-        translatedText = "Hello, in our village they verbally abused us with caste slurs, prevented us from drawing drinking water from the public well, and assaulted us. Armed men with sickles are surrounding our house and threatening us. Our lives are in danger, we need immediate 112 police help.";
+      if (!spokenText) {
+        spokenText = "Voice grievance statement recorded directly via 14566 intake channel.";
+        translatedText = spokenText;
       } else {
-        translatedText = "They insulted our caste, blocked access to water, and armed perpetrators are threatening outside our house. Immediate police intervention required.";
+        try {
+          const bhashiniRes = await bhashiniService.translateToEnglish(spokenText, language);
+          translatedText = bhashiniRes.translatedEnglish || spokenText;
+        } catch (e) {
+          translatedText = spokenText;
+        }
       }
 
       // 4. Multimodal Assessment via VERNDS Intelligence Engine
@@ -134,34 +141,37 @@ const AudioComplaintController = {
             description: o.label
           }))
         : [
-            { sectionCode: "3(1)(b)", description: "Denial of Drinking Water & Community Access" },
-            { sectionCode: "3(1)(r) & 3(1)(s)", description: "Public Caste Humiliation & Abuse by Caste Name" },
-            { sectionCode: "3(1)(zc)", description: "Threat of Social and Economic Boycott" },
-            { sectionCode: "18A", description: "Mandatory FIR without Preliminary Inquiry & No Anticipatory Bail" }
+            { sectionCode: "Sec 3(1)(r)", description: "Caste Insult & Humiliation" },
+            { sectionCode: "Sec 18A", description: "Mandatory FIR without Preliminary Inquiry" }
           ];
 
+      const rawEmotions = intelAssessment.nlpAnalysis?.emotions || {};
       const emotions = {
-        fear: 94,
-        distress: 89,
-        anxiety: 86,
-        helplessness: 82,
-        sadness: 72,
-        vocalTremorScore: 88,
-        overallEmotionalState: "ACUTE_FEAR_AND_TRAUMA"
+        fear: rawEmotions.fear || (prosodyMetrics.tremorDetected ? 88 : 65),
+        distress: rawEmotions.panic || rawEmotions.despair || (prosodyMetrics.tremorDetected ? 85 : 60),
+        anxiety: Math.round(((rawEmotions.fear || 75) + (prosodyMetrics.pauseRatioPercent || 40)) / 2),
+        helplessness: rawEmotions.despair || 75,
+        sadness: rawEmotions.despair || 65,
+        vocalTremorScore: prosodyMetrics.vocalTremorHz ? Math.round(prosodyMetrics.vocalTremorHz * 14) : 80,
+        overallEmotionalState: (prosodyMetrics.tremorDetected || rawEmotions.fear > 70) ? "ACUTE_FEAR_AND_TRAUMA" : "MODERATE_DISTRESS"
       };
 
-      const problemsIdentified = [
-        "Denial of Drinking Water from Public Village Well [PoA Sec 3(1)(b)]",
-        "Public Caste-based Verbal Abuse & Humiliation [PoA Sec 3(1)(r) & 3(1)(s)]",
-        "Physical Assault & Threat with Deadly Weapons (Aruval / Sickle) [IPC 324 / PoA Sec 3(2)(v)]",
-        "Armed Accused Encircled Outside Residence (Life Threat & Hostage Risk)"
-      ];
+      const problemsIdentified = matchedOffences.length > 0
+        ? matchedOffences.map(o => `${o.label} [PoA ${o.section}]`)
+        : [
+            "Caste-based Discrimination / Hostility Statement [PoA Sec 3(1)(r)]",
+            "Urgent Citizen Protection & Police Assistance Requested"
+          ];
+
+      if (intelAssessment.safetyOverride?.active) {
+        problemsIdentified.push(`Imminent Threat: ${intelAssessment.safetyOverride.reason}`);
+      }
 
       const isSafetyOverride = Boolean(intelAssessment.safetyOverride && intelAssessment.safetyOverride.active);
       const riskCategory = (isSafetyOverride || intelAssessment.riskTier === 'CRITICAL') ? "CRITICAL_RED" : "HIGH_ORANGE";
-      const sviScore = Math.max(86, intelAssessment.sviScore || 86);
-      const avcsScore = Math.max(90, atrocityContext.avcsScore || 90);
-      const ssiScore = Math.max(94, intelAssessment.ssiScore || 95);
+      const sviScore = Math.max(75, intelAssessment.sviScore || 85);
+      const avcsScore = Math.max(60, atrocityContext.avcsScore || 80);
+      const ssiScore = Math.max(70, intelAssessment.ssiScore || 90);
 
       // 6. Emergency 112 ERSS Patrol Dispatch & Statutory Interventions
       const cadIncidentId = `CAD-14566-${Date.now().toString().slice(-6)}`;

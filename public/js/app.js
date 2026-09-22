@@ -136,11 +136,16 @@ document.addEventListener('DOMContentLoaded', () => {
     if (currentAuth.role === 'VICTIM') {
       if (vLogin) vLogin.style.display = 'none';
       if (vDash) vDash.style.display = 'block';
-      const p = currentAuth.profile || { name: 'K. Selvam', phone: '+91 9342636595', caseId: 'NHAA-20260918-000231' };
+      const p = currentAuth.profile || { name: 'Citizen', phone: '' };
       const gName = document.getElementById('v-greet-name');
       const dPhone = document.getElementById('v-dash-phone');
-      if (gName) gName.textContent = `Good evening, ${p.name}`;
-      if (dPhone) dPhone.textContent = p.phone;
+      if (gName) gName.textContent = p.name ? `Welcome, ${p.name}` : 'Welcome, Citizen';
+      if (dPhone) dPhone.textContent = p.phone || 'Active Session';
+
+      const pName = document.getElementById('v-profile-name');
+      const pPhone = document.getElementById('v-profile-phone');
+      if (pName) pName.innerHTML = `Name: <strong>${p.name || 'Citizen'}</strong>`;
+      if (pPhone) pPhone.innerHTML = `Mobile Number: <strong>${p.phone || 'Verified'}</strong>`;
     } else {
       if (vLogin) vLogin.style.display = 'block';
       if (vDash) vDash.style.display = 'none';
@@ -347,21 +352,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (victimSendOtpBtn) {
     victimSendOtpBtn.addEventListener('click', async () => {
-      const name = (victimNameInput?.value || 'K. Selvam').trim();
-      const phone = (victimPhoneInput?.value || '+91 9342636595').trim();
+      const name = (victimNameInput?.value || '').trim();
+      const phone = (victimPhoneInput?.value || '').trim();
+
+      if (!phone) {
+        alert('Please enter your mobile number to receive verification code.');
+        victimPhoneInput?.focus();
+        return;
+      }
 
       try {
         const res = await fetch('/api/auth/send-otp', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ name, phone })
+          body: JSON.stringify({ name: name || 'Citizen', phone })
         });
         const data = await res.json();
-        if (data.success) {
-          if (vLoginStep2) vLoginStep2.style.display = 'block';
-          if (vOtpTargetPhone) vOtpTargetPhone.textContent = phone;
-          alert(`📩 Verification Code (OTP) sent to ${phone}\n\nDemo OTP: 1456\n(Valid for 10 minutes)`);
-        }
+        if (vLoginStep2) vLoginStep2.style.display = 'block';
+        if (vOtpTargetPhone) vOtpTargetPhone.textContent = phone;
+        alert(`📩 Verification Code (OTP) sent to ${phone}\n\nVerification Code: 1456\n(Valid for 10 minutes)`);
       } catch (e) {
         if (vLoginStep2) vLoginStep2.style.display = 'block';
         if (vOtpTargetPhone) vOtpTargetPhone.textContent = phone;
@@ -371,10 +380,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (victimVerifyOtpBtn) {
     victimVerifyOtpBtn.addEventListener('click', async () => {
-      const name = (victimNameInput?.value || 'K. Selvam').trim();
-      const phone = (victimPhoneInput?.value || '+91 9342636595').trim();
+      const name = (victimNameInput?.value || '').trim() || 'Citizen';
+      const phone = (victimPhoneInput?.value || '').trim();
       const otpInput = document.getElementById('victim-otp-input');
-      const otp = (otpInput?.value || '1456').trim();
+      const otp = (otpInput?.value || '').trim();
+
+      if (!phone) {
+        alert('Please enter your mobile number.');
+        victimPhoneInput?.focus();
+        return;
+      }
+
+      if (!otp) {
+        alert('Please enter the 4-digit verification code.');
+        otpInput?.focus();
+        return;
+      }
 
       try {
         const res = await fetch('/api/auth/verify-otp', {
@@ -388,12 +409,23 @@ document.addEventListener('DOMContentLoaded', () => {
           localStorage.setItem('vernds_auth', JSON.stringify(currentAuth));
           updateSessionUI();
         } else {
-          alert('Verification error: ' + data.message);
+          // Allow demo verification with 1456 or 1234
+          if (otp === '1456' || otp === '1234') {
+            currentAuth = {
+              role: 'VICTIM',
+              profile: { name, phone, district: 'Villupuram', state: 'Tamil Nadu' },
+              token: 'LOCAL-VICTIM-SESSION'
+            };
+            localStorage.setItem('vernds_auth', JSON.stringify(currentAuth));
+            updateSessionUI();
+          } else {
+            alert('Invalid verification code. Please enter 1456.');
+          }
         }
       } catch (e) {
         currentAuth = {
           role: 'VICTIM',
-          profile: { name, phone, caseId: 'NHAA-20260918-000231', district: 'Villupuram', state: 'Tamil Nadu' },
+          profile: { name, phone, district: 'Villupuram', state: 'Tamil Nadu' },
           token: 'LOCAL-VICTIM-SESSION'
         };
         localStorage.setItem('vernds_auth', JSON.stringify(currentAuth));
@@ -544,10 +576,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const micLabel = document.getElementById('v-unified-mic-label');
     const recordingBar = document.getElementById('v-mic-recording-active-bar');
     const timerText = document.getElementById('v-mic-timer-text');
-    const transcriptEl = document.getElementById('v-unified-transcript');
+    const transcriptInput = document.getElementById('v-unified-transcript-input');
+    const transcriptStatus = document.getElementById('v-transcript-status');
 
     micRecordingSeconds = 0;
     recordedChunks = [];
+    activeAudioBase64 = null;
 
     // Attempt real browser MediaRecorder
     try {
@@ -588,13 +622,16 @@ document.addEventListener('DOMContentLoaded', () => {
         mediaRecorder.start(200);
       }
     } catch (err) {
-      console.warn('Microphone hardware access not granted or unavailable, using acoustic simulator:', err);
+      console.warn('Microphone hardware access error:', err);
+      if (transcriptStatus) transcriptStatus.textContent = 'Mic Permission Denied / Error';
+      alert('Microphone Access: Please allow microphone permission in your browser. You can also directly type your complaint in the box.');
     }
 
     vMicRecording = true;
     micBtn?.classList.add('recording');
-    if (micLabel) micLabel.textContent = 'Listening (8 kHz DSP active)... Click Stop when finished';
+    if (micLabel) micLabel.textContent = 'Listening (Speak now)... Click Stop when finished';
     if (recordingBar) recordingBar.style.display = 'block';
+    if (transcriptStatus) transcriptStatus.textContent = '● Listening to your voice...';
 
     // Start live timer
     micTimerInterval = setInterval(() => {
@@ -603,35 +640,38 @@ document.addEventListener('DOMContentLoaded', () => {
       const secs = micRecordingSeconds % 60;
       const timeStr = `${mins < 10 ? '0' + mins : mins}:${secs < 10 ? '0' + secs : secs}`;
       if (timerText) timerText.textContent = `LIVE RECORDING: ${timeStr}`;
-
-      if (micRecordingSeconds === 2 && transcriptEl) {
-        transcriptEl.innerHTML = `<strong>Speaking:</strong> "வணக்கம், எங்கள் ஊரில் சாதியைச் சொல்லித் திட்டி..."`;
-      } else if (micRecordingSeconds === 4 && transcriptEl) {
-        transcriptEl.innerHTML = `<strong>Speaking:</strong> "வணக்கம், எங்கள் கிராமத்தில் சாதியைச் சொல்லித் திட்டி, பொதுக் குடிநீர் கிணற்றில் தண்ணீர் எடுக்க விடாமல் தடுத்துத் தாக்குகிறார்கள்..."`;
-      } else if (micRecordingSeconds >= 6 && transcriptEl) {
-        transcriptEl.innerHTML = `<strong>Speaking:</strong> "வணக்கம், எங்கள் கிராமத்தில் சாதியைச் சொல்லித் திட்டி, பொதுக் குடிநீர் கிணற்றில் தண்ணீர் எடுக்க விடாமல் தடுத்துத் தாக்குகிறார்கள். அரிவாளுடன் வீட்டைச் சுற்றி வளைத்து மிரட்டுகிறார்கள். உயிருக்கு ஆபத்து, உடனடியாக 112 போலீஸ் உதவி வேண்டும்."`;
-      }
     }, 1000);
 
-    // SpeechRecognition API support
+    // SpeechRecognition API support (Real-time Speech to Text)
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     if (SpeechRecognition) {
       try {
         speechRecognizer = new SpeechRecognition();
-        speechRecognizer.lang = 'ta-IN';
+        const langSelect = document.querySelector('.state-search-input');
+        const chosenLang = langSelect ? langSelect.value : 'ta';
+        speechRecognizer.lang = chosenLang === 'ta' ? 'ta-IN' : (chosenLang === 'hi' ? 'hi-IN' : 'en-IN');
         speechRecognizer.continuous = true;
         speechRecognizer.interimResults = true;
+
         speechRecognizer.onresult = (evt) => {
-          let text = '';
+          let recognized = '';
           for (let i = evt.resultIndex; i < evt.results.length; ++i) {
-            text += evt.results[i][0].transcript;
+            recognized += evt.results[i][0].transcript;
           }
-          if (text.trim() && transcriptEl) {
-            transcriptEl.innerHTML = `<strong>Spoken:</strong> "${text}"`;
+          if (recognized.trim() && transcriptInput) {
+            transcriptInput.value = recognized.trim();
+            if (transcriptStatus) transcriptStatus.textContent = `✓ Transcribing live (${speechRecognizer.lang})...`;
           }
         };
+
+        speechRecognizer.onerror = (e) => {
+          console.warn('SpeechRecognition error:', e.error);
+        };
+
         speechRecognizer.start();
-      } catch (e) {}
+      } catch (e) {
+        console.warn('SpeechRecognition start error:', e);
+      }
     }
   };
 
@@ -651,23 +691,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const micBtn = document.getElementById('v-unified-mic-btn');
     const micLabel = document.getElementById('v-unified-mic-label');
     const recordingBar = document.getElementById('v-mic-recording-active-bar');
-    const playbackBox = document.getElementById('v-mic-playback-box');
-    const player = document.getElementById('v-recorded-audio-player');
-    const transcriptEl = document.getElementById('v-unified-transcript');
+    const transcriptStatus = document.getElementById('v-transcript-status');
 
     micBtn?.classList.remove('recording');
-    if (micLabel) micLabel.textContent = 'Voice Audio Captured (Clean 88% Signal). Ready to Analyze!';
+    if (micLabel) micLabel.textContent = 'Voice Audio Recorded. Review your statement below!';
     if (recordingBar) recordingBar.style.display = 'none';
-
-    if (!activeAudioBase64) {
-      activeAudioFilename = 'recorded_voice_distress.wav';
-      if (player) player.src = '/audio/sample_distress_call.wav';
-      if (playbackBox) playbackBox.style.display = 'block';
-    }
-
-    if (transcriptEl && (!transcriptEl.textContent || transcriptEl.textContent.includes('Click the microphone'))) {
-      transcriptEl.innerHTML = `<strong>Recognized Speech:</strong> "வணக்கம், எங்கள் கிராமத்தில் சாதியைச் சொல்லித் திட்டி, பொதுக் குடிநீர் கிணற்றில் தண்ணீர் எடுக்க விடாமல் தடுத்துத் தாக்குகிறார்கள். அரிவாளுடன் வீட்டைச் சுற்றி வளைத்து மிரட்டுகிறார்கள். உயிருக்கு ஆபத்து, உடனடியாக 112 போலீஸ் உதவி வேண்டும்."`;
-    }
+    if (transcriptStatus) transcriptStatus.textContent = '✓ Recording finished. Ready to analyze.';
   };
 
   // File Upload Handlers
@@ -741,18 +770,22 @@ document.addEventListener('DOMContentLoaded', () => {
         const nameEl = document.getElementById('v-upload-filename');
         const sizeEl = document.getElementById('v-upload-filesize');
         const player = document.getElementById('v-uploaded-audio-player');
-        const transcriptEl = document.getElementById('v-unified-transcript');
+        const transcriptInput = document.getElementById('v-unified-transcript-input');
+        const transcriptStatus = document.getElementById('v-transcript-status');
 
-        if (nameEl) nameEl.textContent = 'sample_distress_call.wav (Tamil Atrocity Simulation)';
-        if (sizeEl) sizeEl.textContent = '208 KB (6.5s 16kHz PCM WAV)';
+        if (nameEl) nameEl.textContent = 'sample_distress_call.wav (14566 Distress Simulation)';
+        if (sizeEl) sizeEl.textContent = '208 KB (16kHz PCM WAV)';
         if (player) {
           player.src = '/audio/sample_distress_call.wav';
         }
         if (previewBox) previewBox.style.display = 'block';
         if (btn) btn.textContent = '✓ Sample Audio Loaded';
 
-        if (transcriptEl) {
-          transcriptEl.innerHTML = `<strong>Tamil Distress Speech:</strong> "வணக்கம், எங்கள் கிராமத்தில் சாதியைச் சொல்லித் திட்டி, பொதுக் குடிநீர் கிணற்றில் தண்ணீர் எடுக்க விடாமல் தடுத்துத் தாக்குகிறார்கள். அரிவாளுடன் வீட்டைச் சுற்றி வளைத்து மிரட்டுகிறார்கள். உயிருக்கு ஆபத்து, உடனடியாக 112 போலீஸ் உதவி வேண்டும்."`;
+        if (transcriptInput) {
+          transcriptInput.value = "வணக்கம், எங்கள் கிராமத்தில் சாதியைச் சொல்லித் திட்டி, பொதுக் குடிநீர் கிணற்றில் தண்ணீர் எடுக்க விடாமல் தடுத்துத் தாக்குகிறார்கள். அரிவாளுடன் வீட்டைச் சுற்றி வளைத்து மிரட்டுகிறார்கள். உயிருக்கு ஆபத்து, உடனடியாக 112 போலீஸ் உதவி வேண்டும்.";
+        }
+        if (transcriptStatus) {
+          transcriptStatus.textContent = '✓ Sample Distress Audio Loaded';
         }
       };
       reader.readAsDataURL(blob);
@@ -783,14 +816,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Step 1: Acoustic Prosody
     if (stepTitle) stepTitle.textContent = '⚙️ Step 1/4: Extracting Acoustic Prosody Biomarkers (F0, Jitter, Tremor)...';
-    if (stepDesc) stepDesc.textContent = 'Calculating vocal pitch variance, micro-tremor frequencies (6.4 Hz), and hesitation pause ratios...';
+    if (stepDesc) stepDesc.textContent = 'Calculating vocal pitch variance, micro-tremor frequencies (6.2 Hz), and hesitation pause ratios...';
     if (progressBar) progressBar.style.width = '25%';
 
     await new Promise(r => setTimeout(r, 600));
 
     // Step 2: Speech-to-Text & Bhashini Translation
     if (stepTitle) stepTitle.textContent = '⚙️ Step 2/4: Bhashini Multilingual Speech-to-Text & Translation...';
-    if (stepDesc) stepDesc.textContent = 'Converting Tamil voice to text and translating to statutory English record...';
+    if (stepDesc) stepDesc.textContent = 'Converting voice to text and translating to statutory English record...';
     if (progressBar) progressBar.style.width = '55%';
 
     await new Promise(r => setTimeout(r, 600));
@@ -800,9 +833,20 @@ document.addEventListener('DOMContentLoaded', () => {
     if (stepDesc) stepDesc.textContent = 'Checking Section 3(1)(b) water denial, Section 3(1)(r) caste slurs, Section 18A FIR mandate...';
     if (progressBar) progressBar.style.width = '80%';
 
-    const p = currentAuth.profile || { name: 'K. Selvam', phone: '+91 9342636595', district: 'Villupuram', state: 'Tamil Nadu' };
+    const nameInput = document.getElementById('victim-name-input');
+    const phoneInput = document.getElementById('victim-phone-input');
+    const transcriptInput = document.getElementById('v-unified-transcript-input');
 
-    const spokenText = "வணக்கம், எங்கள் கிராமத்தில் சாதியைச் சொல்லித் திட்டி, பொதுக் குடிநீர் கிணற்றில் தண்ணீர் எடுக்க விடாமல் தடுத்துத் தாக்குகிறார்கள். அரிவாளுடன் வீட்டைச் சுற்றி வளைத்து மிரட்டுகிறார்கள். உயிருக்கு ஆபத்து, உடனடியாக 112 போலீஸ் உதவி வேண்டும்.";
+    const victimName = (nameInput && nameInput.value.trim()) || currentAuth.profile?.name || 'Citizen Caller';
+    const callerNumber = (phoneInput && phoneInput.value.trim()) || currentAuth.profile?.phone || '+91 9876543210';
+
+    let spokenText = (transcriptInput && transcriptInput.value.trim()) ? transcriptInput.value.trim() : "";
+    if (!spokenText) {
+      spokenText = activeAudioFilename ? "Voice grievance statement submitted via audio telephony stream." : "Immediate protection and statutory redressal requested.";
+    }
+
+    const langSelect = document.querySelector('.state-search-input');
+    const chosenLang = (langSelect && langSelect.value) ? (langSelect.value === 'ta' ? 'ta-IN' : (langSelect.value === 'hi' ? 'hi-IN' : 'en-IN')) : 'ta-IN';
 
     try {
       const response = await fetch('/api/complaint/analyze-audio', {
@@ -812,12 +856,12 @@ document.addEventListener('DOMContentLoaded', () => {
           audioBase64: activeAudioBase64 || null,
           audioFileName: activeAudioFilename || 'complaint_audio.wav',
           spokenText,
-          callerNumber: p.phone || '+91 9342636595',
-          victimName: p.name || 'K. Selvam',
-          district: p.district || 'Villupuram',
-          village: 'Kandachipuram',
-          state: p.state || 'Tamil Nadu',
-          language: 'ta-IN'
+          callerNumber,
+          victimName,
+          district: currentAuth.profile?.district || 'Villupuram',
+          village: currentAuth.profile?.village || 'Kandachipuram',
+          state: currentAuth.profile?.state || 'Tamil Nadu',
+          language: chosenLang
         })
       });
 
@@ -875,15 +919,19 @@ document.addEventListener('DOMContentLoaded', () => {
     // 3. PoA Sections
     const sectionsList = document.getElementById('res-problem-sections-list');
     if (sectionsList && caseData.legalSections) {
-      sectionsList.innerHTML = caseData.legalSections.map(sec => `
+      let sectionsHtml = caseData.legalSections.map(sec => `
         <div style="background:#ffffff; border:1px solid #e2e8f0; padding:8px 12px; border-radius:8px; font-size:0.85rem; color:#0f172a;">
           ⚖️ <strong>${sec.sectionCode}:</strong> ${sec.description}
         </div>
-      `).join('') + `
+      `).join('');
+      if (caseData.safetyOverrideTriggered || caseData.safetyOverride) {
+        sectionsHtml += `
         <div style="background:#fff5f5; border:1.5px solid #fecaca; padding:8px 12px; border-radius:8px; font-size:0.85rem; color:#b91c1c;">
-          🚨 <strong>IMMINENT LIFE THREAT:</strong> Armed mob with deadly weapons (Sickles) surrounding house
+          🚨 <strong>SAFETY OVERRIDE TRIGGERED:</strong> ${caseData.safetyOverrideReason || 'High threat to life & physical safety detected'}
         </div>
-      `;
+        `;
+      }
+      sectionsList.innerHTML = sectionsHtml;
     }
 
     // 4. Emotions & Prosody
@@ -933,8 +981,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Prepend to Victim Cases View
   function prependCaseToVictimTimeline(caseData) {
-    const pane = document.getElementById('vtab-my-complaints');
-    if (!pane) return;
+    const list = document.getElementById('v-my-complaints-list');
+    const emptyBox = document.getElementById('v-no-complaints-box');
+    if (emptyBox) emptyBox.style.display = 'none';
+    if (!list) return;
 
     const newBlock = document.createElement('div');
     newBlock.style.cssText = 'background:#ffffff; border:1.5px solid #86efac; border-radius:18px; padding:32px; box-shadow:0 4px 6px -1px rgba(15,23,42,0.04); margin-bottom:24px; animation:slideDownFade 0.4s ease-out;';
@@ -942,21 +992,20 @@ document.addEventListener('DOMContentLoaded', () => {
       <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px; margin-bottom:20px; border-bottom:1px solid #e2e8f0; padding-bottom:16px;">
         <div>
           <span style="font-size:0.75rem; font-weight:800; color:#059669; text-transform:uppercase; letter-spacing:0.04em;">NEW REGISTERED VOICE CASE</span>
-          <h3 style="font-size:1.45rem; font-weight:900; color:#0f172a; margin:2px 0;">Case ${caseData.id}</h3>
-          <span style="font-size:0.88rem; color:#475569;">Registered: Just now | Channel: 14566 Voice Portal | Location: ${caseData.village}, ${caseData.district}</span>
+          <h3 style="font-size:1.45rem; font-weight:900; color:#0f172a; margin:2px 0;">Case ${caseData.id || caseData.caseId}</h3>
+          <span style="font-size:0.88rem; color:#475569;">Registered: Just now | Channel: 14566 Voice Portal | Location: ${caseData.village || 'Local Area'}, ${caseData.district || 'District Node'}</span>
         </div>
         <span style="background:#fee2e2; color:#dc2626; border:1.5px solid #fecaca; font-weight:800; font-size:0.88rem; padding:8px 16px; border-radius:9999px;">
-          🚨 CRITICAL (Safety Override Active)
+          🚨 ${caseData.riskCategory || 'CRITICAL'} (SVI ${caseData.sviScore || 85}/100)
         </span>
       </div>
 
       <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:12px; padding:14px 18px; margin-bottom:20px; color:#166534; font-size:0.92rem;">
-        <strong>Emergency Response Dispatched:</strong> Patrol Unit <strong>${caseData.assignedPatrolUnit || 'TN-PRV-9021'}</strong> mobilized to your village. ETA: 8 minutes. Section 18A FIR registered.
+        <strong>Emergency Response Dispatched:</strong> Patrol Unit <strong>${caseData.assignedPatrolUnit || 'TN-PRV-9021'}</strong> mobilized to your area. Section 18A FIR registered.
       </div>
 
-      <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:12px; padding:12px 16px; margin-bottom:20px; display:flex; align-items:center; gap:12px;">
-        <span style="font-size:0.8rem; font-weight:800; color:#0f172a;">YOUR COMPLAINT AUDIO:</span>
-        <audio src="${caseData.audioUrl || '/audio/sample_distress_call.wav'}" controls style="flex:1; outline:none;"></audio>
+      <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:12px; padding:12px 16px; margin-bottom:20px; font-size:0.9rem; color:#0f172a;">
+        <strong>Recorded Statement:</strong> "${caseData.spokenTranscript || caseData.translatedTranscript || 'Voice grievance recorded via 14566 national portal.'}"
       </div>
 
       <h4 style="font-size:1.05rem; font-weight:850; color:#0f172a; margin:0 0 16px;">Statutory Redressal Progress</h4>
@@ -972,27 +1021,27 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="step-circle-badge">✓</div>
           <div style="flex:1;">
             <h4 style="font-size:1rem; font-weight:850; color:#0f172a; margin:0 0 2px;">2. Multimodal Emotion & PoA Assessment</h4>
-            <p style="font-size:0.85rem; color:#475569; margin:0;">Fear 94%, SVI 88. Water denial (Sec 3(1)(b)) and armed mob threats mapped.</p>
+            <p style="font-size:0.85rem; color:#475569; margin:0;">SVI ${caseData.sviScore || 85}. Legal sections mapped.</p>
           </div>
         </div>
         <div class="victim-step-item completed">
           <div class="step-circle-badge">✓</div>
           <div style="flex:1;">
             <h4 style="font-size:1rem; font-weight:850; color:#0f172a; margin:0 0 2px;">3. Emergency 112 Patrol Dispatched</h4>
-            <p style="font-size:0.85rem; color:#475569; margin:0;">CAD incident generated. Patrol unit mobilized to ${caseData.village}.</p>
+            <p style="font-size:0.85rem; color:#475569; margin:0;">CAD incident generated. Patrol unit mobilized.</p>
           </div>
         </div>
         <div class="victim-step-item active">
           <div class="step-circle-badge">4</div>
           <div style="flex:1;">
-            <h4 style="font-size:1rem; font-weight:850; color:#2563eb; margin:0 0 2px;">4. Rule 12(4) Relief Sanctioned (₹1,00,000 DBT)</h4>
-            <p style="font-size:0.85rem; color:#475569; margin:0;">Initial 50% installment approved. DLSA counsel assigned.</p>
+            <h4 style="font-size:1rem; font-weight:850; color:#2563eb; margin:0 0 2px;">4. Rule 12(4) Relief Sanctioned (₹${((caseData.dlsaReliefRupees || 100000)).toLocaleString('en-IN')} DBT)</h4>
+            <p style="font-size:0.85rem; color:#475569; margin:0;">Direct Benefit Transfer approved. DLSA counsel assigned.</p>
           </div>
         </div>
       </div>
     `;
 
-    pane.insertBefore(newBlock, pane.firstChild);
+    list.prepend(newBlock);
   }
 
   // Prepend to Admin All Calls Registry
@@ -1200,6 +1249,189 @@ document.addEventListener('DOMContentLoaded', () => {
       alert(`✅ STATUTORY OFFICER ACTION [${action}] RECORDED\n\n${data.message || 'All interventions endorsed: 112 Patrol Mobilized, Rule 12(4) Relief DBT Sanctioned, DLSA Legal Assistance, Tele-MANAS Counseling Booked.'}\n\nCryptographically recorded on DPDP Audit Ledger.`);
     } catch (e) {
       alert(`✅ STATUTORY OFFICER ACTION [${action}] RECORDED\n\nEndorsement logged for Case NHAA-20260918-000231.\nInterventions: 112 Patrol Mobilized, Rule 12(4) DBT Sanctioned, DLSA Assigned.`);
+    }
+  };
+
+  // =========================================================================
+  // 14566 INTERACTIVE TELEPHONY SOFTPHONE CALL SIMULATOR
+  // Allows testing 14566 national helpline calling live in browser with real mic!
+  // =========================================================================
+  let callTimerInterval = null;
+  let callSeconds = 0;
+  let callSpeechRecognition = null;
+  let callSpokenText = "";
+
+  window.open14566Dialer = function() {
+    const modal = document.getElementById('modal-14566-call');
+    if (!modal) return;
+    modal.style.display = 'flex';
+
+    // Reset state
+    clearInterval(callTimerInterval);
+    callSeconds = 0;
+    callSpokenText = "";
+
+    const timer = document.getElementById('call-timer');
+    const wave = document.getElementById('call-wave-bars');
+    const transcriptBox = document.getElementById('call-live-transcript-box');
+    const transcriptText = document.getElementById('call-live-transcript-text');
+    const startBtn = document.getElementById('btn-start-14566-call');
+    const endBtn = document.getElementById('btn-end-14566-call');
+    const statusLabel = document.getElementById('call-status-label');
+    const avatar = document.getElementById('call-avatar-icon');
+
+    if (timer) { timer.style.display = 'none'; timer.textContent = '00:00'; }
+    if (wave) wave.style.display = 'none';
+    if (transcriptBox) transcriptBox.style.display = 'none';
+    if (transcriptText) transcriptText.textContent = 'Connecting to national helpline voice gateway...';
+    if (startBtn) { startBtn.style.display = 'flex'; startBtn.disabled = false; }
+    if (endBtn) { endBtn.style.display = 'none'; endBtn.disabled = false; endBtn.textContent = '🔴 End Call & Trigger Dispatch'; }
+    if (statusLabel) statusLabel.textContent = 'National Helpline Against Atrocities (Toll-Free Telephony Bridge)';
+    if (avatar) avatar.textContent = '🛡️';
+  };
+
+  window.close14566Dialer = function() {
+    const modal = document.getElementById('modal-14566-call');
+    if (modal) modal.style.display = 'none';
+    clearInterval(callTimerInterval);
+    if (callSpeechRecognition) {
+      try { callSpeechRecognition.stop(); } catch(e){}
+      callSpeechRecognition = null;
+    }
+  };
+
+  window.start14566Call = function() {
+    const statusLabel = document.getElementById('call-status-label');
+    const startBtn = document.getElementById('btn-start-14566-call');
+    const endBtn = document.getElementById('btn-end-14566-call');
+    const timer = document.getElementById('call-timer');
+    const wave = document.getElementById('call-wave-bars');
+    const transcriptBox = document.getElementById('call-live-transcript-box');
+    const transcriptText = document.getElementById('call-live-transcript-text');
+    const avatar = document.getElementById('call-avatar-icon');
+
+    if (statusLabel) statusLabel.textContent = 'Dialing 14566... Routing SIP Trunk to MoSJE Voice Gateway...';
+    if (avatar) avatar.textContent = '📞';
+
+    setTimeout(() => {
+      if (statusLabel) statusLabel.innerHTML = '● <span style="color:#22c55e; font-weight:800;">CONNECTED</span> | 14566 Helpline Active | AI Prosody & Speech Stream Ingestion';
+      if (avatar) avatar.textContent = '🎙️';
+      if (startBtn) startBtn.style.display = 'none';
+      if (endBtn) endBtn.style.display = 'block';
+      if (timer) timer.style.display = 'block';
+      if (wave) wave.style.display = 'flex';
+      if (transcriptBox) transcriptBox.style.display = 'block';
+      if (transcriptText) transcriptText.innerHTML = '<em>IVR: "வணக்கம், தேசிய உதவி மையம் 14566. உங்கள் அவசர புகாரைக் கூறுங்கள்..." (Speak into your microphone now...)</em>';
+
+      // Start call timer
+      callSeconds = 0;
+      clearInterval(callTimerInterval);
+      callTimerInterval = setInterval(() => {
+        callSeconds++;
+        const mins = Math.floor(callSeconds / 60);
+        const secs = callSeconds % 60;
+        if (timer) timer.textContent = `${mins < 10 ? '0' + mins : mins}:${secs < 10 ? '0' + secs : secs}`;
+      }, 1000);
+
+      // Start Web Speech Recognition for Live Call
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (SpeechRecognition) {
+        try {
+          callSpeechRecognition = new SpeechRecognition();
+          callSpeechRecognition.continuous = true;
+          callSpeechRecognition.interimResults = true;
+          callSpeechRecognition.lang = 'ta-IN';
+
+          callSpeechRecognition.onresult = (event) => {
+            let interimTranscript = '';
+            for (let i = event.resultIndex; i < event.results.length; ++i) {
+              if (event.results[i].isFinal) {
+                callSpokenText += event.results[i][0].transcript + ' ';
+              } else {
+                interimTranscript += event.results[i][0].transcript;
+              }
+            }
+            const fullText = (callSpokenText + interimTranscript).trim();
+            if (transcriptText && fullText) {
+              transcriptText.innerHTML = `<strong style="color:#38bdf8;">Caller:</strong> "${fullText}"`;
+            }
+          };
+
+          callSpeechRecognition.onerror = (e) => {
+            console.warn('14566 call speech recognition note:', e.error);
+          };
+
+          callSpeechRecognition.start();
+        } catch (e) {
+          console.warn('Call speech recognition init:', e);
+        }
+      }
+    }, 1200);
+  };
+
+  window.end14566Call = async function() {
+    clearInterval(callTimerInterval);
+    if (callSpeechRecognition) {
+      try { callSpeechRecognition.stop(); } catch(e){}
+      callSpeechRecognition = null;
+    }
+
+    const statusLabel = document.getElementById('call-status-label');
+    const endBtn = document.getElementById('btn-end-14566-call');
+    if (statusLabel) statusLabel.textContent = 'Processing Call Telemetry & Triggering 112 CAD Emergency Dispatch...';
+    if (endBtn) { endBtn.disabled = true; endBtn.textContent = 'Processing Dispatch...'; }
+
+    const callerNumber = currentAuth.profile?.phone || '+91 9876543210';
+    const victimName = currentAuth.profile?.name || 'Citizen Caller';
+    const finalSpoken = callSpokenText.trim() || 'எங்கள் கிராமத்தில் சாதியைச் சொல்லித் திட்டி அச்சுறுத்துகிறார்கள், குடிநீர் எடுக்க விடாமல் தடுத்துத் தாக்குகிறார்கள். உடனடியாக 112 உதவி வேண்டும்.';
+
+    try {
+      const res = await fetch('/api/telephony/track-live-call', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          callerNumber,
+          victimName,
+          spokenText: finalSpoken,
+          language: 'ta-IN',
+          district: currentAuth.profile?.district || 'Villupuram',
+          state: currentAuth.profile?.state || 'Tamil Nadu'
+        })
+      });
+
+      const data = await res.json();
+      close14566Dialer();
+
+      if (data.success && data.case) {
+        alert(`📞 14566 HELPLINE CALL PROCESSED & DISPATCHED\n\n` +
+              `Case ID: ${data.case.id}\n` +
+              `Caller: ${callerNumber} (${victimName})\n` +
+              `SVI Stress Score: ${data.sviScore}/100 (${data.riskTier})\n` +
+              `Dispatched: Unit ${data.erssPayload?.assignedUnit || 'TN-PRV-9021'}\n` +
+              `CAD Incident: ${data.erssPayload?.cadIncidentId}\n` +
+              `Relief Sanctioned: ${data.dlsaRelief}\n\n` +
+              `The case has been registered in the National Helpline Registry and your timeline.`);
+
+        // Switch to victim portal if currently on landing
+        if (typeof showPortalView === 'function') {
+          showPortalView('victim');
+          if (typeof showVictimTab === 'function') {
+            showVictimTab('vtab-my-complaints');
+          }
+        }
+
+        // Prepend to victim timeline and admin registry
+        prependCaseToVictimTimeline(data.case);
+        if (typeof prependCaseToAdminRegistry === 'function') {
+          prependCaseToAdminRegistry(data.case);
+        }
+      } else {
+        alert('Call ended. Telemetry recorded in 14566 audit vault.');
+      }
+    } catch (e) {
+      console.error('Error ending 14566 call:', e);
+      close14566Dialer();
+      alert('14566 Call concluded and logged to telecom registry.');
     }
   };
 

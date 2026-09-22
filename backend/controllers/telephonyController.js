@@ -186,8 +186,9 @@ exports.terminateCallSession = async (req, res) => {
  */
 exports.trackLiveCall = async (req, res) => {
   try {
-    const callerNumber = req.body.callerNumber || '+91 9342636595';
-    const spokenText = req.body.spokenText || 'வணக்கம், எங்கள் கிராமத்தில் சாதியைச் சொல்லித் திட்டி, குடிநீர் எடுக்க விடாமல் தடுத்துத் அச்சுறுத்துகிறார்கள். உடனடியாக உதவி வேண்டும்.';
+    const callerNumber = req.body.callerNumber || '+91 9876543210';
+    const spokenText = req.body.spokenText || 'Emergency distress call received on 14566 helpline.';
+    const victimName = req.body.victimName || 'Citizen Caller (14566)';
     const language = req.body.language || 'ta-IN';
     const district = req.body.district || 'Villupuram';
     const state = req.body.state || 'Tamil Nadu';
@@ -241,22 +242,50 @@ exports.trackLiveCall = async (req, res) => {
     }
 
     // Emergency 112 CAD Payload
+    const cadId = `CAD-14566-${Date.now().toString().slice(-6)}`;
     const erssPayload = {
-      cadIncidentId: `CAD-14566-${Date.now().toString().slice(-6)}`,
+      cadIncidentId: cadId,
       callerNumber: callerNumber,
-      anonymizedHash: "AES256:9342636595-HASH-SEC8",
+      anonymizedHash: `AES256:${Buffer.from(callerNumber).toString('base64').slice(0, 16)}-SEC8`,
       district: district,
       state: state,
       sviScore: sviScore,
-      priority: intelAssessment.safetyOverride.active ? "P1_IMMEDIATE_PATROL_MOBILIZED" : "P2_URGENT_DISPATCH",
+      priority: intelAssessment.safetyOverride && intelAssessment.safetyOverride.active ? "P1_IMMEDIATE_PATROL_MOBILIZED" : "P2_URGENT_DISPATCH",
       dispatchStatus: "PATROL_UNIT_ASSIGNED",
-      assignedUnit: "TN-PRV-9021 (Villupuram Patrol)"
+      assignedUnit: `TN-PRV-${Math.floor(1000 + Math.random() * 9000)} (${district} Patrol)`
     };
+
+    // Create & Persist Real Case Entity
+    const generatedCaseId = `NHAA-${new Date().toISOString().slice(0, 10).replace(/-/g, '')}-${Math.floor(1000 + Math.random() * 9000)}`;
+    const savedCase = CaseModel.createCase({
+      id: generatedCaseId,
+      callerNumber: callerNumber,
+      victimName: victimName,
+      state: state,
+      district: district,
+      village: req.body.village || "Local Area",
+      crimeCategory: problemSummary,
+      language: language,
+      sviScore: sviScore,
+      riskCategory: riskTier.includes('CRITICAL') ? 'CRITICAL_RED' : 'HIGH_ORANGE',
+      safetyOverride: intelAssessment.safetyOverride ? intelAssessment.safetyOverride.active : false,
+      overrideReason: intelAssessment.safetyOverride?.reasons?.join('; ') || null,
+      legalSections: (sections || []).map(s => ({ sectionCode: s, description: "SC/ST (PoA) Act Statutory Offence" })),
+      spokenTranscript: spokenText,
+      translatedTranscript: spokenText,
+      erssDispatchStatus: "PATROL_UNIT_DISPATCHED",
+      cadIncidentId: erssPayload.cadIncidentId,
+      assignedPatrolUnit: erssPayload.assignedUnit,
+      dlsaReliefRupees: atrocityContext.avcsScore >= 85 ? 450000 : 100000
+    });
 
     return res.status(200).json({
       success: true,
       timestamp: new Date().toISOString(),
+      caseId: generatedCaseId,
+      case: savedCase,
       callerNumber,
+      victimName,
       spokenText,
       language,
       district,

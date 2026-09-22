@@ -75,8 +75,11 @@ class AuthController {
   sendOtp(req, res) {
     try {
       const { name, phone } = req.body;
-      const cleanPhone = (phone || '').trim() || '+91 9342636595';
-      const callerName = (name || '').trim() || 'K. Selvam';
+      const cleanPhone = (phone || '').trim();
+      if (!cleanPhone) {
+        return res.status(400).json({ success: false, message: "Please provide a valid mobile number." });
+      }
+      const callerName = (name || '').trim() || 'Citizen';
       const demoOtp = '1456';
 
       return res.json({
@@ -98,13 +101,16 @@ class AuthController {
   verifyOtp(req, res) {
     try {
       const { name, phone, otp } = req.body;
-      const cleanPhone = (phone || '').trim() || '+91 9342636595';
-      const callerName = (name || '').trim() || 'K. Selvam';
+      const cleanPhone = (phone || '').trim();
+      if (!cleanPhone) {
+        return res.status(400).json({ success: false, message: "Please provide a valid mobile number." });
+      }
+      const callerName = (name || '').trim() || 'Citizen';
 
       if (otp !== '1456' && otp !== '1234') {
         return res.status(400).json({
           success: false,
-          message: "Invalid OTP. Please enter the 4-digit code sent to your mobile (Demo OTP: 1456)."
+          message: "Invalid OTP. Please enter the 4-digit code sent to your mobile (OTP: 1456)."
         });
       }
 
@@ -112,11 +118,11 @@ class AuthController {
       const profile = {
         name: callerName,
         phone: cleanPhone,
-        caseId: "NHAA-1023",
-        village: "Kandachipuram",
-        district: "Villupuram",
+        caseId: null,
+        village: "Local Jurisdiction",
+        district: "District Nodal Unit",
         state: "Tamil Nadu",
-        policeStation: "Kandachipuram Special SC/ST PS",
+        policeStation: "Special SC/ST PS",
         role: "VICTIM",
         authenticatedAt: new Date().toISOString()
       };

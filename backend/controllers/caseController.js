@@ -58,23 +58,27 @@ const CaseController = {
       const { phoneOrCaseId } = req.params;
       const cleanParam = (phoneOrCaseId || '').replace(/\s+/g, '').toUpperCase();
 
-      // Find case
+      // Find case matching phone or case ID
       const allCases = CaseModel.getAllCases();
       const found = allCases.find(c => {
         const caseMatch = (c.id || c.caseId || '').toUpperCase() === cleanParam;
         const phoneMatch = (c.callerNumber || '').replace(/\s+/g, '') === cleanParam;
         return caseMatch || phoneMatch;
-      }) || allCases.find(c => c.id === 'NHAA-1023'); // fallback to default demo case
+      });
 
       if (!found) {
-        return res.status(404).json({ success: false, message: "No active grievance found for this phone or Case ID." });
+        return res.status(200).json({ 
+          success: true, 
+          count: 0, 
+          message: "No active grievance found for this phone or Case ID." 
+        });
       }
 
       // Format victim-centric dossier
       const victimDossier = {
-        caseId: found.id || found.caseId || 'NHAA-1023',
-        callerNumber: found.callerNumber || '+91 9342636595',
-        victimName: found.victimName || "Protected Citizen Node #9342",
+        caseId: found.id || found.caseId || 'NHAA-CASE',
+        callerNumber: found.callerNumber || cleanParam,
+        victimName: found.victimName || "Citizen Caller",
         state: found.state || "Tamil Nadu",
         district: found.district || "Villupuram",
         village: found.village || "Kandachipuram",

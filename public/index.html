@@ -54,11 +54,14 @@
           <option value="hi">हिन्दी (Hindi)</option>
         </select>
 
-        <!-- Bold Red Emergency Helpline with Pulse Beacon -->
-        <div class="nav-emergency-badge">
+        <!-- Bold Red Emergency Helpline with Pulse Beacon (Interactive Dial Test) -->
+        <button class="nav-emergency-badge" onclick="open14566Dialer();" style="border:none; cursor:pointer;" title="Click to test calling 14566">
           <span>🚨 Helpline:</span>
           <strong>14566</strong>
-        </div>
+        </button>
+        <button class="btn-pill-toggle" onclick="open14566Dialer();" style="background:#fee2e2; color:#dc2626; border:1.5px solid #fecaca; font-weight:850; padding:7px 14px; font-size:0.85rem; cursor:pointer;">
+          📞 Dial 14566
+        </button>
 
         <!-- Victim Portal Action (Vibrant Emerald Green) -->
         <button class="btn-victim-solid" onclick="showPortalView('victim');">
@@ -102,13 +105,16 @@
         AI-assisted victim vulnerability assessment, immediate safety triage, and statutory support prioritization for the National Helpline Against Atrocities (14566).
       </p>
 
-      <!-- Two Large Buttons Side-by-Side (Color Psychology) -->
+      <!-- Two Large Buttons Side-by-Side (Color Psychology) + Dial 14566 -->
       <div class="hero-btn-duo">
         <button class="btn-hero-victim" onclick="showPortalView('victim');">
           👤 VICTIM PORTAL (GET HELP)
         </button>
+        <button class="btn-hero-admin" onclick="open14566Dialer();" style="background:#dc2626; color:#ffffff; border-color:#dc2626; box-shadow:0 10px 25px -5px rgba(220,38,38,0.3);">
+          📞 DIAL 14566 (TEST CALL)
+        </button>
         <button class="btn-hero-admin" onclick="showPortalView('admin');">
-          🔒 ADMIN COMMAND DESK
+          🔒 ADMIN DESK
         </button>
       </div>
 
@@ -513,12 +519,12 @@
       <div id="v-login-step1">
         <div style="margin-bottom:18px;">
           <label style="font-size:0.8rem; font-weight:800; color:#0f172a; display:block; margin-bottom:8px; letter-spacing:0.04em;">ENTER YOUR NAME</label>
-          <input type="text" id="victim-name-input" value="K. Selvam" placeholder="Enter your full name" class="state-search-input" style="padding:13px 18px; border-radius:10px; font-weight:600; width:100%; border:1px solid #cbd5e1; background:#ffffff; color:#0f172a; font-size:0.95rem;">
+          <input type="text" id="victim-name-input" placeholder="e.g. Balaji P" class="state-search-input" style="padding:13px 18px; border-radius:10px; font-weight:600; width:100%; border:1px solid #cbd5e1; background:#ffffff; color:#0f172a; font-size:0.95rem;">
         </div>
 
         <div style="margin-bottom:24px;">
           <label style="font-size:0.8rem; font-weight:800; color:#0f172a; display:block; margin-bottom:8px; letter-spacing:0.04em;">ENTER YOUR MOBILE NUMBER</label>
-          <input type="tel" id="victim-phone-input" value="+91 9342636595" placeholder="+91 9XXXXXXXXX" class="state-search-input" style="padding:13px 18px; border-radius:10px; font-weight:600; font-family:var(--font-premium-mono); width:100%; border:1px solid #cbd5e1; background:#ffffff; color:#0f172a; font-size:0.95rem;">
+          <input type="tel" id="victim-phone-input" placeholder="+91 9XXXXXXXXX" class="state-search-input" style="padding:13px 18px; border-radius:10px; font-weight:600; font-family:var(--font-premium-mono); width:100%; border:1px solid #cbd5e1; background:#ffffff; color:#0f172a; font-size:0.95rem;">
         </div>
 
         <button id="victim-send-otp-btn" class="btn-hero-victim" style="width:100%; justify-content:center; padding:13px; font-size:1rem;">
@@ -529,12 +535,12 @@
       <!-- Step 2: OTP Verification -->
       <div id="v-login-step2" style="display:none; margin-top:22px; padding-top:22px; border-top:1px dashed #cbd5e1;">
         <div style="font-size:0.9rem; color:#475569; margin-bottom:14px;">
-          OTP SENT TO <strong id="v-otp-target-phone" style="color:#0f172a;">+91 9342636595</strong> (Demo OTP: <strong style="color:#059669;">1456</strong>)
+          OTP SENT TO <strong id="v-otp-target-phone" style="color:#0f172a;"></strong> (Verification OTP: <strong style="color:#059669;">1456</strong>)
         </div>
 
         <div style="margin-bottom:18px;">
           <label style="font-size:0.8rem; font-weight:800; color:#0f172a; display:block; margin-bottom:8px; letter-spacing:0.04em;">ENTER 4-DIGIT OTP</label>
-          <input type="text" id="victim-otp-input" value="1456" maxlength="6" class="state-search-input" style="padding:13px; text-align:center; font-size:1.4rem; letter-spacing:0.3em; font-weight:900; font-family:var(--font-premium-mono); border-radius:10px; width:100%; border:1px solid #cbd5e1; background:#ffffff; color:#0f172a;">
+          <input type="text" id="victim-otp-input" placeholder="• • • •" maxlength="6" class="state-search-input" style="padding:13px; text-align:center; font-size:1.4rem; letter-spacing:0.3em; font-weight:900; font-family:var(--font-premium-mono); border-radius:10px; width:100%; border:1px solid #cbd5e1; background:#ffffff; color:#0f172a;">
         </div>
 
         <button id="victim-verify-otp-btn" class="btn-hero-victim" style="width:100%; justify-content:center; padding:13px; font-size:1rem;">
@@ -556,10 +562,10 @@
         <div>
           <span style="font-size:0.75rem; font-weight:800; color:#059669; text-transform:uppercase; letter-spacing:0.06em;">AUTHENTICATED CITIZEN PORTAL</span>
           <h2 style="font-size:2rem; font-weight:900; color:#0f172a; margin:4px 0; letter-spacing:-0.02em;" id="v-greet-name">
-            Good evening, K. Selvam
+            Welcome, Citizen
           </h2>
           <div style="font-size:0.92rem; color:#475569;">
-            How can we help you today? | Mobile: <strong id="v-dash-phone" style="color:#0f172a;">+91 9342636595</strong>
+            How can we help you today? | Mobile: <strong id="v-dash-phone" style="color:#0f172a;">--</strong>
           </div>
         </div>
         <div style="display:flex; gap:12px;">
@@ -616,77 +622,19 @@
         <button class="victim-tab-btn" data-vtab="vtab-privacy">🔒 Privacy</button>
       </div>
 
-      <!-- TAB: MY COMPLAINTS (WITH 5-STEP STATUTORY TRACKER) -->
+      <!-- TAB: MY COMPLAINTS (DYNAMIC REAL CASES TRACKER) -->
       <div class="victim-tab-pane active" id="vtab-my-complaints">
-        
-        <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:18px; padding:32px; box-shadow:0 4px 6px -1px rgba(15,23,42,0.04); margin-bottom:24px;">
-          
-          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px; margin-bottom:24px; border-bottom:1px solid #e2e8f0; padding-bottom:20px;">
-            <div>
-              <span style="font-size:0.75rem; font-weight:800; color:#2563eb; text-transform:uppercase; letter-spacing:0.04em;">CASE RECORD</span>
-              <h3 style="font-size:1.45rem; font-weight:900; color:#0f172a; margin:2px 0;">Case NHAA-20260918-000231</h3>
-              <span style="font-size:0.88rem; color:#475569;">Date: 18 Sep 2026 | Complaint: Threat, Intimidation & Caste Hostility</span>
-            </div>
-            <div>
-              <span style="background:#eff6ff; color:#1e40af; border:1px solid #bfdbfe; font-weight:800; font-size:0.88rem; padding:8px 16px; border-radius:9999px;">
-                Priority Human Assistance
-              </span>
-            </div>
+        <div id="v-my-complaints-list">
+          <div id="v-no-complaints-box" style="text-align:center; padding:48px 24px; background:#ffffff; border:1.5px dashed #cbd5e1; border-radius:18px; margin-bottom:24px;">
+            <div style="font-size:3rem; margin-bottom:12px;">📋</div>
+            <h3 style="font-size:1.3rem; font-weight:850; color:#0f172a; margin:0 0 8px;">No Grievances Registered Yet</h3>
+            <p style="font-size:0.9rem; color:#64748b; margin:0 0 20px;">You haven't filed any complaints under this account yet. Speak or type your grievance now.</p>
+            <button class="btn-hero-victim" onclick="showVictimTab('vtab-new-complaint');" style="margin:0 auto; padding:12px 28px;">
+              📝 File Your First Complaint Now
+            </button>
           </div>
-
-          <!-- Plain Language Notification (Never raw DSP) -->
-          <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:12px; padding:16px; margin-bottom:28px; color:#166534; font-size:0.95rem; line-height:1.6;">
-            <strong>Support Priority Notice:</strong> Your case has been identified for priority human assistance and legal protection by the District Nodal Officer.
-          </div>
-
-          <!-- 5-Step Progress Tracker -->
-          <h4 style="font-size:1.1rem; font-weight:850; color:#0f172a; margin:0 0 20px;">Statutory Redressal Progress</h4>
-          
-          <div class="victim-timeline-steps">
-            
-            <div class="victim-step-item completed">
-              <div class="step-circle-badge">✓</div>
-              <div style="flex:1;">
-                <h4 style="font-size:1rem; font-weight:850; color:#0f172a; margin:0 0 2px;">1. Complaint Registered & Audio Preserved</h4>
-                <p style="font-size:0.85rem; color:#475569; margin:0;">14566 call record ingested. Explicit consent verified.</p>
-              </div>
-            </div>
-
-            <div class="victim-step-item completed">
-              <div class="step-circle-badge">✓</div>
-              <div style="flex:1;">
-                <h4 style="font-size:1rem; font-weight:850; color:#0f172a; margin:0 0 2px;">2. AI Safety Assessment & Atrocity Classification</h4>
-                <p style="font-size:0.85rem; color:#475569; margin:0;">Mapped to PoA Section 3(1)(r). Safety override triggered for armed mob threat.</p>
-              </div>
-            </div>
-
-            <div class="victim-step-item completed">
-              <div class="step-circle-badge">✓</div>
-              <div style="flex:1;">
-                <h4 style="font-size:1rem; font-weight:850; color:#0f172a; margin:0 0 2px;">3. Human Nodal Officer Assigned</h4>
-                <p style="font-size:0.85rem; color:#475569; margin:0;">Assigned to DSP M. Ramachandran, TPS (Villupuram SC/ST Special Cell).</p>
-              </div>
-            </div>
-
-            <div class="victim-step-item active">
-              <div class="step-circle-badge">4</div>
-              <div style="flex:1;">
-                <h4 style="font-size:1rem; font-weight:850; color:#2563eb; margin:0 0 2px;">4. Support Sanctioned (In Progress)</h4>
-                <p style="font-size:0.85rem; color:#475569; margin:0;">Rule 12(4) ₹1,00,000 relief sanction pending final bank disbursement. DLSA counsel assigned.</p>
-              </div>
-            </div>
-
-            <div class="victim-step-item">
-              <div class="step-circle-badge">5</div>
-              <div style="flex:1;">
-                <h4 style="font-size:1rem; font-weight:850; color:#94a3b8; margin:0 0 2px;">5. Police Patrol & Follow-up Scheduled</h4>
-                <p style="font-size:0.85rem; color:#94a3b8; margin:0;">112 patrol car active for Kandachipuram sector. 3-day recovery check scheduled.</p>
-              </div>
-            </div>
-
-          </div>
-
         </div>
+      </div>
 
       </div>
 
@@ -772,9 +720,18 @@
                 <audio id="v-recorded-audio-player" controls style="width:100%; outline:none;"></audio>
               </div>
 
-              <!-- Spoken Transcript Preview -->
-              <div style="background:#ffffff; border:1px solid #cbd5e1; padding:18px; border-radius:14px; text-align:left; font-size:0.98rem; color:#0f172a; margin-top:14px; line-height:1.6;" id="v-unified-transcript">
-                <em>(Click the microphone to begin speaking. Your spoken words will appear here...)</em>
+              <!-- Spoken Transcript Box (Real Voice-to-Text & Editable) -->
+              <div style="background:#ffffff; border:1.5px solid #cbd5e1; padding:16px 20px; border-radius:14px; text-align:left; margin-top:16px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                  <span style="font-size:0.82rem; font-weight:800; color:#0f172a; text-transform:uppercase; letter-spacing:0.04em;">
+                    🗣️ Spoken Complaint Statement (Live Voice-to-Text)
+                  </span>
+                  <span id="v-transcript-status" style="font-size:0.75rem; font-weight:800; color:#2563eb; background:#eff6ff; padding:3px 10px; border-radius:6px;">
+                    Ready to Listen
+                  </span>
+                </div>
+                <textarea id="v-unified-transcript-input" rows="3" placeholder="Click the microphone to start speaking. Your speech will be transcribed here in real-time. (You can also edit or type your grievance statement here directly)." style="width:100%; border:1px solid #cbd5e1; border-radius:10px; padding:12px; font-size:0.95rem; font-family:inherit; color:#0f172a; resize:vertical; outline:none; line-height:1.5; background:#f8fafc;"></textarea>
+                <div id="v-unified-transcript" style="display:none;"></div>
               </div>
 
             </div>
@@ -849,10 +806,10 @@
                 <div>
                   <span style="font-size:0.75rem; font-weight:800; text-transform:uppercase; letter-spacing:0.04em; opacity:0.9;">GRIEVANCE REGISTERED & ANALYZED</span>
                   <h3 style="font-size:1.45rem; font-weight:900; margin:3px 0 0;" id="res-case-id">
-                    Case NHAA-20260920-001092
+                    Case --
                   </h3>
                   <div style="font-size:0.85rem; opacity:0.95;" id="res-caller-info">
-                    Caller: +91 9342636595 (K. Selvam) | Kandachipuram, Villupuram | Tamil
+                    Caller: Voice Grievance Ingestion Node
                   </div>
                 </div>
                 <div>
@@ -1069,10 +1026,10 @@
         <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:18px; padding:32px; box-shadow:0 4px 6px -1px rgba(15,23,42,0.04);">
           <h3 style="font-size:1.4rem; font-weight:900; color:#0f172a; margin:0 0 18px;">Citizen Profile</h3>
           <div style="line-height:2.2; font-size:0.95rem;">
-            <div>Name: <strong>K. Selvam</strong></div>
-            <div>Mobile Number: <strong>+91 9342636595 (Verified)</strong></div>
-            <div>Preferred Language: <strong>Tamil (தமிழ்)</strong></div>
-            <div>District Node: <strong>Villupuram, Tamil Nadu</strong></div>
+            <div id="v-profile-name">Name: <strong>Citizen</strong></div>
+            <div id="v-profile-phone">Mobile Number: <strong>--</strong></div>
+            <div id="v-profile-lang">Preferred Language: <strong>Tamil (தமிழ்) / Multilingual</strong></div>
+            <div id="v-profile-district">District Node: <strong>Auto-assigned via GIS Cell</strong></div>
           </div>
         </div>
       </div>
@@ -1476,6 +1433,72 @@
 
     </div>
 
+  </div>
+
+  <!-- =========================================================================
+       14566 INTERACTIVE TELEPHONY CALL SIMULATOR MODAL
+       Allows user/judges to dial 14566 from browser, speak directly, and see live triage!
+       ========================================================================= -->
+  <div id="modal-14566-call" style="display:none; position:fixed; inset:0; background:rgba(15,23,42,0.75); backdrop-filter:blur(8px); z-index:99999; align-items:center; justify-content:center; padding:20px;">
+    <div style="background:#0f172a; color:#ffffff; width:100%; max-width:440px; border-radius:28px; padding:36px 28px; text-align:center; box-shadow:0 25px 50px -12px rgba(0,0,0,0.6); border:1px solid #334155; position:relative;">
+      
+      <!-- Close Button -->
+      <button onclick="close14566Dialer()" style="position:absolute; top:18px; right:20px; background:none; border:none; color:#94a3b8; font-size:1.6rem; cursor:pointer; padding:4px 8px;">✕</button>
+
+      <!-- Ministry Header -->
+      <div style="font-size:0.75rem; font-weight:800; color:#38bdf8; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:6px;">
+        MINISTRY OF SOCIAL JUSTICE & EMPOWERMENT, GOVT. OF INDIA
+      </div>
+      <div style="font-size:2.4rem; font-weight:900; letter-spacing:0.02em; margin-bottom:4px; color:#ffffff;">
+        14566
+      </div>
+      <div id="call-status-label" style="font-size:0.92rem; color:#94a3b8; margin-bottom:24px;">
+        National Helpline Against Atrocities (Toll-Free Telephony Bridge)
+      </div>
+
+      <!-- Calling Icon with Pulse -->
+      <div id="call-radar-circle" style="width:110px; height:110px; margin:0 auto 24px; border-radius:50%; background:#1e293b; display:flex; align-items:center; justify-content:center; border:2px solid #38bdf8; position:relative;">
+        <div style="font-size:3.2rem;" id="call-avatar-icon">🛡️</div>
+      </div>
+
+      <!-- Call Timer -->
+      <div id="call-timer" style="font-family:var(--font-premium-mono); font-size:1.6rem; font-weight:800; color:#22c55e; margin-bottom:12px; display:none;">
+        00:00
+      </div>
+
+      <!-- Audio Waveform while on call -->
+      <div id="call-wave-bars" style="display:none; justify-content:center; align-items:center; gap:6px; height:32px; margin-bottom:16px;">
+        <div class="waveform-bar-light active" style="height:14px; background:#38bdf8;"></div>
+        <div class="waveform-bar-light active" style="height:26px; background:#38bdf8;"></div>
+        <div class="waveform-bar-light active" style="height:32px; background:#38bdf8;"></div>
+        <div class="waveform-bar-light active" style="height:18px; background:#38bdf8;"></div>
+        <div class="waveform-bar-light active" style="height:28px; background:#38bdf8;"></div>
+        <div class="waveform-bar-light active" style="height:34px; background:#38bdf8;"></div>
+        <div class="waveform-bar-light active" style="height:20px; background:#38bdf8;"></div>
+      </div>
+
+      <!-- Live Speech Stream Box -->
+      <div id="call-live-transcript-box" style="display:none; background:#1e293b; border:1px solid #334155; border-radius:14px; padding:14px; text-align:left; font-size:0.9rem; color:#e2e8f0; margin-bottom:20px; max-height:110px; overflow-y:auto; line-height:1.5;">
+        <span style="font-size:0.72rem; color:#38bdf8; font-weight:800; display:block; margin-bottom:4px; text-transform:uppercase;">● Live Audio Stream (Transcribing):</span>
+        <span id="call-live-transcript-text">Connecting to national helpline voice gateway...</span>
+      </div>
+
+      <!-- Action Buttons -->
+      <div style="display:flex; justify-content:center; gap:16px;">
+        <button id="btn-start-14566-call" onclick="start14566Call()" style="background:#22c55e; color:#ffffff; border:none; border-radius:9999px; padding:14px 32px; font-weight:800; font-size:1.05rem; cursor:pointer; display:flex; align-items:center; gap:10px; box-shadow:0 10px 25px -5px rgba(34,197,94,0.4);">
+          📞 Call 14566 Now
+        </button>
+        <button id="btn-end-14566-call" onclick="end14566Call()" style="display:none; background:#ef4444; color:#ffffff; border:none; border-radius:9999px; padding:14px 32px; font-weight:800; font-size:1.05rem; cursor:pointer; box-shadow:0 10px 25px -5px rgba(239,68,68,0.4);">
+          🔴 End Call & Trigger Dispatch
+        </button>
+      </div>
+
+      <!-- Info note -->
+      <div style="margin-top:20px; font-size:0.76rem; color:#64748b;">
+        Simulates live SIP trunking to MoSJE 14566 telephony server with real-time acoustic DSP and Bhashini translation.
+      </div>
+
+    </div>
   </div>
 
   <script src="js/districtRegistryData.js"></script>
