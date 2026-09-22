@@ -731,12 +731,14 @@ document.addEventListener('DOMContentLoaded', () => {
   }, 300);
 
   function handleSelectedAudioFile(file) {
+    if (!file) return;
     activeAudioFilename = file.name;
     const previewBox = document.getElementById('v-uploaded-file-preview');
     const nameEl = document.getElementById('v-upload-filename');
     const sizeEl = document.getElementById('v-upload-filesize');
     const player = document.getElementById('v-uploaded-audio-player');
-    const transcriptEl = document.getElementById('v-unified-transcript');
+    const transcriptInput = document.getElementById('v-unified-transcript-input');
+    const transcriptStatus = document.getElementById('v-transcript-status');
 
     if (nameEl) nameEl.textContent = file.name;
     if (sizeEl) sizeEl.textContent = `${Math.round(file.size / 1024)} KB`;
@@ -744,10 +746,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const reader = new FileReader();
     reader.onload = (e) => {
       activeAudioBase64 = e.target.result;
-      if (player) player.src = activeAudioBase64;
+      if (player) {
+        player.src = activeAudioBase64;
+        player.load();
+      }
       if (previewBox) previewBox.style.display = 'block';
-      if (transcriptEl) {
-        transcriptEl.innerHTML = `<strong>Uploaded File:</strong> <em>${file.name} ready for AI acoustic prosody and SC/ST PoA offence analysis.</em>`;
+      if (transcriptStatus) {
+        transcriptStatus.textContent = `✓ Audio File Loaded: ${file.name} (${Math.round(file.size / 1024)} KB)`;
+        transcriptStatus.style.color = '#059669';
+        transcriptStatus.style.background = '#ecfdf5';
+      }
+      if (transcriptInput && (!transcriptInput.value || transcriptInput.value.trim() === '')) {
+        transcriptInput.value = `Audio file "${file.name}" attached. Grievance statement and distress telemetry ready for SC/ST PoA offence analysis and 112 emergency dispatch.`;
       }
     };
     reader.readAsDataURL(file);

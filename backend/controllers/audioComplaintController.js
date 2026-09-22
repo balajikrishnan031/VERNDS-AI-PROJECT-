@@ -58,16 +58,26 @@ const AudioComplaintController = {
 
       if (audioBase64) {
         try {
-          const cleanBase64 = audioBase64.replace(/^data:audio\/[a-zA-Z0-9.-]+;base64,/, '');
+          // Robust base64 header stripping (handles audio/webm;codecs=opus, audio/wav, audio/mpeg, etc.)
+          const cleanBase64 = audioBase64.replace(/^data:[^;]+;base64,/, '').replace(/\s/g, '');
           audioBuffer = Buffer.from(cleanBase64, 'base64');
-          const ext = (audioFileName && path.extname(audioFileName)) ? path.extname(audioFileName) : '.wav';
+          
+          let ext = '.wav';
+          if (audioFileName && path.extname(audioFileName)) {
+            ext = path.extname(audioFileName);
+          } else if (audioBase64.includes('audio/webm') || audioBase64.includes('video/webm')) {
+            ext = '.webm';
+          } else if (audioBase64.includes('audio/mp3') || audioBase64.includes('audio/mpeg')) {
+            ext = '.mp3';
+          }
+
           const fileName = `complaint_${Date.now()}_${Math.floor(1000 + Math.random() * 9000)}${ext}`;
 
           fs.writeFileSync(path.join(UPLOADS_DIR_PUBLIC, fileName), audioBuffer);
           fs.writeFileSync(path.join(UPLOADS_DIR_FRONTEND, fileName), audioBuffer);
 
           savedAudioUrl = `/uploads/audio/${fileName}`;
-          console.log(`[Audio Ingestion] Audio saved to ${savedAudioUrl} (${audioBuffer.length} bytes)`);
+          console.log(`[Audio Ingestion] Audio file successfully stored to ${savedAudioUrl} (${audioBuffer.length} bytes)`);
         } catch (e) {
           console.warn('[Audio Ingestion] Could not save audio buffer to disk:', e.message);
         }
