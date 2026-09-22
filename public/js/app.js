@@ -1075,14 +1075,36 @@ document.addEventListener('DOMContentLoaded', () => {
         const c = data.case;
         const dosHeader = document.querySelector('#tab-case-intelligence h3');
         const dosSub = document.querySelector('#tab-case-intelligence span[style*="Channel: 14566"]');
-        const dosAudio = document.getElementById('master-dos-audio-element');
-        const dosOrig = document.querySelector('#tab-case-intelligence div:nth-child(2) p[style*="font-weight:650"]');
-        const dosTrans = document.querySelector('#tab-case-intelligence div:nth-child(3) p');
+        const origP = document.getElementById('master-dos-orig-p');
+        const transP = document.getElementById('master-dos-trans-p');
+        const sviVal = document.getElementById('master-dos-svi-val');
+        const sviTier = document.getElementById('master-dos-svi-tier');
+        const locEl = document.getElementById('master-dos-location-info');
+        const secList = document.getElementById('master-dos-sections-list');
 
         if (dosHeader) dosHeader.textContent = `Case ${c.id || c.caseId}`;
-        if (dosSub) dosSub.textContent = `Channel: 14566 Voice Portal | Duration: ${c.audioDuration || '02:18'} | Language: ${c.language || 'Tamil'} | Caller: ${c.callerNumber}`;
-        if (dosOrig) dosOrig.textContent = `"${c.spokenTranscript}"`;
-        if (dosTrans) dosTrans.textContent = `"${c.translatedTranscript}"`;
+        if (dosSub) dosSub.textContent = `Channel: 14566 Voice Portal | Language: ${c.language || 'ta-IN'} | Caller: ${c.callerNumber} (${c.victimName || 'Citizen'})`;
+        if (origP) origP.textContent = `"${c.spokenTranscript || 'Voice grievance recorded via 14566 national portal.'}"`;
+        if (transP) transP.textContent = `"${c.translatedTranscript || c.spokenTranscript || 'Statutory grievance registered.'}"`;
+        if (sviVal) sviVal.textContent = `${c.sviScore || 85} / 100`;
+        if (sviTier) sviTier.textContent = c.riskCategory || 'CRITICAL TIER';
+
+        if (locEl) {
+          locEl.innerHTML = `
+            <div>State: <strong>${c.state || 'Tamil Nadu'}</strong></div>
+            <div>District: <strong>${c.district || 'Villupuram'}</strong></div>
+            <div>Village: <strong>${c.village || 'Local Area'}</strong></div>
+            <div>Police Station: <strong>${c.policeStation || 'Special SC/ST PS'}</strong></div>
+          `;
+        }
+
+        if (secList && c.legalSections && c.legalSections.length > 0) {
+          secList.innerHTML = c.legalSections.map(s => `
+            <div style="background:#ffffff; border:1px solid #e2e8f0; padding:8px 12px; border-radius:8px; color:#0f172a;">
+              • <strong>${s.sectionCode || s.code || 'Sec 3(1)'}:</strong> ${s.description || 'Statutory PoA Offence'}
+            </div>
+          `).join('');
+        }
 
         // Update audio player in dossier
         const playerBox = document.querySelector('#tab-case-intelligence .call-sim-play-btn')?.parentElement;
